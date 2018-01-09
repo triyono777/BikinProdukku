@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Produk;
 
 use App\Http\Controllers\Controller;
 use App\Models\Produk\GambarProduk;
+use App\Models\Produk\GambarTemplate;
 use App\Models\Produk\GambarWarna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -16,7 +17,8 @@ class GambarProdukController extends Controller
         $id_gambar = $id_gambar;
 
         $gambarWarna = GambarWarna::orderBy('created_at', 'desc')->get()->toArray();
-    	return view('admin.produk.gambar-produk', compact(['kode_produk', 'id_gambar', 'gambarWarna']));
+        $gambarTemplate = GambarTemplate::orderBy('created_at', 'desc')->get()->toArray();
+    	return view('admin.produk.gambar-produk', compact(['kode_produk', 'id_gambar', 'gambarWarna', 'gambarTemplate']));
     }
 
     // gambar produk CRUD

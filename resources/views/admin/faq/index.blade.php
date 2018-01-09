@@ -15,10 +15,11 @@
 			    <form action="" method="post" id="frm-tambah">
 					<div class="form-group">
 						<label for="">Nama User</label>
-						<select class="form-control select2" name="id_user" style="width: 100% !important">
+						<select class="form-control select2" id="id_user" name="id_user" style="width: 100% !important">
 							<option disabled selected>-Pilih-</option>
-							<option value="">1</option>
-							<option value="">2</option>
+							@foreach($user as $data)
+								<option value="{{$data['id_user']}}">{{$data['nama']}}</option>
+							@endforeach
 						</select>
 					</div>
 					<div class="form-group">
@@ -44,22 +45,69 @@
 							<th>Action</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>1</td>
-							<td>adam</td>
-							<td>sadasdsad ?</td>
-							<td>23-23-2102</td>
-							<td>
-								<a href="{{route('admin.answerView', 1)}}" class="btn btn-info"><i class=" fa fa-eye"></i></a>
-								<a href="#!" class="btn btn-warning"><i class=" fa fa-edit"></i></a>
-								<a href="#!" class="btn btn-danger"><i class=" fa fa-trash"></i></a>
-							</td>
-						</tr>
-					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
 </div>
+@endsection
+@section('customJs')
+	<script type="text/javascript">
+		$('#datatables').DataTable({
+	        processing: true,
+	        serverSide: true,
+	        ajax: '{{route('admin.faqData')}}',
+	        columns: [
+	            {data: 'DT_Row_Index', orderable: false, searchable: false},
+	            {data: 'id_user'},
+	            {data: 'question'},
+	            {data: 'tanggal'},
+	            {data: 'action'},
+	        ]
+	    });
+
+		$('#frm-tambah').on('submit', function(e) {
+			e.preventDefault();
+			const data = $(this).serialize();
+			$.post('{{route('admin.faqPost')}}', data, function(data) {
+				$('#frm-tambah')[0].reset();
+				 $('#datatables').DataTable().ajax.reload();
+				 alertify.success('data berhasil di tambah');
+			});
+		})
+
+		$('#datatables').on('click', '.edit', function() {
+			const id = $(this).data('id');
+			const nama_satuan = $(this).data('nama');
+			const berat = $(this).data('berat');
+
+			$('#modal-edit').find('#id').val(id);
+			$('#modal-edit').find('#nama_satuan').val(nama_satuan);
+			$('#modal-edit').find('#berat').val(berat);
+		});
+
+		$('#frm-edit').on('submit', function(e) {
+			e.preventDefault();
+			const data = $(this).serialize();
+			$.post("{{route('admin.faqUpdate')}}", data, function() {
+				$('#modal-edit').modal('hide');
+				$('#datatables').DataTable().ajax.reload();
+				alertify.success('data berhasil di update');
+			})
+		});
+
+		$('#datatables').on('click', '.delete', function() {
+			const id = $(this).data('id');
+			alertify.confirm('Alert', 'Apakah anda yakin ingin menghapus data ini ?',
+				 function() {
+				 	$.post('{{route('admin.faqDelete')}}', {id: id}, function() {
+				 		$('#datatables').DataTable().ajax.reload();
+				 		alertify.success('Data berhasil di hapus !');
+				 	})
+				 },
+				 function() {
+				 	alertify.error('Cancel')
+				 });
+		})
+	</script>
 @endsection

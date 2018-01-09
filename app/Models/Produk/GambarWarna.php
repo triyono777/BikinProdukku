@@ -9,4 +9,6 @@ class GambarWarna extends Model
     protected $table = 'gambar_warna';
 
     protected $guarded = ['kode_warna'];
+
+    protected $primaryKey = 'kode_warna';
 }

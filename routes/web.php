@@ -61,6 +61,11 @@ Route::get('/logout', 'Auth\AuthController@logout')->name('admin.logout');
 	Route::post('/produk/detail/{id}/gambar-produk/{id_gambar}/gambar-warna/update', 'Produk\GambarWarnaController@gambarWarnaUpdate')->name('admin.gambarWarnaUpdate');
 	Route::post('/produk/detail/{id}/gambar-produk/{id_gambar}/gambar-warna/delete', 'Produk\GambarWarnaController@gambarWarnaDelete')->name('admin.gambarWarnaDelete');
 
+	// Gambar Template
+	Route::post('/produk/detail/{id}/gambar-produk/{id_gambar}/gambar-template/post', 'Produk\GambarTemplateController@gambarTemplatePost')->name('admin.gambarTemplatePost');
+	Route::post('/produk/detail/{id}/gambar-produk/{id_gambar}/gambar-template/update', 'Produk\GambarTemplateController@gambarTemplateUpdate')->name('admin.gambarTemplateUpdate');
+	Route::post('/produk/detail/{id}/gambar-produk/{id_gambar}/gambar-template/delete', 'Produk\GambarTemplateController@gambarTemplateDelete')->name('admin.gambarTemplateDelete');
+
 	// bahan baku
 	Route::get('/produk/detail/{id}/bahan-baku/data', 'Produk\BahanBakuController@bahanBakuData')->name('admin.bahanBakuData');
 	Route::post('/produk/detail/{id}/bahan-baku/post', 'Produk\BahanBakuController@bahanBakuPost')->name('admin.bahanBakuPost');
@@ -77,6 +82,10 @@ Route::get('/logout', 'Auth\AuthController@logout')->name('admin.logout');
 
 	// faq
 	Route::get('/setting-website/faq', 'Faq\FaqController@faqView')->name('admin.faqView');
+	Route::get('/setting-website/faq/data', 'Faq\FaqController@faqData')->name('admin.faqData');
+	Route::post('/setting-website/faq/store', 'Faq\FaqController@faqPost')->name('admin.faqPost');
+	Route::post('/setting-website/faq/update', 'Faq\FaqController@faqUpdate')->name('admin.faqUpdate');
+	Route::post('/setting-website/faq/delete', 'Faq\FaqController@faqDelete')->name('admin.faqDelete');
 
 	// Answer
 	Route::get('/setting-website/faq/{id_faq}', 'Answer\AnswerController@answerView')->name('admin.answerView');

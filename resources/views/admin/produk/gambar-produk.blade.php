@@ -47,13 +47,46 @@
 							</td>
 							<td>{{strip_tags($value['caption'])}}</td>
 							<td>
-								<a href="#!" class="btn btn-warning"><i class=" fa fa-edit"></i></a>
-								<a href="#!" class="btn btn-danger"><i class=" fa fa-trash"></i></a>
+								<a href="#modal-edit" data-toggle="modal" class="btn btn-warning edit"
+								data-id="{{$value['kode_warna']}}"
+								data-caption="{{$value['caption']}}"
+								><i class=" fa fa-edit"></i></a>
+								<a href="#!" class="btn btn-danger delete" data-id="{{$value['kode_warna']}}"><i class=" fa fa-trash"></i></a>
 							</td>
 						</tr>
 						@endforeach
 					</tbody>
 				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+{{-- modal edit gambar Produk--}}
+<div class="modal fade" id="modal-edit">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Edit</h4>
+			</div>
+			<div class="modal-body">
+				<form action="{{route('admin.gambarWarnaUpdate', [$kode_produk, $id_gambar])}}" id="frm-edit" method="post" enctype="multipart/form-data">
+					{{csrf_field()}}
+					<div class="form-group">
+						<label for="">Upload Gambar Baru</label>
+						<input type="file" name="gambar_warna" id="gambar_warna" class="form-control">
+						<input type="hidden" name="id" id="id">
+					</div>
+					<div class="form-group">
+						<label for="">Caption</label>
+						<textarea name="caption" id="caption" class="form-control textarea" rows="3"></textarea>
+					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save changes</button>
+				</form>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -71,7 +104,8 @@
 			</a>
 			<div class="collapse" id="collapse-tambah2" style="margin-top: 10px">
 			  <div class="well">
-			    <form action="" method="post" id="frm-tambah" enctype="multipart/form-data">
+			    <form action="{{route('admin.gambarTemplatePost', [$kode_produk, $id_gambar])}}" method="post" id="frm-tambah" enctype="multipart/form-data">
+			    	{{csrf_field()}}
 			    	<div class="form-group">
 						<label for="">Upload Gambar</label>
 						<input type="file" name="gambar_template" class="form-control">
@@ -79,7 +113,7 @@
 					<div class="form-group">
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" value="" name="sold_out">
+								<input type="checkbox" value="1" name="sold_out">
 								Sold Out
 							</label>
 						</div>
@@ -88,12 +122,12 @@
 						<label for="">Caption</label>
 						<textarea name="caption" class="form-control textarea" rows="3"></textarea>
 					</div>
-					<button class="btn btn-primary">Tambah</button>
+					<button type="submit" class="btn btn-primary">Tambah</button>
 			    </form>
 			  </div>
 			</div>
 			<div class="table-responsive" style="margin-top: 15px;">
-				<table id="datatables" class="table table-bordered table-hover">
+				<table id="datatables2" class="table table-bordered table-hover">
 					<thead>
 						<tr>
 							<th>No</th>
@@ -104,22 +138,64 @@
 						</tr>
 					</thead>
 					<tbody>
+						@foreach($gambarTemplate as $key => $value)
 						<tr>
-							<td>1</td>
+							<td>{{++$key}}</td>
 							<td>
-								<img src="{{URL::to('dist/img/avatar2.png')}}" class="img-thumbnail" width="100" height="80">
+								<img src="{{URL::to('upload/gambar-template/'. $value['gambar_template'])}}" class="img-thumbnail" width="100" height="80">
 							</td>
-							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</td>
+							<td>{{strip_tags($value['caption'])}}</td>
+							<td><span class="btn btn-xs {{$value['sold_out'] == 1 ? 'btn-success' : 'btn-danger' }}">{{$value['sold_out'] == 1 ? 'Yes' : 'No' }}</span></td>
 							<td>
-								<span class="btn btn-success btn-xs">Yes</span>
-							</td>
-							<td>
-								<a href="#!" class="btn btn-warning"><i class=" fa fa-edit"></i></a>
-								<a href="#!" class="btn btn-danger"><i class=" fa fa-trash"></i></a>
+								<a href="#modal-edit2" data-toggle="modal" class="btn btn-warning edit"
+								data-id="{{$value['kode_template']}}"
+								data-sold_out="{{$value['sold_out']}}"
+								data-caption="{{$value['caption']}}"
+								><i class=" fa fa-edit"></i></a>
+								<a href="#!" class="btn btn-danger delete" data-id="{{$value['kode_template']}}"><i class=" fa fa-trash"></i></a>
 							</td>
 						</tr>
+						@endforeach
 					</tbody>
 				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+{{-- modal edit gambar Template--}}
+<div class="modal fade" id="modal-edit2">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Edit</h4>
+			</div>
+			<div class="modal-body">
+				<form action="{{route('admin.gambarTemplateUpdate', [$kode_produk, $id_gambar])}}" id="frm-edit" method="post" enctype="multipart/form-data">
+					{{csrf_field()}}
+					<div class="form-group">
+						<label for="">Upload Gambar Baru</label>
+						<input type="file" name="gambar_template" id="gambar_template" class="form-control">
+						<input type="hidden" name="id" id="id">
+					</div>
+					<div class="form-group">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" value="1" id="sold_out" name="sold_out">
+								Sold Out
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="">Caption</label>
+						<textarea name="caption" id="caption" class="form-control textarea" rows="3"></textarea>
+					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save changes</button>
+				</form>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -129,49 +205,53 @@
 <script type="text/javascript">
 	$('#datatables').on('click', '.edit', function() {
 		const id = $(this).data('id');
-		const id_kategori = $(this).data('id_kategori');
-		const nama_produk = $(this).data('nama_produk');
-		const biaya_operasional = $(this).data('biaya_operasional');
-		const sold_out = $(this).data('sold_out');
-		const perbesar = $(this).data('perbesar');
 		const caption = $(this).data('caption');
 		$('#modal-edit').find('#id').val(id);
-		$('#modal-edit').find('#id_kategori').val(id_kategori).change();
-		$('#modal-edit').find('#nama_produk').val(nama_produk);
-		$('#modal-edit').find('#biaya_operasional').val(biaya_operasional);
+		$('iframe').contents().find('.textarea').html(caption);
+	});
+
+	$('#datatables2').on('click', '.edit', function() {
+		const id = $(this).data('id');
+		const sold_out = $(this).data('sold_out');
+		const caption = $(this).data('caption');
+
+		$('#modal-edit2').find('#id').val(id);
 		if (sold_out == 1) {
-			$('#modal-edit').find('#sold_out').prop('checked', true);
+			$('#modal-edit2').find('#sold_out').prop('checked', true);
 		}else {
-			$('#modal-edit').find('#sold_out').prop('checked', false);
-		}
-		if (perbesar == 1) {
-			$('#modal-edit').find('#perbesar').prop('checked', true);
-		}else {
-			$('#modal-edit').find('#perbesar').prop('checked', false);
+			$('#modal-edit2').find('#sold_out').prop('checked', false);
 		}
 		$('iframe').contents().find('.textarea').html(caption);
 	});
-	$('#frm-edit').on('submit', function(e) {
-		e.preventDefault();
-		const data = $(this).serialize();
-		$.post("{{route('admin.produkUpdate')}}", data, function() {
-			$('#modal-edit').modal('hide');
-			$('#datatables').DataTable().ajax.reload();
-			alertify.success('data berhasil di update');
-		})
-	});
+
 	$('#datatables').on('click', '.delete', function() {
 		const id = $(this).data('id');
 		alertify.confirm('Alert', 'Apakah anda yakin ingin menghapus data ini ?',
 			function() {
-				$.post('{{route('admin.produkDelete')}}', {id: id}, function() {
-					$('#datatables').DataTable().ajax.reload();
+				$.post('{{route('admin.gambarWarnaDelete', [$kode_produk, $id_gambar])}}', {id: id}, function() {
 					alertify.success('Data berhasil di hapus !');
+					location.reload();
+				})
+			},
+			function() {
+				alertify.error('Cancel')
+			});
+	});
+
+	$('#datatables2').on('click', '.delete', function() {
+		const id = $(this).data('id');
+		alertify.confirm('Alert', 'Apakah anda yakin ingin menghapus data ini ?',
+			function() {
+				$.post('{{route('admin.gambarTemplateDelete', [$kode_produk, $id_gambar])}}', {id: id}, function() {
+					alertify.success('Data berhasil di hapus !');
+					location.reload();
 				})
 			},
 			function() {
 				alertify.error('Cancel')
 			});
 	})
+
+	$('#datatables2').DataTable();
 </script>
 @endsection

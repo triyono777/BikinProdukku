@@ -38,7 +38,7 @@
 						<tr>
 							<td>1</td>
 							<td>telepon</td>
-							<th>e2384092384</th>
+							<td>e2384092384</td>
 							<td>
 								<a href="#!" class="btn btn-warning"><i class=" fa fa-edit"></i></a>
 								<a href="#!" class="btn btn-danger"><i class=" fa fa-trash"></i></a>

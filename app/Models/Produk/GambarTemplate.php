@@ -9,4 +9,6 @@ class GambarTemplate extends Model
     protected $table = 'gambar_template';
 
     protected $guarded = ['kode_template'];
+
+    protected $primaryKey = 'kode_template';
 }

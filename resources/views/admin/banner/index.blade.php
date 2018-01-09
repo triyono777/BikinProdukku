@@ -41,7 +41,7 @@
 							<td>
 								<img src="{{URL::to('dist/img/avatar2.png')}}" class="img-thumbnail" width="100" height="80">
 							</td>
-							<th>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</th>
+							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</td>
 							<td>
 								<a href="#!" class="btn btn-warning"><i class=" fa fa-edit"></i></a>
 								<a href="#!" class="btn btn-danger"><i class=" fa fa-trash"></i></a>

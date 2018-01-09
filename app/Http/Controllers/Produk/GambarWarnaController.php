@@ -27,9 +27,9 @@ class GambarWarnaController extends Controller
 
     }
 
-    public function gambarWarnaUpdate(Request $request, $kode_produk) {
-        $gambarWarna = GambarWarna::where('kode_gambar', $request['id'])->first();
-        $gambarWarna->kode_produk = $kode_produk;
+    public function gambarWarnaUpdate(Request $request, $kode_produk, $id_gambar) {
+        $gambarWarna = GambarWarna::where('kode_warna', $request['id'])->first();
+        $gambarWarna->kode_gambar = $id_gambar;
         if ($request['gambar_warna']) {
         	// delete file
         	File::delete(public_path('upload/gambar-warna/'. $gambarWarna->gambar_warna));
@@ -48,7 +48,7 @@ class GambarWarnaController extends Controller
     }
 
     public function gambarWarnaDelete(Request $request) {
-        $gambarWarna = GambarWarna::where('kode_gambar', $request['id'])->first(	);
+        $gambarWarna = GambarWarna::where('kode_warna', $request['id'])->first();
         // delete file
     	File::delete(public_path('upload/gambar-warna/'. $gambarWarna->gambar_warna));
         $gambarWarna->delete();
