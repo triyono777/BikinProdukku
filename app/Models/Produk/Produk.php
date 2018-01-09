@@ -8,5 +8,9 @@ class Produk extends Model
 {
     protected $table = 'produk';
 
-    protected $guarded = ['kode_produk'];
+    protected $guarded = [''];
+
+    public function kategori() {
+    	return $this->belongsTo('App\Models\Kategori\Kategori', 'id_kategori', 'id_kategori');
+    }
 }

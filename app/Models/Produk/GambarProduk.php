@@ -8,5 +8,7 @@ class GambarProduk extends Model
 {
     protected $table = 'gambar_produk';
 
-    protected $guarded = ['kode_warna'];
+    protected $guarded = ['kode_gambar'];
+
+    protected $primaryKey = 'kode_gambar';
 }

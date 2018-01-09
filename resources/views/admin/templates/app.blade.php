@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Admin | Dashboard</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -31,7 +32,10 @@
     <link rel="stylesheet" href="{{URL::to('bower_components/bootstrap-daterangepicker/daterangepicker.css')}}">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="{{URL::to('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
-    {{--  --}}
+    <!-- include the style -->
+    <link rel="stylesheet" href="{{URL::to('plugins/alertifyjs/build/css/alertify.min.css')}}" />
+    <!-- include a theme -->
+    <link rel="stylesheet" href="{{URL::to('plugins/alertifyjs/build/css/themes/default.min.css')}}" />
     @yield('customCss')
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -77,7 +81,7 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-right">
-                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="{{route('admin.logout')}}" class="btn btn-default btn-flat">Sign out</a>
                     </div>
                   </li>
                 </ul>
@@ -116,11 +120,11 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                <li>
+                {{-- <li>
                   <a href="{{route('admin.penggunaView')}}">
                     <i class="fa fa-users"></i> <span>Pengguna</span>
                   </a>
-                </li>
+                </li> --}}
                 <li>
                   <a href="{{route('admin.satuanView')}}">
                     <i class="fa fa-cube"></i> <span>Satuan</span>
@@ -146,19 +150,19 @@
                   </a>
                 </li>
                 <li>
-                  <a href="#">
+                  <a href="{{route('admin.transaksiView')}}">
                     <i class="fa fa-handshake-o"></i>
                     <span>Transaksi</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#!">
+                  <a href="{{route('admin.lihatPasarView')}}">
                     <i class="fa fa-eye"></i>
                     <span>Lihat Pasar</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#">
+                  <a href="{{route('admin.dialogProsesView')}}">
                     <i class="fa fa-refresh"></i>
                     <span>Dialog Proses</span>
                   </a>
@@ -175,13 +179,13 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{route('admin.tentangView')}}"><i class="fa fa-circle-o"></i> Tentang</a></li>
-                <li><a href="#!"><i class="fa fa-circle-o"></i> Kontak</a></li>
+                <li><a href="{{route('admin.kontakView')}}"><i class="fa fa-circle-o"></i> Kontak</a></li>
                 <li><a href="{{route('admin.faqView')}}"><i class="fa fa-circle-o"></i> FAQ</a></li>
                 <li><a href="{{route('admin.testimonialView')}}"><i class="fa fa-circle-o"></i> Testimonial</a></li>
                 <li><a href="{{route('admin.bannerView')}}"><i class="fa fa-circle-o"></i> Banner</a></li>
               </ul>
             </li>
-            <li class="treeview">
+            {{-- <li class="treeview">
               <a href="#">
                 <i class="fa fa-share"></i> <span>Pembayaran & Pengiriman</span>
                 <span class="pull-right-container">
@@ -198,7 +202,7 @@
                   </a>
                 </li>
               </ul>
-            </li>
+            </li> --}}
           </section>
           <!-- /.sidebar -->
         </aside>
@@ -257,16 +261,24 @@
       <script src="{{URL::to('bower_components/select2/dist/js/select2.min.js')}}"></script>
       <!-- FastClick -->
       <script src="{{URL::to('bower_components/fastclick/lib/fastclick.js')}}"></script>
+      {{-- alertify --}}
+      <script src="{{URL::to('plugins/alertifyjs/build/alertify.min.js')}}"></script>
       <!-- AdminLTE App -->
       <script src="{{URL::to('dist/js/adminlte.min.js')}}"></script>
       <script type="text/javascript">
       $(function() {
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
       $('#datatables').DataTable();
       $('.select2').select2();
       //Date picker
       $('.datepicker').datepicker({
       autoclose: true
       });
+       alertify.set('notifier','position', 'top-right');
       // CKEDITOR.replace('editor1');
       $('.textarea').wysihtml5();
       })

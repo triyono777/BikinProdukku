@@ -17,13 +17,14 @@
 			    		<label>Induk Kategori</label>
 			    		<select class="form-control select2" name="id_kategori" style="width: 100% !important">
 							<option disabled selected>-Pilih-</option>
-							<option value="">1</option>
-							<option value="">2</option>
+							@foreach($kategori as $data)
+								<option value="{{$data['id_kategori']}}">{{$data['nama_kategori']}}</option>
+							@endforeach
 			    		</select>
 			    	</div>
 					<div class="form-group">
-						<label for="">Nama Kategori</label>
-						<input type="text" name="nama_kategori" class="form-control">
+						<label for="">Nama Sub Kategori</label>
+						<input type="text" name="nama_subkategori" class="form-control">
 					</div>
 					<button class="btn btn-primary">Tambah</button>
 			    </form>
@@ -34,23 +35,106 @@
 					<thead>
 						<tr>
 							<th>No</th>
+							<th>Induk Kategori</th>
 							<th>Nama Sub Kategori</th>
 							<th>Action</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>1</td>
-							<td>kfjhsdgf</td>
-							<td>
-								<a href="#!" class="btn btn-warning"><i class=" fa fa-edit"></i></a>
-								<a href="#!" class="btn btn-danger"><i class=" fa fa-trash"></i></a>
-							</td>
-						</tr>
-					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
 </div>
+{{-- modal edit --}}
+<div class="modal fade" id="modal-edit">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Edit</h4>
+			</div>
+			<div class="modal-body">
+				<form action="" id="frm-edit" method="post">
+					<div class="form-group">
+			    		<label>Induk Kategori</label>
+			    		<select class="form-control select2" id="id_kategori" name="id_kategori" style="width: 100% !important">
+							<option disabled selected>-Pilih-</option>
+							@foreach($kategori as $data)
+								<option value="{{$data['id_kategori']}}">{{$data['nama_kategori']}}</option>
+							@endforeach
+			    		</select>
+			    	</div>
+					<div class="form-group">
+						<label>Nama Sub Kategori</label>
+						<input type="text" name="nama_subkategori" id="nama_subkategori" class="form-control">
+						<input type="hidden" name="id" id="id" class="form-control">
+					</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary">Save changes</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+@endsection
+@section('customJs')
+	<script type="text/javascript">
+		$('#datatables').DataTable({
+	        processing: true,
+	        serverSide: true,
+	        ajax: '{{route('admin.subKategoriData')}}',
+	        columns: [
+	            {data: 'DT_Row_Index', orderable: false, searchable: false},
+	            {data: 'nama_kategori'},
+	            {data: 'nama_subkategori'},
+	            {data: 'action'},
+	        ]
+	    });
+
+		$('#frm-tambah').on('submit', function(e) {
+			e.preventDefault();
+			const data = $(this).serialize();
+			$.post('{{route('admin.subKategoriPost')}}', data, function(data) {
+				$('#frm-tambah')[0].reset();
+				 $('#datatables').DataTable().ajax.reload();
+				 alertify.success('data berhasil di tambah');
+			});
+		})
+
+		$('#datatables').on('click', '.edit', function() {
+			const id = $(this).data('id');
+			const id_kategori = $(this).data('id_kategori');
+			const nama_subkategori = $(this).data('nama');
+
+			$('#modal-edit').find('#id').val(id);
+			$('#modal-edit').find('#id_kategori').val(id_kategori).change();
+			$('#modal-edit').find('#nama_subkategori').val(nama_subkategori);
+		});
+
+		$('#frm-edit').on('submit', function(e) {
+			e.preventDefault();
+			const data = $(this).serialize();
+			$.post("{{route('admin.subKategoriUpdate')}}", data, function() {
+				$('#modal-edit').modal('hide');
+				$('#datatables').DataTable().ajax.reload();
+				alertify.success('data berhasil di update');
+			})
+		});
+
+		$('#datatables').on('click', '.delete', function() {
+			const id = $(this).data('id');
+			alertify.confirm('Alert', 'Apakah anda yakin ingin menghapus data ini ?',
+				 function() {
+				 	$.post('{{route('admin.subKategoriDelete')}}', {id: id}, function() {
+				 		$('#datatables').DataTable().ajax.reload();
+				 		alertify.success('Data berhasil di hapus !');
+				 	})
+				 },
+				 function() {
+				 	alertify.error('Cancel')
+				 });
+		})
+	</script>
 @endsection

@@ -12,7 +12,8 @@
 			</a>
 			<div class="collapse" id="collapse-tambah" style="margin-top: 10px">
 			  <div class="well">
-			    <form action="" method="post" id="frm-tambah" enctype="multiple/form-data">
+			    <form action="{{route('admin.gambarWarnaPost', [$kode_produk, $id_gambar])}}" method="post" id="frm-tambah" enctype="multipart/form-data">
+			    	{{csrf_field()}}
 					<div class="form-group">
 						<label for="">Upload Gambar</label>
 						<input type="file" name="gambar_warna" class="form-control">
@@ -38,17 +39,19 @@
 						</tr>
 					</thead>
 					<tbody>
+						@foreach($gambarWarna as $key => $value)
 						<tr>
-							<td>1</td>
+							<td>{{++$key}}</td>
 							<td>
-								<img src="{{URL::to('dist/img/avatar2.png')}}" class="img-thumbnail" width="100" height="80">
+								<img src="{{URL::to('upload/gambar-warna/'. $value['gambar_warna'])}}" class="img-thumbnail" width="100" height="80">
 							</td>
-							<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</td>
+							<td>{{strip_tags($value['caption'])}}</td>
 							<td>
 								<a href="#!" class="btn btn-warning"><i class=" fa fa-edit"></i></a>
 								<a href="#!" class="btn btn-danger"><i class=" fa fa-trash"></i></a>
 							</td>
 						</tr>
+						@endforeach
 					</tbody>
 				</table>
 			</div>
@@ -68,7 +71,7 @@
 			</a>
 			<div class="collapse" id="collapse-tambah2" style="margin-top: 10px">
 			  <div class="well">
-			    <form action="" method="post" id="frm-tambah">
+			    <form action="" method="post" id="frm-tambah" enctype="multipart/form-data">
 			    	<div class="form-group">
 						<label for="">Upload Gambar</label>
 						<input type="file" name="gambar_template" class="form-control">
@@ -121,4 +124,54 @@
 		</div>
 	</div>
 </div>
+@endsection
+@section('customJs')
+<script type="text/javascript">
+	$('#datatables').on('click', '.edit', function() {
+		const id = $(this).data('id');
+		const id_kategori = $(this).data('id_kategori');
+		const nama_produk = $(this).data('nama_produk');
+		const biaya_operasional = $(this).data('biaya_operasional');
+		const sold_out = $(this).data('sold_out');
+		const perbesar = $(this).data('perbesar');
+		const caption = $(this).data('caption');
+		$('#modal-edit').find('#id').val(id);
+		$('#modal-edit').find('#id_kategori').val(id_kategori).change();
+		$('#modal-edit').find('#nama_produk').val(nama_produk);
+		$('#modal-edit').find('#biaya_operasional').val(biaya_operasional);
+		if (sold_out == 1) {
+			$('#modal-edit').find('#sold_out').prop('checked', true);
+		}else {
+			$('#modal-edit').find('#sold_out').prop('checked', false);
+		}
+		if (perbesar == 1) {
+			$('#modal-edit').find('#perbesar').prop('checked', true);
+		}else {
+			$('#modal-edit').find('#perbesar').prop('checked', false);
+		}
+		$('iframe').contents().find('.textarea').html(caption);
+	});
+	$('#frm-edit').on('submit', function(e) {
+		e.preventDefault();
+		const data = $(this).serialize();
+		$.post("{{route('admin.produkUpdate')}}", data, function() {
+			$('#modal-edit').modal('hide');
+			$('#datatables').DataTable().ajax.reload();
+			alertify.success('data berhasil di update');
+		})
+	});
+	$('#datatables').on('click', '.delete', function() {
+		const id = $(this).data('id');
+		alertify.confirm('Alert', 'Apakah anda yakin ingin menghapus data ini ?',
+			function() {
+				$.post('{{route('admin.produkDelete')}}', {id: id}, function() {
+					$('#datatables').DataTable().ajax.reload();
+					alertify.success('Data berhasil di hapus !');
+				})
+			},
+			function() {
+				alertify.error('Cancel')
+			});
+	})
+</script>
 @endsection

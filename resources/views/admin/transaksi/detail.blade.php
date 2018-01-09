@@ -98,7 +98,7 @@
 					<img src="http://via.placeholder.com/150x150" class="img-responsive" width="150px" height="150px">
 				</div>
 				<!-- /.col -->
-				<div class="col-xs-8">
+				<div class="col-xs-8 col-md-8">
 					<div class="pull-right">
 						<h3>Tracking Transaksi <a href="#!" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a></h3>
 					</div>
@@ -107,30 +107,37 @@
 							<div class="connecting-line"></div>
 							<ul class="nav nav-tabs" role="tablist">
 								<li role="presentation" class="active">
-									<a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Step 1">
+									<a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="Pembelian Bahan Baku">
 										<span class="round-tab">
-											<i class="glyphicon glyphicon-folder-open"></i>
+											<i class="fa fa-cubes"></i>
 										</span>
 									</a>
 								</li>
 								<li role="presentation" class="disabled">
-									<a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Step 2">
+									<a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="Cetak Kemasan">
 										<span class="round-tab">
-											<i class="glyphicon glyphicon-pencil"></i>
+											<i class="fa fa-print"></i>
 										</span>
 									</a>
 								</li>
 								<li role="presentation" class="disabled">
-									<a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Step 3">
+									<a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="Produksi">
 										<span class="round-tab">
-											<i class="glyphicon glyphicon-picture"></i>
+											<i class="fa fa-gears"></i>
 										</span>
 									</a>
 								</li>
 								<li role="presentation" class="disabled">
-									<a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
+									<a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Quality Control">
 										<span class="round-tab">
-											<i class="glyphicon glyphicon-ok"></i>
+											<i class="fa fa-search"></i>
+										</span>
+									</a>
+								</li>
+								<li role="presentation" class="disabled">
+									<a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Finishing">
+										<span class="round-tab">
+											<i class="fa fa-check"></i>
 										</span>
 									</a>
 								</li>

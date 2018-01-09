@@ -30,6 +30,20 @@
 										<a href="{{route('admin.transaksiDetailView', 1)}}" class="btn btn-info"><i class="fa fa-eye"></i> Lihat</a>
 									</td>
 								</tr>
+								<tr>
+									<td>2</td>
+									<td>skdasdasd</td>
+									<td>
+										<a href="{{route('admin.transaksiDetailView', 1)}}" class="btn btn-info"><i class="fa fa-eye"></i> Lihat</a>
+									</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>skdasdasd</td>
+									<td>
+										<a href="{{route('admin.transaksiDetailView', 1)}}" class="btn btn-info"><i class="fa fa-eye"></i> Lihat</a>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
