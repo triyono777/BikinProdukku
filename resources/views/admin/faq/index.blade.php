@@ -50,6 +50,35 @@
 		</div>
 	</div>
 </div>
+
+{{-- modal edit --}}
+<div class="modal fade" id="modal-edit">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Edit</h4>
+			</div>
+			<div class="modal-body">
+				<form id="frm-edit" method="post">
+					<div class="form-group">
+						<label>Tanggal</label>
+						<input type="text" name="tanggal" id="tanggal" class="form-control datepicker">
+					</div>
+					<div class="form-group">
+						<label>Question</label>
+						<input type="text" name="question" id="question" class="form-control">
+						<input type="hidden" name="id" id="id" class="form-control">
+					</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary">Save changes</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 @endsection
 @section('customJs')
 	<script type="text/javascript">
@@ -69,6 +98,7 @@
 		$('#frm-tambah').on('submit', function(e) {
 			e.preventDefault();
 			const data = $(this).serialize();
+
 			$.post('{{route('admin.faqPost')}}', data, function(data) {
 				$('#frm-tambah')[0].reset();
 				 $('#datatables').DataTable().ajax.reload();
@@ -78,12 +108,12 @@
 
 		$('#datatables').on('click', '.edit', function() {
 			const id = $(this).data('id');
-			const nama_satuan = $(this).data('nama');
-			const berat = $(this).data('berat');
+			const question = $(this).data('question');
+			const tanggal = $(this).data('tanggal');
 
 			$('#modal-edit').find('#id').val(id);
-			$('#modal-edit').find('#nama_satuan').val(nama_satuan);
-			$('#modal-edit').find('#berat').val(berat);
+			$('#modal-edit').find('#question').val(question);
+			$('#modal-edit').find('#tanggal').val(tanggal);
 		});
 
 		$('#frm-edit').on('submit', function(e) {

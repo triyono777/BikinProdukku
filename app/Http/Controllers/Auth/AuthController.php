@@ -25,7 +25,7 @@ class AuthController extends Controller
     				'password' => $request['password']
     			];
 
-    	if (auth()->guard('admin')->attempt($data)) {
+    	if (Auth::guard('admin')->attempt($data)) {
     		return redirect()->route('admin.landingPageView');
     	}
 
@@ -34,7 +34,6 @@ class AuthController extends Controller
 
     public function logout() {
     	Session::flush();
-        Auth::guard('admin')->logout();
     	return redirect()->route('admin.loginView');
     }
 }

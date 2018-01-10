@@ -11,6 +11,6 @@ class Faq extends Model
     protected $guarded = ['id_faq'];
 
     public function user() {
-    	return $this->belongsTo('App\Models\User\User', 'id_user', 'id_user');
+    	return $this->belongsTo('App\Models\Pengguna\Pengguna', 'id_user', 'id_user');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Auth;
 
 class Admin
 {
@@ -11,14 +12,16 @@ class Admin
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
+     * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $guard = 'admin')
     {
-        if (auth()->guard('admin')->check()) {
+        if (Auth::guard($guard)->check()) {
             return $next($request);
         }
 
-        return redirect()->route('admin.loginView');
+        return redirect()->route('admin.loginView')->with('danger', 'Login Gagal !');
+
     }
 }

@@ -9,4 +9,6 @@ class Banner extends Model
     protected $table = 'banner';
 
     protected $guarded = ['id_banner'];
+
+    protected $primaryKey = 'id_banner';
 }

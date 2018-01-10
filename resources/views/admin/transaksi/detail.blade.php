@@ -102,6 +102,7 @@
 					<div class="pull-right">
 						<h3>Tracking Transaksi <a href="#!" class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></a></h3>
 					</div>
+					<div class="clearfix"></div>
 					<div class="wizard">
 						<div class="wizard-inner">
 							<div class="connecting-line"></div>

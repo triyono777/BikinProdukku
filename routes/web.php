@@ -2,12 +2,12 @@
 
 // Admin
 // Auth Login
-Route::get('/login', 'Auth\AuthController@loginView')->name('admin.loginView');
-Route::post('/login', 'Auth\AuthController@loginPost')->name('admin.loginPost');
+Route::get('/admin/login', 'Auth\AuthController@loginView')->name('admin.loginView');
+Route::post('/admin/login', 'Auth\AuthController@loginPost')->name('admin.loginPost');
 
-Route::get('/logout', 'Auth\AuthController@logout')->name('admin.logout');
+Route::get('/admin/logout', 'Auth\AuthController@logout')->name('admin.logout');
 
-// Route::group(['middleware' => 'admin'], function() {
+Route::group(['middleware' => 'admins'], function() {
 	Route::group(['prefix' => 'admin'], function() {
 	// Admin Landing Page
 	Route::get('/', 'Admin\AdminController@landingPageView')->name('admin.landingPageView');
@@ -92,20 +92,41 @@ Route::get('/logout', 'Auth\AuthController@logout')->name('admin.logout');
 
 	// Tentang
 	Route::get('/setting-website/tentang', 'Tentang\TentangController@tentangView')->name('admin.tentangView');
+	Route::post('/setting-website/tentang', 'Tentang\TentangController@tentangPost')->name('admin.tentangPost');
 
 	// Testimonial
 	Route::get('/setting-website/testimonial', 'Testimonial\TestimonialController@testimonialView')->name('admin.testimonialView');
+	Route::get('/setting-website/testimonial/data', 'Testimonial\TestimonialController@testimonialData')->name('admin.testimonialData');
+	Route::post('/setting-website/testimonial/store', 'Testimonial\TestimonialController@testimonialPost')->name('admin.testimonialPost');
+	Route::post('/setting-website/testimonial/update', 'Testimonial\TestimonialController@testimonialUpdate')->name('admin.testimonialUpdate');
+	Route::post('/setting-website/testimonial/delete', 'Testimonial\TestimonialController@testimonialDelete')->name('admin.testimonialDelete');
 
 	// Banner
 	Route::get('/setting-website/banner', 'Banner\BannerController@bannerView')->name('admin.bannerView');
+	Route::get('/setting-website/banner/data', 'Banner\BannerController@bannerData')->name('admin.bannerData');
+	Route::post('/setting-website/banner/store', 'Banner\BannerController@bannerPost')->name('admin.bannerPost');
+	Route::post('/setting-website/banner/update', 'Banner\BannerController@bannerUpdate')->name('admin.bannerUpdate');
+	Route::post('/setting-website/banner/delete', 'Banner\BannerController@bannerDelete')->name('admin.bannerDelete');
 
 	// kontak
 	Route::get('/setting-website/kontak', 'Kontak\KontakController@kontakView')->name('admin.kontakView');
+	Route::get('/setting-website/kontak/data', 'Kontak\KontakController@kontakData')->name('admin.kontakData');
+	Route::post('/setting-website/kontak/store', 'Kontak\KontakController@kontakPost')->name('admin.kontakPost');
+	Route::post('/setting-website/kontak/update', 'Kontak\KontakController@kontakUpdate')->name('admin.kontakUpdate');
+	Route::post('/setting-website/kontak/delete', 'Kontak\KontakController@kontakDelete')->name('admin.kontakDelete');
 
 	// lihat pasar
 	Route::get('/lihat-pasar', 'LihatPasar\LihatPasarController@lihatPasarView')->name('admin.lihatPasarView');
+	Route::get('/lihat-pasar/data', 'LihatPasar\LihatPasarController@lihatPasarData')->name('admin.lihatPasarData');
+	Route::post('/lihat-pasar/store', 'LihatPasar\LihatPasarController@lihatPasarPost')->name('admin.lihatPasarPost');
+	Route::post('/lihat-pasar/update', 'LihatPasar\LihatPasarController@lihatPasarUpdate')->name('admin.lihatPasarUpdate');
+	Route::post('/lihat-pasar/delete', 'LihatPasar\LihatPasarController@lihatPasarDelete')->name('admin.lihatPasarDelete');
 
 	// dialog proses
 	Route::get('/dialog-proses', 'DialogProses\DialogProsesController@dialogProsesView')->name('admin.dialogProsesView');
+	Route::get('/dialog-proses/data', 'DialogProses\DialogProsesController@dialogProsesData')->name('admin.dialogProsesData');
+	Route::post('/dialog-proses/store', 'DialogProses\DialogProsesController@dialogProsesPost')->name('admin.dialogProsesPost');
+	Route::post('/dialog-proses/update', 'DialogProses\DialogProsesController@dialogProsesUpdate')->name('admin.dialogProsesUpdate');
+	Route::post('/dialog-proses/delete', 'DialogProses\DialogProsesController@dialogProsesDelete')->name('admin.dialogProsesDelete');
 });
-// });
+});

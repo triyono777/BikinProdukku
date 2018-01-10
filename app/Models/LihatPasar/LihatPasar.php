@@ -9,4 +9,6 @@ class LihatPasar extends Model
     protected $table = 'lihat_pasar';
 
     protected $guarded = ['id_pasar'];
+
+    protected $primaryKey = 'id_pasar';
 }

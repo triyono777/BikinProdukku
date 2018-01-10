@@ -20,16 +20,22 @@ class FaqController extends Controller
 
     	$datatables = DataTables::of($faq)
     		->editColumn('tanggal', function($data) {
-    			return date('d-M-Y', strtotime($data['tanggal']));
+    			return date('d-m-Y', strtotime($data['tanggal']));
     		})
     		->editColumn('id_user', function($data) {
     			return $data['user']['nama'];
     		})
     		->addColumn('action', function($data) {
 	            return '
-	            	<a href='.route('admin.answerView', 1).'" class="btn btn-info"><i class=" fa fa-eye"></i></a>
-					<a href="#!" class="btn btn-warning"><i class=" fa fa-edit"></i></a>
-					<a href="#!" class="btn btn-danger"><i class=" fa fa-trash"></i></a>';
+	            	<a href="'.route('admin.answerView', $data['id_faq']).'" class="btn btn-info"><i class=" fa fa-eye"></i></a>
+					<a href="#modal-edit" data-toggle="modal" class="btn btn-warning edit"
+					data-id="'.$data['id_faq'].'"
+					data-question="'.$data['question'].'"
+					data-tanggal="'.date('d/m/Y', strtotime($data['tanggal'])).'"
+					><i class="fa fa-edit"></i></a>
+					<a href="#!" class="btn btn-danger delete"
+					data-id="'.$data['id_faq'].'"
+					><i class=" fa fa-trash"></i></a>';
 	        })
 	        ->addIndexColumn();
 
@@ -38,23 +44,24 @@ class FaqController extends Controller
 
     public function FaqPost(Request $request) {
     	$faq = Faq::create([
-    		'nama_satuan' => $request['nama_satuan'],
-    		'berat' => $request['berat'],
+    		'id_user' => $request['id_user'],
+    		'question' => $request['question'],
+    		'tanggal' => date('Y-m-d', strtotime($request['tanggal'])),
     	]);
 
     	return response()->json($faq);
     }
 
     public function FaqUpdate(Request $request) {
-    	$faq = Faq::where('id_satuan', $request['id'])->update([
-    		'nama_satuan' => $request['nama_satuan'],
-    		'berat' => $request['berat'],
+    	$faq = Faq::where('id_faq', $request['id'])->update([
+    		'question' => $request['question'],
+    		'tanggal' => date('Y-m-d', strtotime($request['tanggal'])),
     	]);
     	return response()->json($faq);
     }
 
     public function FaqDelete(Request $request) {
-    	$faq = Faq::where('id_satuan', $request['id'])->delete();
+    	$faq = Faq::where('id_faq', $request['id'])->delete();
     	return response()->json($faq);
     }
 }
