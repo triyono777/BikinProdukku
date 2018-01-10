@@ -7,7 +7,7 @@ Route::post('/admin/login', 'Auth\AuthController@loginPost')->name('admin.loginP
 
 Route::get('/admin/logout', 'Auth\AuthController@logout')->name('admin.logout');
 
-Route::group(['middleware' => 'admins'], function() {
+Route::group(['middleware' => 'admin'], function() {
 	Route::group(['prefix' => 'admin'], function() {
 	// Admin Landing Page
 	Route::get('/', 'Admin\AdminController@landingPageView')->name('admin.landingPageView');
