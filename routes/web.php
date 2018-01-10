@@ -14,7 +14,14 @@ Route::group(['middleware' => 'admin'], function() {
 
 	// Transaksi
 	Route::get('/transaksi', 'Transaksi\TransaksiController@transaksiView')->name('admin.transaksiView');
+	Route::get('/transaksi/data', 'Transaksi\TransaksiController@transaksiData')->name('admin.transaksiData');
+	Route::post('/transaksi/update', 'Transaksi\TransaksiController@transaksiUpdate')->name('admin.transaksiUpdate');
+	Route::post('/transaksi/delete', 'Transaksi\TransaksiController@transaksiDelete')->name('admin.transaksiDelete');
+
+	// transaksi detail
 	Route::get('/transaksi/detail/{id}', 'Transaksi\TransaksiController@transaksiDetailView')->name('admin.transaksiDetailView');
+
+	// sub transaksi detail
 	Route::get('/transaksi/detail/{id}/sub-detail/{subId}', 'Transaksi\TransaksiController@transaksiSubDetailView')->name('admin.transaksiSubDetailView');
 
 	//Pengguna
