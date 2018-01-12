@@ -15,6 +15,7 @@ class FaqController extends Controller
     	return view('admin.faq.index', compact('user'));
     }
 
+    // CRUD FAQ
     public function FaqData() {
     	$faq = Faq::with('user')->get()->toArray();
 

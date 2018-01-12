@@ -10,18 +10,18 @@
 		</div>
 		<div class="box-body">
 			<div class="col-md-6 col-xs-12">
-					<h3><b>#INV323434</b></h3>
-					<h3>Nama Produkku</h3>
+					<h3><b>#{{$kode_invoice}}</b></h3>
+					<h3>{{$detailTransaksi['nama_produk']}}</h3>
 			</div>
 			<div class="col-md-6 col-xs-12">
 				<span class="pull-right">
-					<h3>Sub Total : 30.000</h3>
+					<h3>Sub Total : {{number_format($detailTransaksi['subtotal'])}}</h3>
 				</span>
 			</div>
 
 			<div class="col-md-12 col-xs-12">
 				<div class="table-responsive">
-					<table class="table table-bordered table-hover">
+					<table id="datatables" class="table table-bordered table-hover">
 						<thead>
 							<tr>
 								<th>No</th>
@@ -31,12 +31,14 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>sadasdas</td>
-								<td>332</td>
-								<td>12321</td>
-							</tr>
+							@foreach($detailTransaksi['sub_detail_transaksi'] as $key => $value)
+								<tr>
+									<td>{{++$key}}</td>
+									<td>{{$value['nama_bahan']}}</td>
+									<td>{{$value['jumlah']}}</td>
+									<td>{{$value['subtotal']}}</td>
+								</tr>
+							@endforeach
 						</tbody>
 					</table>
 				</div>

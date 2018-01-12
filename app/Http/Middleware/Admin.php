@@ -21,7 +21,7 @@ class Admin
             return $next($request);
         }
 
-        return redirect()->route('admin.loginView')->with('danger', 'Login Gagal !');
+        return redirect()->route('admin.loginView')->with('danger', 'Anda Harus Login Dahulu !');
 
     }
 }

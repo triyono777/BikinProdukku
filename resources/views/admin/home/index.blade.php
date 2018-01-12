@@ -14,7 +14,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="table-responsive">
-						<table class="table table-bordered table-hover">
+						<table id="datatables" class="table table-bordered table-hover">
 							<thead>
 								<tr>
 									<th>No</th>
@@ -22,29 +22,7 @@
 									<th>Action</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr>
-									<td>1</td>
-									<td>skdasdasd</td>
-									<td>
-										<a href="{{route('admin.transaksiDetailView', 1)}}" class="btn btn-info"><i class="fa fa-eye"></i> Lihat</a>
-									</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>skdasdasd</td>
-									<td>
-										<a href="{{route('admin.transaksiDetailView', 1)}}" class="btn btn-info"><i class="fa fa-eye"></i> Lihat</a>
-									</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>skdasdasd</td>
-									<td>
-										<a href="{{route('admin.transaksiDetailView', 1)}}" class="btn btn-info"><i class="fa fa-eye"></i> Lihat</a>
-									</td>
-								</tr>
-							</tbody>
+
 						</table>
 					</div>
 				</div>
@@ -52,4 +30,18 @@
 		</div>
 	</div>
 </div>
+@endsection
+@section('customJs')
+<script type="text/javascript">
+	$('#datatables').DataTable({
+	        processing: true,
+	        serverSide: true,
+	        ajax: '{{route('admin.landingPageData')}}',
+	        columns: [
+	            {data: 'DT_Row_Index', orderable: false, searchable: false},
+	            {data: 'notifikasi'},
+	            {data: 'action'},
+	        ]
+	 });
+</script>
 @endsection

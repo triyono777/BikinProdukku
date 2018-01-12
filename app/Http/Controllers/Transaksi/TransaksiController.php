@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Transaksi;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tracking\Tracking;
+use App\Models\Transaksi\DetailTransaksi;
+use App\Models\Transaksi\SubDetailTransaksi;
 use App\Models\Transaksi\Transaksi;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -14,11 +17,18 @@ class TransaksiController extends Controller
     }
 
     public function transaksiDetailView($id) {
-    	return view('admin.transaksi.detail');
+        $transaksi = Transaksi::with(['tracking', 'detailTransaksi'])->where('kode_invoice', $id)->first()->toArray();
+        $kode_invoice = $id;
+    	return view('admin.transaksi.detail', compact(['transaksi', 'kode_invoice']));
     }
 
     public function transaksiSubDetailView($id, $subId) {
-    	return view('admin.transaksi.sub-detail');
+        // $subDetailTransaksi = SubDetailTransaksi::with('detailTransaksi')->where('kode_detail', $subId)->get()->toArray();
+        $detailTransaksi = DetailTransaksi::with('subDetailTransaksi')->where('kode_detail', $subId)->first()->toArray();
+        $kode_invoice = $id;
+        // $nama_produk = $subDetailTransaksi[0]['detail_transaksi']['nama_produk'];
+        // dd($detailTransaksi);
+    	return view('admin.transaksi.sub-detail', compact(['detailTransaksi', 'kode_invoice']));
     }
 
     // transaksi CRUD
@@ -62,5 +72,26 @@ class TransaksiController extends Controller
     public function transaksiDelete(Request $request) {
     	$transaksi = Transaksi::where('kode_invoice', $request['id'])->delete();
     	return response()->json($transaksi);
+    }
+
+    public function transaksiStatusUpdate(Request $request, $id) {
+        $transaksi = Transaksi::where('kode_invoice', $id)->first();
+        $transaksi->status = $request['status'];
+        $transaksi->save();
+
+        return response()->json($request['status']);
+    }
+
+    public function transaksiTrackingUpdate(Request $request, $id) {
+        $transaksi = Tracking::where('kode_invoice', $id)->first();
+        $transaksi->pembelian_bahan_baku = $request['pembelian_bahan_baku'] == 1 ? 1 : 0;
+        $transaksi->cetak_kemasan = $request['cetak_kemasan'] == 1 ? 1 : 0;
+        $transaksi->produksi = $request['produksi'] == 1 ? 1 : 0;
+        $transaksi->qc = $request['qc'] == 1 ? 1 : 0;
+        $transaksi->finishing = $request['finishing'] == 1 ? 1 : 0;
+        $transaksi->pengiriman = $request['pengiriman'] == 1 ? 1 : 0;
+        $transaksi->save();
+
+        return response()->json($transaksi);
     }
 }

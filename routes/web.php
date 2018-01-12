@@ -11,6 +11,7 @@ Route::group(['middleware' => 'admin'], function() {
 	Route::group(['prefix' => 'admin'], function() {
 	// Admin Landing Page
 	Route::get('/', 'Admin\AdminController@landingPageView')->name('admin.landingPageView');
+	Route::get('/transaksi-data', 'Admin\AdminController@transaksiData')->name('admin.landingPageData');
 
 	// Transaksi
 	Route::get('/transaksi', 'Transaksi\TransaksiController@transaksiView')->name('admin.transaksiView');
@@ -20,6 +21,8 @@ Route::group(['middleware' => 'admin'], function() {
 
 	// transaksi detail
 	Route::get('/transaksi/detail/{id}', 'Transaksi\TransaksiController@transaksiDetailView')->name('admin.transaksiDetailView');
+	Route::post('/transaksi/detail/{id}/statusUpdate', 'Transaksi\TransaksiController@transaksiStatusUpdate')->name('admin.transaksiStatusUpdate');
+	Route::post('/transaksi/detail/{id}/trackingUpdate', 'Transaksi\TransaksiController@transaksiTrackingUpdate')->name('admin.transaksiTrackingUpdate');
 
 	// sub transaksi detail
 	Route::get('/transaksi/detail/{id}/sub-detail/{subId}', 'Transaksi\TransaksiController@transaksiSubDetailView')->name('admin.transaksiSubDetailView');
@@ -95,7 +98,11 @@ Route::group(['middleware' => 'admin'], function() {
 	Route::post('/setting-website/faq/delete', 'Faq\FaqController@faqDelete')->name('admin.faqDelete');
 
 	// Answer
-	Route::get('/setting-website/faq/{id_faq}', 'Answer\AnswerController@answerView')->name('admin.answerView');
+	Route::get('/setting-website/faq/{id_faq}/answer', 'Answer\AnswerController@answerView')->name('admin.answerView');
+	Route::get('/setting-website/faq/{id_faq}/answer/data', 'Answer\AnswerController@answerData')->name('admin.answerData');
+	Route::post('/setting-website/faq/{id_faq}/answer/store', 'Answer\AnswerController@answerPost')->name('admin.answerPost');
+	Route::post('/setting-website/faq/{id_faq}/answer/update', 'Answer\AnswerController@answerUpdate')->name('admin.answerUpdate');
+	Route::post('/setting-website/faq/{id_faq}/answer/delete', 'Answer\AnswerController@answerDelete')->name('admin.answerDelete');
 
 	// Tentang
 	Route::get('/setting-website/tentang', 'Tentang\TentangController@tentangView')->name('admin.tentangView');
@@ -135,5 +142,5 @@ Route::group(['middleware' => 'admin'], function() {
 	Route::post('/dialog-proses/store', 'DialogProses\DialogProsesController@dialogProsesPost')->name('admin.dialogProsesPost');
 	Route::post('/dialog-proses/update', 'DialogProses\DialogProsesController@dialogProsesUpdate')->name('admin.dialogProsesUpdate');
 	Route::post('/dialog-proses/delete', 'DialogProses\DialogProsesController@dialogProsesDelete')->name('admin.dialogProsesDelete');
-});
+	});
 });
