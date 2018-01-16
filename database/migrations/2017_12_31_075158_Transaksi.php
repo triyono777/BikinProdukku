@@ -16,7 +16,7 @@ class Transaksi extends Migration
         Schema::create('transaksi', function (Blueprint $table) {
             $table->char('kode_invoice', 13);
             $table->primary('kode_invoice');
-            $table->integer('id_user');
+            $table->string('id_user');
             $table->integer('total');
             $table->boolean('status')->default(false);
             $table->text('gambar_bukti');

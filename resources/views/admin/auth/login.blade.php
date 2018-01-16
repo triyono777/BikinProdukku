@@ -40,6 +40,8 @@
       <div class="form-group has-feedback">
         <input type="text" class="form-control" name="username" placeholder="Username">
         <span class="fa fa-user form-control-feedback"></span>
+        <input type="hidden" name="level" value="admin">
+
       </div>
       <div class="form-group has-feedback">
         <input type="password" class="form-control" name="password" placeholder="Password">

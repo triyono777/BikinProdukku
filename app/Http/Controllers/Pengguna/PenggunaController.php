@@ -10,4 +10,5 @@ class PenggunaController extends Controller
     public function penggunaView() {
     	return view('admin.pengguna.index');
     }
+
 }

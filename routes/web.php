@@ -1,9 +1,15 @@
 <?php
 
+// Home
+Route::get('/', 'Home\HomeController@index')->name('home');
+
+
+
 // Admin
 // Auth Login
 Route::get('/admin/login', 'Auth\AuthController@loginView')->name('admin.loginView');
 Route::post('/admin/login', 'Auth\AuthController@loginPost')->name('admin.loginPost');
+Route::post('/register', 'Auth\AuthController@registerPost')->name('admin.registerPost');
 
 Route::get('/admin/logout', 'Auth\AuthController@logout')->name('admin.logout');
 
@@ -27,8 +33,8 @@ Route::group(['middleware' => 'admin'], function() {
 	// sub transaksi detail
 	Route::get('/transaksi/detail/{id}/sub-detail/{subId}', 'Transaksi\TransaksiController@transaksiSubDetailView')->name('admin.transaksiSubDetailView');
 
-	//Pengguna
-	Route::get('/pengguna', 'Pengguna\PenggunaController@penggunaView')->name('admin.penggunaView');
+	// //Pengguna
+	// Route::get('/pengguna', 'Pengguna\PenggunaController@penggunaView')->name('admin.penggunaView');
 
 	// Satuan
 	Route::get('/satuan', 'Satuan\SatuanController@satuanView')->name('admin.satuanView');
@@ -143,4 +149,11 @@ Route::group(['middleware' => 'admin'], function() {
 	Route::post('/dialog-proses/update', 'DialogProses\DialogProsesController@dialogProsesUpdate')->name('admin.dialogProsesUpdate');
 	Route::post('/dialog-proses/delete', 'DialogProses\DialogProsesController@dialogProsesDelete')->name('admin.dialogProsesDelete');
 	});
+});
+
+
+Route::group(['prefix' => 'akun', 'middleware' => 'pengguna'], function() {
+	// pengguna login
+	Route::post('/akun/login', 'Auth\AuthController@loginPost')->name('admin.penggunaLogin');
+	Route::get('/akun/{username}&id={id}', 'Pengguna\PenggunaController@penggunaView')->name('admin.penggunaView');
 });

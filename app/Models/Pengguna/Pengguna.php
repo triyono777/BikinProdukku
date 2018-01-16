@@ -2,11 +2,18 @@
 
 namespace App\Models\Pengguna;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Pengguna extends Model
+class Pengguna extends Authenticatable
 {
+	use Notifiable;
+
     protected $table = 'pengguna';
 
-    protected $guarded = ['id_user'];
+    protected $guarded = [''];
+
+    public function transaksi() {
+    	return $this->hasMany('App\Transaksi\Transaksi', 'id_user', 'id_user');
+    }
 }

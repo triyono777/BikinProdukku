@@ -79,8 +79,8 @@ class AdminSeeder extends Seeder
             $pengguna->username = $faker->username;
             $pengguna->email = $faker->email;
             $pengguna->whatsapp = $faker->phoneNumber;
-            $pengguna->password = bcrypt($faker->password);
-            $pengguna->jabatan = 'Jabatan ' . $key;
+            $pengguna->password = bcrypt('pengguna');
+            $pengguna->status = 'Jabatan ' . $key;
             $pengguna->img = $faker->imageUrl;
 
 
