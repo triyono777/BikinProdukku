@@ -20,8 +20,8 @@
 							<label for="">Kategori Produk</label>
 							<select class="form-control select2" name="id_kategori" style="width: 100% !important">
 								<option disabled selected>-Pilih-</option>
-								@foreach($kategori as $data)
-								<option value="{{$data['id_kategori']}}">{{$data['nama_kategori']}}</option>
+								@foreach($subKategori as $data)
+								<option value="{{$data['id_subkategori']}}">{{$data['nama_subkategori']}}</option>
 								@endforeach
 							</select>
 						</div>
@@ -87,8 +87,8 @@
 						<label for="">Kategori Produk</label>
 						<select class="form-control select2" name="id_kategori" id="id_kategori" style="width: 100% !important">
 							<option disabled selected>-Pilih-</option>
-							@foreach($kategori as $data)
-							<option value="{{$data['id_kategori']}}">{{$data['nama_kategori']}}</option>
+							@foreach($subKategori as $data)
+							<option value="{{$data['id_subkategori']}}">{{$data['nama_subkategori']}}</option>
 							@endforeach
 						</select>
 					</div>

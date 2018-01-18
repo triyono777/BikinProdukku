@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Produk;
 use App\Helpers\AutoNumber;
 use App\Http\Controllers\Controller;
 use App\Models\Kategori\Kategori;
+use App\Models\Kategori\SubKategori;
 use App\Models\Produk\GambarProduk;
 use App\Models\Produk\Produk;
 use Illuminate\Http\Request;
@@ -13,8 +14,8 @@ use Yajra\DataTables\Facades\DataTables;
 class ProdukController extends Controller
 {
     public function produkView() {
-        $kategori = Kategori::get()->toArray();
-    	return view('admin.produk.index', compact('kategori'));
+        $subKategori = SubKategori::get()->toArray();
+    	return view('admin.produk.index', compact('subKategori'));
     }
 
     public function produkDetailView($id) {

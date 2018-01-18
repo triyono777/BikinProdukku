@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\Admin;
 use App\Models\Pengguna\Pengguna;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 use Session;
 
 class AuthController extends Controller
@@ -29,14 +29,18 @@ class AuthController extends Controller
 
     	if ($request['level'] == 'admin') {
             if (auth()->guard('admin')->attempt($data)) {
-                return redirect()->route('admin.landingPage');
+                return redirect()->route('admin.landingPageView');
             }
             return redirect()->back()->with('danger', 'Maaf Username/Password Salah !');
 
         }elseif($request['level'] == 'pengguna') {
-            if (auth()->guard('pengguna')->attempt($data)) {
-                return redirect()->route('admin.landingPengguna');
+            if (Auth::guard('pengguna')->attempt($data)) {
+                $pengguna = Pengguna::where('username', $data['username'])->first();
+                $username = $pengguna['username'];
+                $id = $pengguna['id_user'];
+                return redirect()->route('akun.penggunaView', [$username, $id]);
             }
+            return redirect('/');
         }else {
     	   return redirect()->back()->with('danger', 'Maaf Username/Password Salah !');
         }
@@ -55,19 +59,24 @@ class AuthController extends Controller
             'id_user' => AutoNumber::autoNumberPengguna('pengguna', 'id_user', 'P'),
             'nama' => $request['nama'],
             'username' => $request['username'],
-            'password' => $request['password'],
+            'password' => bcrypt($request['password']),
             'email' => $request['email'],
             'whatsapp' => $request['whatsapp'],
         ]);
 
-        if ($pengguna) {
-            auth()->guard('pengguna')->attempt(['username' => $pengguna['username'], 'password' => $pengguna['password']]);
-            return redirect()->route('admin.penggunaView', [$pengguna['username'], $pengguna['id_user']]);
-        }
+        return redirect()->back()->with('login', 'Selamat Akun Anda Sudah jadi');
     }
 
     public function logout() {
-    	Session::flush();
-    	return redirect()->route('admin.loginView');
+    	if (auth()->guard('admin')->check()) {
+            Session::flush();
+            return redirect()->route('admin.loginView');
+        }else {
+            Session::flush();
+            auth()->guard('pengguna')->logout();
+            return redirect('/');
+        }
     }
+
+
 }

@@ -21,8 +21,8 @@ class Pengguna extends Migration
             $table->text('password');
             $table->text('email');
             $table->text('whatsapp');
-            $table->string('status', 15);
-            $table->text('img');
+            $table->string('status', 15)->nullable();
+            $table->text('img')->nullable();
             $table->timestamps();
         });
     }

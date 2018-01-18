@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
 class Pengguna
 {
@@ -13,12 +14,12 @@ class Pengguna
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $guard = 'pengguna')
     {
-        if (auth()->guard('pegguna')->check()) {
+        if (Auth::guard('pengguna')->check()) {
             return $next($request);
         }
 
-        return redirect()->route('/');
+        return redirect('/');
     }
 }

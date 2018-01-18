@@ -13,7 +13,19 @@ class Pengguna extends Authenticatable
 
     protected $guarded = [''];
 
+    protected $primaryKey = 'id_user';
+
+    public $incrementing = false;
+
     public function transaksi() {
-    	return $this->hasMany('App\Transaksi\Transaksi', 'id_user', 'id_user');
+    	return $this->hasMany('App\Models\Transaksi\Transaksi', 'id_user', 'id_user');
+    }
+
+    public function username() {
+    	return $this->username;
+    }
+
+    public function id_user() {
+    	return $this->id_user;
     }
 }

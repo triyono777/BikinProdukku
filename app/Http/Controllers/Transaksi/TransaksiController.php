@@ -40,7 +40,7 @@ class TransaksiController extends Controller
     			return $data['pengguna']['nama'];
     		})
     		->editColumn('status', function($data) {
-    			return '<span class="btn btn-xs '.($data['status'] == 1 ? "btn-success" : "btn-danger").'">'.($data['status'] == 1 ? "yes" : "no").'</span>';
+    			return '<span class="btn btn-xs '.($data['status'] == 1 ? "btn-success" : "btn-danger").'">'.($data['status'] == 1 ? "Finished" : "Pending").'</span>';
     		})
     		->addColumn('action', function($data) {
 	            return '

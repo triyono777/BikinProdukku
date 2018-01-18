@@ -41,6 +41,7 @@ class AdminSeeder extends Seeder
 
         $faker = Faker::create();
         foreach (range(1, 10) as $key => $value) {
+            $this->command->info($key);
             $pengguna = new Pengguna;
             $pengguna->id_user =  AutoNumber::autoNumberPengguna('pengguna', 'id_user', 'P');
 
@@ -75,8 +76,8 @@ class AdminSeeder extends Seeder
                     $tracking->qc = 0;
                     $tracking->pengiriman = 0;
 
-            $pengguna->nama = $faker->name;
-            $pengguna->username = $faker->username;
+            $pengguna->nama = $faker->firstName;
+            $pengguna->username = $faker->username(2,10);
             $pengguna->email = $faker->email;
             $pengguna->whatsapp = $faker->phoneNumber;
             $pengguna->password = bcrypt('pengguna');
