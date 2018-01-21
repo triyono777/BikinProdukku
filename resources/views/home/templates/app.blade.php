@@ -193,7 +193,7 @@
 						</div>
 					</div>
 					<div class="col-lg-12 col-xs-12">
-						<h2 style="color: red">Kenapa harus jadi Mitra B-Pro ?</h2>
+						<h2 style="color: red; text-align:center">Kenapa harus jadi Mitra B-Pro ?</h2>
 						<div>
 							<ul>
 								<li>Anda akan menjadi bos untuk brand sendiri</li>
@@ -204,6 +204,117 @@
 								<li>Tanpa resiko</li>
 								<li>Garansi uang kembali</li>
 							</ul>
+							<div class="pull-right">
+								<a href="">Lihat 30 Lainnya </a>
+							</div>
+						</div>
+					</div>
+
+					
+				</div>
+			</div>
+			<div class="row" style='background-color:#c1c1c1'>
+				<div class="col-lg-12 col-xs-12">
+					<h2 style="color: red; text-align:center">Tim B-Pro Siap Membantu Anda !</h2>
+					<p style="text-align:center">Sangat Mudah untuk menggunakan Bikinprodukku.com. Tetapi Jika Memiliki Pertanyaan,tim  </p>
+
+					<div class="row">
+						<div class="container">
+							<div class="col-md-4">
+								<img src="" alt="" class="img-circle img-responsive">
+							</div>
+							<div class="col-md-4">
+								<img src="" alt="" class="img-circle img-responsive">
+							</div>
+							<div class="col-md-4">
+								<img src="" alt="" class="img-circle img-responsive">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<h2 style="text-align:center">Jadilah Bagian Dari Kami</h2>
+					{{--  //gambar  --}}
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2">
+							<img src="" alt="">
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="container">
+							<h2 style="text-align:center">Daftar Sekarang Untuk Menerima Informasi Produk,Pasar,Promosi,Bonus dan Lainnya</h2>
+							<div class="col-md-8 col-md-offset-2">
+								<form action="">
+									<div class="form-group">
+										<input type="text" class="form-control" name="" placeholder="">
+									</div>
+									<div class="form-group">
+										<input type="text" class="form-control" name="" placeholder="">
+									</div>
+									<div class="form-group">
+										<input type="text" class="form-control" name="" placeholder="">
+									</div>
+									<input type="submit" class="btn btn-warning" value="kirim">
+								</form>
+							</div>
+						</div>
+					</div>
+					<div class="pull-right">
+						<button class="btn btn-md btn-danger">Bikin Produkmu Sekarang</button>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="row" style="background-color: #e87874;">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-md-3">
+							<img src="" alt="">
+							Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt numquam iste, suscipit officiis esse blanditiis laudantium, nisi voluptates ab beatae, voluptas quae soluta eaque modi vero quod consectetur asperiores iure?
+						</div>
+						<div class="col-md-3">
+							<h4 style="text-align:center">Tentang Kami</h4>
+							<ul style="list-style:none">
+								<li>> Profil</li>
+								<li>> Kebijakan Privasi</li>
+								<li>> Program Mitra B-Pro</li>
+								<li>> Reseller B-Pro</li>
+							</ul>
+						</div>
+						<div class="col-md-3">
+							<h4 style="text-align:center">Layanan Mitra B-Pro</h4>
+							<ul style="list-style:none">
+								<li>> Jadwal Konsultasi</li>
+								<li>> Kebijakan Privasi</li>
+								<li>> Status Pembayaran</li>
+							</ul>
+						</div>
+						<div class="col-md-3">
+							<h4 style="text-align:center">Jam Layanan</h4>
+							<table align="center">
+								<tr>
+									<td>Jam Buka</td>
+									<td></td>
+									<td>09.00 WIB</td>
+								</tr>
+								<tr>
+									<td>Jam Tutup</td>
+									<td></td>
+									<td>17.00 WIB</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							Jl. Lorem ipsum
+						</div>
+						<div class="col-md-6">
+							
 						</div>
 					</div>
 				</div>
