@@ -15,10 +15,9 @@ class GambarWarna extends Migration
     {
         Schema::create('gambar_warna', function (Blueprint $table) {
             $table->increments('kode_warna', 8);
-            $table->integer('kode_template');
-            $table->text('gambar_template');
+            $table->integer('kode_template')->unsigned();
+            $table->text('gambar_warna');
             $table->text('caption');
-            $table->boolean('sold_out')->default(false);
             $table->timestamps();
         });
     }

@@ -82,14 +82,15 @@ Route::group(['middleware' => 'admin'], function() {
 	Route::post('/produk/detail/{id}/gambar-produk/delete', 'Produk\GambarProdukController@gambarProdukDelete')->name('admin.gambarProdukDelete');
 
 	// Gambar Warna
-	Route::post('/produk/detail/{id}/gambar-produk/{id_gambar}/gambar-warna/post', 'Produk\GambarWarnaController@gambarWarnaPost')->name('admin.gambarWarnaPost');
-	Route::post('/produk/detail/{id}/gambar-produk/{id_gambar}/gambar-warna/update', 'Produk\GambarWarnaController@gambarWarnaUpdate')->name('admin.gambarWarnaUpdate');
-	Route::post('/produk/detail/{id}/gambar-produk/{id_gambar}/gambar-warna/delete', 'Produk\GambarWarnaController@gambarWarnaDelete')->name('admin.gambarWarnaDelete');
+	Route::post('/produk/detail/{id}/gambar-produk/{id_gambar}/gambar-template/detail/{id_gambar_template}/gambar-warna/post', 'Produk\GambarWarnaController@gambarWarnaPost')->name('admin.gambarWarnaPost');
+	Route::post('/produk/detail/{id}/gambar-produk/{id_gambar}/gambar-template/detail/{id_gambar_template}/gambar-warna/update', 'Produk\GambarWarnaController@gambarWarnaUpdate')->name('admin.gambarWarnaUpdate');
+	Route::post('/produk/detail/{id}/gambar-produk/{id_gambar}/gambar-template/detail/{id_gambar_template}/gambar-warna/delete', 'Produk\GambarWarnaController@gambarWarnaDelete')->name('admin.gambarWarnaDelete');
 
 	// Gambar Template
 	Route::post('/produk/detail/{id}/gambar-produk/{id_gambar}/gambar-template/post', 'Produk\GambarTemplateController@gambarTemplatePost')->name('admin.gambarTemplatePost');
 	Route::post('/produk/detail/{id}/gambar-produk/{id_gambar}/gambar-template/update', 'Produk\GambarTemplateController@gambarTemplateUpdate')->name('admin.gambarTemplateUpdate');
 	Route::post('/produk/detail/{id}/gambar-produk/{id_gambar}/gambar-template/delete', 'Produk\GambarTemplateController@gambarTemplateDelete')->name('admin.gambarTemplateDelete');
+	Route::get('/produk/detail/{id}/gambar-produk/{id_gambar}/gambar-template/detail/{id_gambar_template}', 'Produk\GambarTemplateController@gambarTemplateDetail')->name('admin.gambarTemplateDetail');
 
 	// bahan baku
 	Route::get('/produk/detail/{id}/bahan-baku/data', 'Produk\BahanBakuController@bahanBakuData')->name('admin.bahanBakuData');

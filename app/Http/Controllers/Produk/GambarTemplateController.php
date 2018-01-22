@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Produk;
 
 use App\Http\Controllers\Controller;
 use App\Models\Produk\GambarTemplate;
+use App\Models\Produk\GambarWarna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -20,6 +21,7 @@ class GambarTemplateController extends Controller
         $image->encode('jpg', 75);
         $image->save(public_path('upload/gambar-template/' . $newName));
         $gambarTemplate->gambar_template = $newName;
+        $gambarTemplate->harga = $request['harga'];
         $gambarTemplate->sold_out = ($request['sold_out'] == 1 ? 1 : 0);
         $gambarTemplate->caption = $request['caption'];
         $gambarTemplate->save();
@@ -42,6 +44,7 @@ class GambarTemplateController extends Controller
 	        $image->save(public_path('upload/gambar-template/' . $newName));
 	        $gambarTemplate->gambar_template = $newName;
         }
+        $gambarTemplate->harga = $request['harga'];
         $gambarTemplate->sold_out = ($request['sold_out'] == 1 ? 1 : 0);
         $gambarTemplate->caption = $request['caption'];
 
@@ -55,5 +58,10 @@ class GambarTemplateController extends Controller
     	File::delete(public_path('upload/gambar-template/'. $gambarTemplate->gambar_template));
         $gambarTemplate->delete();
         return response()->json($gambarTemplate);
+    }
+
+    public function gambarTemplateDetail($kode_produk, $id_gambar, $id_gambar_template) {
+        $gambarWarna = GambarWarna::where('kode_template', $id_gambar_template)->get()->toArray();
+        return view('admin.produk.gambar-template-detail', compact(['gambarWarna', 'kode_produk', 'id_gambar', 'id_gambar_template']));
     }
 }

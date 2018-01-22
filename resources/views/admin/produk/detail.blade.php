@@ -19,6 +19,10 @@
 							<input type="hidden" name="id" id="id">
 						</div>
 						<div class="form-group">
+							<label for="">Upload Gambar Text</label>
+							<input type="file" name="gambar_text" class="form-control">
+						</div>
+						<div class="form-group">
 							<label for="">Caption</label>
 							<textarea name="caption" class="form-control textarea" rows="3"></textarea>
 						</div>
@@ -115,6 +119,10 @@
 						<input type="file" name="gambar_tampilan" id="gambar_tampilan" class="form-control">
 						<input type="hidden" name="id" id="id">
 					</div>
+					<div class="form-group">
+							<label for="">Upload Gambar Text</label>
+							<input type="file" name="gambar_text" class="form-control">
+						</div>
 					<div class="form-group">
 						<label for="">Caption</label>
 						<textarea name="caption" id="caption" class="form-control textarea" rows="3"></textarea>

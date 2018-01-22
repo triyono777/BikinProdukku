@@ -19,6 +19,7 @@ class GambarTemplate extends Migration
             $table->text('gambar_template');
             $table->text('caption');
             $table->boolean('sold_out');
+            $table->string('harga');
             $table->timestamps();
         });
     }

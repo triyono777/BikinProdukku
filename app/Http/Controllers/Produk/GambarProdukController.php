@@ -25,12 +25,21 @@ class GambarProdukController extends Controller
     public function gambarProdukPost(Request $request, $kode_produk) {
         $gambarProduk = new GambarProduk;
         $gambarProduk->kode_produk = $kode_produk;
+
         $name = $request->file('gambar_tampilan');
-        $newName = time() . '.' . $name->getClientOriginalExtension();
+        $gambar_tampilan = time() . '.' . $name->getClientOriginalExtension();
         $image = Image::make($name);
         $image->encode('jpg', 75);
-        $image->save(public_path('upload/gambar-produk/' . $newName));
-        $gambarProduk->gambar_tampilan = $newName;
+        $image->save(public_path('upload/gambar-produk/' . $gambar_tampilan));
+        $gambarProduk->gambar_tampilan = $gambar_tampilan;
+
+        $name = $request->file('gambar_text');
+        $gambar_text = time() . '.' . $name->getClientOriginalExtension();
+        $image = Image::make($name);
+        $image->encode('jpg', 75);
+        $image->save(public_path('upload/gambar-produk/' . $gambar_text));
+        $gambarProduk->gambar_text = $gambar_text;
+
         $gambarProduk->caption = $request['caption'];
         $gambarProduk->save();
 
@@ -46,11 +55,22 @@ class GambarProdukController extends Controller
         	File::delete(public_path('upload/gambar-produk/'. $gambarProduk->gambar_tampilan));
 
         	$name = $request->file('gambar_tampilan');
-	        $newName = time() . '.' . $name->getClientOriginalExtension();
+	        $gambar_tampilan = time() . '.' . $name->getClientOriginalExtension();
 	        $image = Image::make($name);
 	        $image->encode('jpg', 75);
-	        $image->save(public_path('upload/gambar-produk/' . $newName));
-	        $gambarProduk->gambar_tampilan = $newName;
+	        $image->save(public_path('upload/gambar-produk/' . $gambar_tampilan));
+	        $gambarProduk->gambar_tampilan = $gambar_tampilan;
+        }
+        if ($request['gambar_text']) {
+            // delete file
+            File::delete(public_path('upload/gambar-produk/'. $gambarProduk->gambar_text));
+
+            $name = $request->file('gambar_text');
+            $gambar_text = time() . '.' . $name->getClientOriginalExtension();
+            $image = Image::make($name);
+            $image->encode('jpg', 75);
+            $image->save(public_path('upload/gambar-produk/' . $gambar_text));
+            $gambarProduk->gambar_text = $gambar_text;
         }
         $gambarProduk->caption = $request['caption'];
 

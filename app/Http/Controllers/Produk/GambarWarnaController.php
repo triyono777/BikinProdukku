@@ -11,9 +11,9 @@ use Intervention\Image\Facades\Image;
 class GambarWarnaController extends Controller
 {
  	// Gambar Warna CRUD
- 	public function gambarWarnaPost(Request $request, $kode_produk, $kode_gambar) {
+ 	public function gambarWarnaPost(Request $request, $kode_produk, $kode_gambar, $kode_template) {
         $gambarWarna = new GambarWarna;
-        $gambarWarna->kode_gambar = $kode_gambar;
+        $gambarWarna->kode_template = $kode_template;
         $name = $request->file('gambar_warna');
         $newName = time() . '.' . $name->getClientOriginalExtension();
         $image = Image::make($name);
@@ -27,9 +27,9 @@ class GambarWarnaController extends Controller
 
     }
 
-    public function gambarWarnaUpdate(Request $request, $kode_produk, $id_gambar) {
+    public function gambarWarnaUpdate(Request $request, $kode_produk, $id_gambar, $kode_template) {
         $gambarWarna = GambarWarna::where('kode_warna', $request['id'])->first();
-        $gambarWarna->kode_gambar = $id_gambar;
+        $gambarWarna->kode_template = $kode_template;
         if ($request['gambar_warna']) {
         	// delete file
         	File::delete(public_path('upload/gambar-warna/'. $gambarWarna->gambar_warna));
