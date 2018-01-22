@@ -17,7 +17,7 @@
 							<input type="text" name="nama_produk" class="form-control">
 						</div>
 						<div class="form-group">
-							<label for="">Kategori Produk</label>
+							<label for="">Sub Kategori Produk</label>
 							<select class="form-control select2" name="id_kategori" style="width: 100% !important">
 								<option disabled selected>-Pilih-</option>
 								@foreach($subKategori as $data)
