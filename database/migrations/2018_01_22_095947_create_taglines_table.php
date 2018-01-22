@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class GambarProduk extends Migration
+class CreateTaglinesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class GambarProduk extends Migration
      */
     public function up()
     {
-        Schema::create('gambar_produk', function (Blueprint $table) {
-            $table->increments('kode_gambar', 8);
-            $table->char('kode_produk', 8);
-            $table->text('gambar_tampilan');
-            $table->text('caption');
-            $table->text('gambar_text');
+        Schema::create('taglines', function (Blueprint $table) {
+            $table->increments('id_tagline');
+            $table->string('nama');
+            $table->text('isi');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class GambarProduk extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gambar_produk');
+        Schema::dropIfExists('taglines');
     }
 }
