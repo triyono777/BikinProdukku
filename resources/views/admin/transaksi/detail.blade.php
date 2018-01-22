@@ -26,7 +26,7 @@
 			<!-- /.col -->
 			<div class="col-sm-6 invoice-col">
 				<div class="pull-right">
-					<span class="badge" id="badge-status">{{$transaksi['status'] == 0 ? 'Pending' : 'Success'}}</span>
+					<span class="badge" id="badge-status">{{$transaksi['status'] == 0 ? 'Pending' : 'Finished'}}</span>
 					<a href="#modal-status" data-status="{{$transaksi['status']}}" data-toggle="modal" class="btn btn-warning btn-xs btn-status"><i class="fa fa-edit"></i></a>
 				</div>
 			</div>
@@ -50,7 +50,7 @@
 							@foreach($transaksi['detail_transaksi'] as $key => $value)
 							<tr>
 								<td>{{++$key}}</td>
-								<td><img src="{{$value['gambar_produk']}}" class="img-thumbnail" width="100" height="80"></td>
+								<td><img src="{{URL::to('upload/bukti_pembayaran/'.$value['gambar_produk'])}}" class="img-thumbnail" width="100" height="80"></td>
 								<td>{{$value['nama_produk']}}</td>
 								<td>{{number_format($value['subtotal'])}}</td>
 								<td>
@@ -70,19 +70,19 @@
 				<!-- accepted payments column -->
 				<div class="col-xs-4">
 					<h3>Bukti Pembayaran</h3>
-					<img src="http://via.placeholder.com/150x150" class="img-responsive" width="150px" height="150px">
+					<img src="{{URL::to('upload/bukti_pembayaran/'.$value['gambar_produk'])}}" class="img-responsive" width="150px" height="150px">
 				</div>
 				<!-- /.col -->
 				<div class="col-xs-8 col-md-8">
 					<div class="pull-right">
 						<h3>Tracking Transaksi
 						<a href="#modal-tracking" data-toggle="modal" class="btn btn-xs btn-warning btn-tracking"
-						data-pembelian_bahan_baku="{{$transaksi['tracking']['pembelian_bahan_baku']}}"
-						data-cetak_kemasan="{{$transaksi['tracking']['cetak_kemasan']}}"
-						data-produksi="{{$transaksi['tracking']['produksi']}}"
-						data-qc="{{$transaksi['tracking']['qc']}}"
-						data-finishing="{{$transaksi['tracking']['finishing']}}"
-						data-pengiriman="{{$transaksi['tracking']['pengiriman']}}"
+							data-pembelian_bahan_baku="{{$transaksi['tracking']['pembelian_bahan_baku']}}"
+							data-cetak_kemasan="{{$transaksi['tracking']['cetak_kemasan']}}"
+							data-produksi="{{$transaksi['tracking']['produksi']}}"
+							data-qc="{{$transaksi['tracking']['qc']}}"
+							data-finishing="{{$transaksi['tracking']['finishing']}}"
+							data-pengiriman="{{$transaksi['tracking']['pengiriman']}}"
 						><i class="fa fa-edit"></i></a>
 						</h3>
 					</div>
@@ -142,6 +142,72 @@
 			<!-- /.row -->
 		</div>
 	</div>
+	<div class="box">
+		<!-- title row -->
+		<div class="box-header">
+			<h3 class="page-header">Tagline</h3>
+		</div>
+		<div class="box-body">
+			<a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapse-tambah" aria-expanded="false" aria-controls="collapse-tambah" style="margin-bottom: 20px">
+				Tambah <i class="fa fa-plus"></i>
+			</a>
+			<div class="collapse" id="collapse-tambah" style="margin-top: 10px">
+				<div class="well">
+					<form method="post" id="frm-tagline">
+						<div class="form-group">
+							<label for="">Nama</label>
+							<input type="text" name="nama" class="form-control">
+						</div>
+						<div class="form-group">
+							<label for="">Isi</label>
+							<textarea class="textarea form-control" name="isi"></textarea>
+						</div>
+						<button class="btn btn-primary">Tambah</button>
+					</form>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<table id="datatables2" class="table table-hover table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>No</th>
+							<th>Nama</th>
+							<th>Isi</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{{-- modal tagline --}}
+<div class="modal fade" id="modal-edit">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Edit</h4>
+			</div>
+			<div class="modal-body">
+				<form action="" id="frm-edit" method="post">
+					<div class="form-group">
+						<label for="">Nama</label>
+						<input type="text" name="nama" class="form-control" id="nama">
+						<input type="hidden" name="id" class="form-control" id="id">
+					</div>
+					<div class="form-group">
+						<label for="">Isi</label>
+						<textarea class="textarea form-control" name="isi" id="isi"></textarea>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save changes</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 {{-- modal status --}}
 <div class="modal fade" id="modal-status">
@@ -156,7 +222,7 @@
 					<div class="form-group">
 						<label>Status</label>
 						<select class="form-control" name="status" id="status">
-							<option value="1">Success</option>
+							<option value="1">Finished</option>
 							<option value="0">Pending</option>
 						</select>
 					</div>
@@ -244,6 +310,67 @@
 @endsection
 @section('customJs')
 <script type="text/javascript">
+	$('#datatables2').DataTable({
+		processing: true,
+		serverSide: true,
+		ajax: '{{route('tagline.index', $kode_invoice)}}',
+		columns: [
+			{data: 'DT_Row_Index', orderable: false, searchable: false},
+			{data: 'nama'},
+			{data: 'isi'},
+			{data: 'action'},
+		]
+	});
+	$('#frm-tagline').on('submit', function(e) {
+		e.preventDefault();
+		const data = $(this).serialize();
+		$.post('{{route('tagline.store', $kode_invoice)}}', data, function(data) {
+			$('#datatables2').DataTable().ajax.reload();
+			$('#frm-tagline')[0].reset();
+			alertify.success('Data berhasil di tambah !');
+		});
+	});
+	$('#datatables2').on('click', '.edit', function() {
+		const id = $(this).data('id');
+		const nama = $(this).data('nama');
+		const isi = $(this).data('isi');
+		$('#modal-edit').find('#id').val(id);
+		$('#modal-edit').find('#nama').val(nama);
+		$('iframe').contents().find('.textarea').html(isi);
+	});
+	$('#frm-edit').on('submit', function(e) {
+		e.preventDefault();
+		const data = $(this).serializeArray();
+		$.ajax({
+			url: '/admin/transaksi/detail/{{$kode_invoice}}/tagline/'+data[1].value,
+			data: data,
+			type: 'PUT',
+			success: function(data) {
+				$('#modal-edit').modal('hide');
+				$('#datatables2').DataTable().ajax.reload();
+				alertify.success('Data berhasil di update !');
+			}
+		});
+	});
+	$('#datatables2').on('click', '.delete', function() {
+		const id = $(this).data('id');
+		alertify.confirm('Alert', 'Apakah anda yakin ingin menghapus data ini ?',
+			function() {
+				$.ajax({
+					url: '/admin/transaksi/detail/{{$kode_invoice}}/tagline/'+id,
+					data: id,
+					type: 'DELETE',
+					success: function(data) {
+						$('#datatables2').DataTable().ajax.reload();
+						alertify.success('Data berhasil di hapus !');
+					}
+				});
+			},
+			function() {
+				alertify.error('Cancel')
+			});
+	})
+	// end Tagline
 	$('.btn-status').on('click', function() {
 		const status = $(this).data('status');
 		$('#modal-status').find('#status').val(status).change();
@@ -255,7 +382,6 @@
 		const qc = $(this).data('qc');
 		const finishing = $(this).data('finishing');
 		const pengiriman = $(this).data('pengiriman');
-
 		pembelian_bahan_baku == 1 ? $('#modal-tracking').find('#pembelian_bahan_baku').attr('checked', true) : $('#modal-tracking').find('#pembelian_bahan_baku').attr('checked', false);
 		cetak_kemasan == 1 ? $('#modal-tracking').find('#cetak_kemasan').attr('checked', true) : $('#modal-tracking').find('#cetak_kemasan').attr('checked', false);
 		produksi == 1 ? $('#modal-tracking').find('#produksi').attr('checked', true) : $('#modal-tracking').find('#produksi').attr('checked', false);
@@ -263,16 +389,14 @@
 		finishing == 1 ? $('#modal-tracking').find('#finishing').attr('checked', true) : $('#modal-tracking').find('#finishing').attr('checked', false);
 		pengiriman == 1 ? $('#modal-tracking').find('#pengiriman').attr('checked', true) : $('#modal-tracking').find('#pengiriman').attr('checked', false);
 	});
-
 	$('#frm-status').on('submit', function(e) {
 		e.preventDefault();
 		const status = $(this).serialize();
 		$.post("{{route('admin.transaksiStatusUpdate', $transaksi['kode_invoice'])}}", status, function(data) {
-			data == 1 ? $('#badge-status').text('Success') : $('#badge-status').text('Pending');
+			data == 1 ? $('#badge-status').text('Finished') : $('#badge-status').text('Pending');
 			$('#modal-status').modal('hide');
 		})
 	});
-
 	$('#frm-tracking').on('submit', function(e) {
 		e.preventDefault();
 		const data = $(this).serialize();
@@ -284,7 +408,6 @@
 			data.finishing == 1 ? $('#list-tracking').find('#finishing').addClass('active') : $('#list-tracking').find('#finishing').removeClass('active');
 			data.pengiriman == 1 ? $('#list-tracking').find('#pengiriman').addClass('active') : $('#list-tracking').find('#pengiriman').removeClass('active');
 			$('#modal-tracking').modal('hide');
-
 		})
 	})
 </script>

@@ -17,6 +17,8 @@ class Banner extends Migration
             $table->increments('id_banner', 2);
             $table->text('gambar');
             $table->text('keterangan');
+            $table->string('tipe');
+            $table->string('tipe_page');
             $table->timestamps();
         });
     }

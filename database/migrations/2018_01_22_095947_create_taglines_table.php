@@ -15,6 +15,7 @@ class CreateTaglinesTable extends Migration
     {
         Schema::create('taglines', function (Blueprint $table) {
             $table->increments('id_tagline');
+            $table->string('kode_invoice');
             $table->string('nama');
             $table->text('isi');
             $table->timestamps();

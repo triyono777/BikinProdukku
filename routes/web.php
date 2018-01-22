@@ -42,6 +42,8 @@ Route::group(['middleware' => 'admin'], function() {
 	Route::post('/transaksi/detail/{id}/statusUpdate', 'Transaksi\TransaksiController@transaksiStatusUpdate')->name('admin.transaksiStatusUpdate');
 	Route::post('/transaksi/detail/{id}/trackingUpdate', 'Transaksi\TransaksiController@transaksiTrackingUpdate')->name('admin.transaksiTrackingUpdate');
 
+	Route::resource('/transaksi/detail/{id}/tagline', 'TaglineController');
+
 	// sub transaksi detail
 	Route::get('/transaksi/detail/{id}/sub-detail/{subId}', 'Transaksi\TransaksiController@transaksiSubDetailView')->name('admin.transaksiSubDetailView');
 
