@@ -19,8 +19,8 @@
 						<input type="file" name="gambar" id="" class="form-control">
 					</div>
 					<div class="form-group">
-						<label for="">Keterangan</label>
-						<textarea class="form-control textarea" name="keterangan"></textarea>
+						<label for="">Gambar Text</label>
+						<input type="file" name="gambar_text" id="" class="form-control">
 					</div>
 					<button class="btn btn-primary">Tambah</button>
 			    </form>
@@ -32,7 +32,7 @@
 						<tr>
 							<th>No</th>
 							<th>Gambar</th>
-							<th>Keterangan</th>
+							<th>Gambar Text</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -44,12 +44,12 @@
 								<img src="{{URL::to('upload/dialog-proses/'.$value['gambar'])}}" class="img-thumbnail" width="100" height="80">
 							</td>
 							<td>
-								{{ substr(strip_tags($value['keterangan']), 0, 100) }}{{strlen($value['keterangan']) > 100 ? '...' : ' '}}
+								<img src="{{URL::to('upload/dialog-proses/'.$value['gambar_text'])}}" class="img-thumbnail" width="100" height="80">
 							</td>
 							<td>
 								<a href="#modal-edit" data-toggle="modal" class="btn btn-warning edit"
 								data-id="{{$value['id_dialog']}}"
-								data-keterangan="{{$value['keterangan']}}"
+								data-gambar_text="{{$value['gambar_text']}}"
 								><i class=" fa fa-edit"></i></a>
 								<a href="#!" class="btn btn-danger delete"
 								data-id="{{$value['id_dialog']}}"
@@ -80,9 +80,10 @@
 						<input type="hidden" name="id" id="id">
 					</div>
 					<div class="form-group">
-						<label for="">Keterangan</label>
-						<textarea name="keterangan" id="keterangan" class="form-control textarea" rows="3"></textarea>
+						<label for="">Gambar Text Baru</label>
+						<input type="file" name="gambar_text" id="gambar_text" class="form-control">
 					</div>
+
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<button type="submit" class="btn btn-primary">Save changes</button>
@@ -97,10 +98,10 @@
 <script type="text/javascript">
 	$('#datatables').on('click', '.edit', function() {
 		const id = $(this).data('id');
-		const keterangan = $(this).data('keterangan');
-		// console.log(id,keterangan)
+		const gambar_text = $(this).data('gambar_text');
+		// console.log(id,gambar_text)
 		$("#modal-edit").find('#id').val(id);
-		$('iframe').contents().find('.textarea').html(keterangan);
+		$('iframe').contents().find('.textarea').html(gambar_text);
 	});
 	$('#datatables').on('click', '.delete', function() {
 		const id = $(this).data('id');

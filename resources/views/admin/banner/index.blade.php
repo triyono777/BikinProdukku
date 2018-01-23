@@ -19,6 +19,14 @@
 						<input type="file" name="gambar" id="" class="form-control">
 					</div>
 					<div class="form-group">
+						<label for="">Tipe</label>
+						<input type="text" name="tipe" id="" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="">Tipe Page</label>
+						<input type="text" name="tipe_page" id="" class="form-control">
+					</div>
+					<div class="form-group">
 						<label for="">Keterangan</label>
 						<textarea class="form-control textarea" name="keterangan"></textarea>
 					</div>
@@ -33,6 +41,8 @@
 							<th>No</th>
 							<th>Gambar</th>
 							<th>Keterangan</th>
+							<th>Tipe</th>
+							<th>Tipe Page</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -44,10 +54,14 @@
 								<img src="{{URL::to('upload/banner/'.$value['gambar'])}}" class="img-thumbnail" width="100" height="80">
 							</td>
 							<td>{{ substr(strip_tags($value['keterangan']), 0, 100) }}{{strlen($value['keterangan']) > 100 ? '...' : ' '}}</td>
+							<td>{{$value['tipe']}}</td>
+							<td>{{$value['tipe_page']}}</td>
 							<td>
 								<a href="#modal-edit" data-toggle="modal" class="btn btn-warning edit"
 								data-id="{{$value['id_banner']}}"
 								data-keterangan="{{$value['keterangan']}}"
+								data-tipe="{{$value['tipe']}}"
+								data-tipe_page="{{$value['tipe_page']}}"
 								><i class=" fa fa-edit"></i></a>
 								<a href="#!" class="btn btn-danger delete"
 								data-id="{{$value['id_banner']}}"
@@ -79,6 +93,14 @@
 						<input type="hidden" name="id" id="id">
 					</div>
 					<div class="form-group">
+						<label for="">Tipe</label>
+						<input type="text" name="tipe" id="tipe" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="">Tipe Page</label>
+						<input type="text" name="tipe_page" id="tipe_page" class="form-control">
+					</div>
+					<div class="form-group">
 						<label for="">Keterangan</label>
 						<textarea name="keterangan" id="keterangan" class="form-control textarea" rows="3"></textarea>
 					</div>
@@ -97,7 +119,11 @@
 		$('#datatables').on('click', '.edit', function() {
 			const id = $(this).data('id');
 			const keterangan = $(this).data('keterangan');
+			const tipe = $(this).data('tipe');
+			const tipe_page = $(this).data('tipe_page');
 			$('#modal-edit').find('#id').val(id);
+			$('#modal-edit').find('#tipe').val(tipe);
+			$('#modal-edit').find('#tipe_page').val(tipe_page);
 			$('iframe').contents().find('.textarea').html(keterangan);
 		});
 

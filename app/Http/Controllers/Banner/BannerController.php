@@ -25,6 +25,8 @@ class BannerController extends Controller
         $image->save(public_path('upload/banner/' . $newName));
         $banner->gambar = $newName;
         $banner->keterangan = $request['keterangan'];
+        $banner->tipe = $request['tipe'];
+        $banner->tipe_page = $request['tipe_page'];
         $banner->save();
 
         return redirect()->back();
@@ -45,6 +47,8 @@ class BannerController extends Controller
 	        $banner->gambar = $newName;
         }
         $banner->keterangan = $request['keterangan'];
+        $banner->tipe = $request['tipe'];
+        $banner->tipe_page = $request['tipe_page'];
 
         $banner->save();
         return redirect()->back();

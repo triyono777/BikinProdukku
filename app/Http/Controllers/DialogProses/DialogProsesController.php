@@ -18,14 +18,22 @@ class DialogProsesController extends Controller
     // Lihat Pasar CRUD
     public function dialogProsesPost(Request $request) {
         $dialogProses = new DialogProses;
-	        $name = $request->file('gambar');
-	        $newName = time() . '.' . $name->getClientOriginalExtension();
-	        $image = Image::make($name);
+	        $name1 = $request->file('gambar');
+	        $gambar = time() . str_random(5) .'.' . $name1->getClientOriginalExtension();
+	        $image = Image::make($name1);
 	        $image->encode('jpg', 75);
-	        $image->save(public_path('upload/dialog-proses/' . $newName));
-        $dialogProses->gambar = $newName;
+	        $image->save(public_path('upload/dialog-proses/' . $gambar));
 
-        $dialogProses->keterangan = $request['keterangan'];
+            $name2 = $request->file('gambar_text');
+            $gambar_text = time() . str_random(5) . '.' . $name2->getClientOriginalExtension();
+            $image = Image::make($name2);
+            $image->encode('jpg', 75);
+            $image->save(public_path('upload/dialog-proses/' . $gambar_text));
+
+        $dialogProses->gambar = $gambar;
+        $dialogProses->gambar_text = $gambar_text;
+
+        // $dialogProses->keterangan = $request['keterangan'];
         $dialogProses->save();
 
         return redirect()->back();
@@ -38,15 +46,27 @@ class DialogProsesController extends Controller
         	// delete file
         	File::delete(public_path('upload/dialog-proses/'. $dialogProses->gambar));
 
-        	$name = $request->file('gambar');
-	        $newName = time() . '.' . $name->getClientOriginalExtension();
-	        $image = Image::make($name);
-	        $image->encode('jpg', 75);
-	        $image->save(public_path('upload/dialog-proses/' . $newName));
-	        $dialogProses->gambar = $newName;
+        	$name1 = $request->file('gambar');
+            $gambar = time() . str_random(5) .'.' . $name1->getClientOriginalExtension();
+            $image = Image::make($name1);
+            $image->encode('jpg', 75);
+            $image->save(public_path('upload/dialog-proses/' . $gambar));
+            $dialogProses->gambar = $gambar;
         }
 
-        $dialogProses->keterangan = $request['keterangan'];
+        if ($request['gambar_text']) {
+            // delete file
+            File::delete(public_path('upload/dialog-proses/'. $dialogProses->gambar_text));
+
+            $name2 = $request->file('gambar_text');
+            $gambar_text = time() . str_random(5) . '.' . $name2->getClientOriginalExtension();
+            $image = Image::make($name2);
+            $image->encode('jpg', 75);
+            $image->save(public_path('upload/dialog-proses/' . $gambar_text));
+            $dialogProses->gambar_text = $gambar_text;
+        }
+
+        // $dialogProses->keterangan = $request['keterangan'];
 
         $dialogProses->save();
         return redirect()->back();

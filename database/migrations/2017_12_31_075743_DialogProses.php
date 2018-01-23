@@ -16,7 +16,7 @@ class DialogProses extends Migration
         Schema::create('dialog_proses', function (Blueprint $table) {
             $table->increments('id_dialog', 2);
             $table->text('gambar');
-            $table->text('keterangan');
+            $table->text('gambar_text');
             $table->timestamps();
         });
     }
