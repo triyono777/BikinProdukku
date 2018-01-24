@@ -38,7 +38,7 @@ class AuthController extends Controller
                 $pengguna = Pengguna::where('username', $data['username'])->first();
                 $username = $pengguna['username'];
                 $id = $pengguna['id_user'];
-                return redirect()->route('akun.penggunaView', [$username, $id]);
+                return redirect()->route('akun.penggunaView');
             }
             return redirect('/');
         }else {

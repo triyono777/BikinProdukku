@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Admin | Dashboard</title>
+    <title>{{auth()->guard('pengguna')->check() ? auth()->guard('pengguna')->user()->username : 'Admin' }} | Dashboard</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     {{-- select 2 --}}
@@ -52,9 +52,9 @@
         <!-- Logo -->
         <a href="#!" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>A</b>DM</span>
+          <span class="logo-mini"><b>BPK</b></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Admin</b></span>
+          <span class="logo-lg"><b>{{auth()->guard('pengguna')->check() ? auth()->guard('pengguna')->user()->username : 'Admin' }}</b></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
