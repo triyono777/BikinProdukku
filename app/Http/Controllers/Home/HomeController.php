@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Home;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Kategori\Kategori;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index() {
-    	return view('home.index');
+    	$kategori = Kategori::with('subKategori')->get()->toArray();
+    	return view('home.index', compact('kategori'));
     }
 }

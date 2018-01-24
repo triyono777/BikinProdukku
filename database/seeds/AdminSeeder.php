@@ -2,6 +2,8 @@
 
 use App\Helpers\AutoNumber;
 use App\Models\Admin\Admin;
+use App\Models\Kategori\Kategori;
+use App\Models\Kategori\SubKategori;
 use App\Models\Pengguna\Pengguna;
 use App\Models\Tracking\Tracking;
 use App\Models\Transaksi\DetailTransaksi;
@@ -26,6 +28,8 @@ class AdminSeeder extends Seeder
         Transaksi::truncate();
         DetailTransaksi::truncate();
         Tracking::truncate();
+        Kategori::truncate();
+        SubKategori::truncate();
 
         $this->command->info('Data Sedang Dibuat');
 
@@ -84,7 +88,18 @@ class AdminSeeder extends Seeder
             $pengguna->status = 'Jabatan ' . $key;
             $pengguna->img = $faker->imageUrl;
 
+            // kategori
+            $kategori = new Kategori;
+            $kategori->nama_kategori = 'Kategori '. $key;
 
+            // sub kategori
+            $subKategori = new SubKategori;
+            $subKategori->id_kategori = $key;
+            $subKategori->nama_subKategori = 'sub kategori '.$key;
+
+
+            $kategori->save();
+            $subKategori->save();
             $pengguna->save();
             $tracking->save();
             $detailTransaksi->save();
