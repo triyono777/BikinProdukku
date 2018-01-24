@@ -31,7 +31,7 @@
 		$('#datatables').DataTable({
 	        processing: true,
 	        serverSide: true,
-	        ajax: '/akun/{{auth()->guard('pengguna')->user()->username}}&id={{auth()->guard('pengguna')->user()->id_user}}/transaksi-data',
+	        ajax: '/akun/transaksi-data',
 	        columns: [
 	            {data: 'DT_Row_Index', orderable: false, searchable: false},
 	            {data: 'kode_invoice'},

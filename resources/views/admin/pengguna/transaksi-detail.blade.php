@@ -53,7 +53,7 @@
 								<td>{{$value['nama_produk']}}</td>
 								<td>{{number_format($value['subtotal'])}}</td>
 								<td>
-									<a href="{{route('akun.penggunaSubTransaksiDetailView', [$username, $id_user, $value['kode_detail'], $value['kode_invoice']])}}" class="btn btn-info">Detail</a>
+									<a href="{{route('akun.penggunaSubTransaksiDetailView', [$value['kode_detail']])}}" class="btn btn-info">Detail</a>
 								</td>
 							</tr>
 							@endforeach

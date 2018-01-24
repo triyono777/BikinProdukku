@@ -14,10 +14,10 @@ Route::post('/register', 'Auth\AuthController@registerPost')->name('admin.regist
 Route::group(['middleware' => 'pengguna'], function() {
 	Route::group(['prefix' => 'akun'], function() {
 	// pengguna login
-		Route::get('/{username}&id={id}', 'Pengguna\PenggunaController@penggunaView')->name('akun.penggunaView');
-		Route::get('/{username}&id={id}/transaksi-data', 'Pengguna\PenggunaController@penggunaTransaksiData')->name('akun.penggunaTransaksiData');
-		Route::get('/{username}&id={id}/transaksi/detail', 'Pengguna\PenggunaController@penggunaTransaksiDetailView')->name('akun.penggunaTransaksiDetailView');
-		Route::get('/{username}&id={id}/transaksi/detail/sub-transaksi&kode={kode_detail}', 'Pengguna\PenggunaController@penggunaSubTransaksiDetailView')->name('akun.penggunaSubTransaksiDetailView');
+		Route::get('/', 'Pengguna\PenggunaController@penggunaView')->name('akun.penggunaView');
+		Route::get('/transaksi-data', 'Pengguna\PenggunaController@penggunaTransaksiData')->name('akun.penggunaTransaksiData');
+		Route::get('/transaksi/detail', 'Pengguna\PenggunaController@penggunaTransaksiDetailView')->name('akun.penggunaTransaksiDetailView');
+		Route::get('/transaksi/detail/sub-transaksi&kode={kode_detail}', 'Pengguna\PenggunaController@penggunaSubTransaksiDetailView')->name('akun.penggunaSubTransaksiDetailView');
 	});
 });
 

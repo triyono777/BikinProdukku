@@ -210,7 +210,7 @@
 						</div>
 					</div>
 
-					
+
 				</div>
 			</div>
 			<div class="row" style='background-color:#c1c1c1'>
@@ -242,7 +242,7 @@
 							<img src="" alt="">
 						</div>
 					</div>
-					
+
 					<div class="row">
 						<div class="container">
 							<h2 style="text-align:center">Daftar Sekarang Untuk Menerima Informasi Produk,Pasar,Promosi,Bonus dan Lainnya</h2>
@@ -314,7 +314,7 @@
 							Jl. Lorem ipsum
 						</div>
 						<div class="col-md-6">
-							
+
 						</div>
 					</div>
 				</div>
@@ -324,14 +324,10 @@
 		<script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
 		<!-- Bootstrap JavaScript -->
 		<script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-		@section('customJs')
 		@if(Session::has('login'))
 		<script type="text/javascript">
-			$(document).ready(function() {
-				alert('Selamat akun anda sudah terdaftar, Silahkan login !');
-			})
+			alert('{{ Session::get('login') }} Silahkan login !');
 		</script>
 		@endif
-@endsection
 	</body>
 </html>

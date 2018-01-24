@@ -188,9 +188,9 @@
             </li>
             @else
               <li>
-                  <a href="{{route('akun.penggunaView', [auth()->guard('pengguna')->user()->username, auth()->guard('pengguna')->user()->id_user])}}">
+                  <a href="{{route('akun.penggunaView')}}">
                     <i class="fa fa-dashboard"></i>
-                    <span>Dashboard</span>
+                    <span>Transaksi</span>
                   </a>
                 </li>
             @endif
