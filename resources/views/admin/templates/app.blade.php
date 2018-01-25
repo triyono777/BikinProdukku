@@ -187,12 +187,18 @@
               </ul>
             </li>
             @else
-              <li>
-                  <a href="{{route('akun.penggunaView')}}">
-                    <i class="fa fa-dashboard"></i>
-                    <span>Transaksi</span>
-                  </a>
-                </li>
+            <li>
+              <a href="{{route('akun.penggunaView')}}">
+                <i class="fa fa-dashboard"></i>
+                <span>Transaksi</span>
+              </a>
+            </li>
+            <li>
+              <a href="{{route('akun.dataPribadiView')}}">
+                <i class="fa fa-user"></i>
+                <span>Data Pribadi</span>
+              </a>
+            </li>
             @endif
             {{-- <li class="treeview">
               <a href="#">
@@ -276,18 +282,18 @@
       <script src="{{URL::to('dist/js/adminlte.min.js')}}"></script>
       <script type="text/javascript">
       $(function() {
-        $.ajaxSetup({
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          }
-        });
+      $.ajaxSetup({
+      headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+      });
       $('#datatables').DataTable();
       $('.select2').select2();
       //Date picker
       $('.datepicker').datepicker({
       autoclose: true
       });
-       alertify.set('notifier','position', 'top-right');
+      alertify.set('notifier','position', 'top-right');
       // CKEDITOR.replace('editor1');
       $('.textarea').wysihtml5();
       })

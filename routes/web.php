@@ -18,6 +18,8 @@ Route::group(['middleware' => 'pengguna'], function() {
 		Route::get('/transaksi-data', 'Pengguna\PenggunaController@penggunaTransaksiData')->name('akun.penggunaTransaksiData');
 		Route::get('/transaksi/detail', 'Pengguna\PenggunaController@penggunaTransaksiDetailView')->name('akun.penggunaTransaksiDetailView');
 		Route::get('/transaksi/detail/sub-transaksi&kode={kode_detail}', 'Pengguna\PenggunaController@penggunaSubTransaksiDetailView')->name('akun.penggunaSubTransaksiDetailView');
+		Route::get('/data-pribadi', 'Pengguna\PenggunaController@dataPribadiView')->name('akun.dataPribadiView');
+		Route::post('/data-pribadi', 'Pengguna\PenggunaController@dataPribadiPost')->name('akun.dataPribadiPost');
 	});
 });
 

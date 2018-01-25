@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Pengguna;
 
 use App\Http\Controllers\Controller;
+use App\Models\FormulirPendaftaran\FormulirPendaftaran;
 use App\Models\Pengguna\Pengguna;
 use App\Models\Transaksi\DetailTransaksi;
 use App\Models\Transaksi\SubDetailTransaksi;
@@ -60,4 +61,47 @@ class PenggunaController extends Controller
         return view('admin.pengguna.sub-detail', compact(['sub_detail_transaksi', 'detailTransaksi']));
     }
 
+    // Data Diri
+    public function dataPribadiView() {
+        $id_user = $this->id_user();
+        $dataDiri = FormulirPendaftaran::where('id', $id_user)->first();
+        return view('admin.pengguna.data-pribadi', compact(['dataDiri', 'id_user']));
+    }
+
+    public function dataPribadiPost(Request $request) {
+        $id_user = $this->id_user();
+        $dataDiri = FormulirPendaftaran::where('id', $id_user)->first();
+        if ($request->hasFile($request['foto'])) {
+            $foto = time() . str_random(5) . '.' . $name->getClientOriginalExtension();
+            $image = Image::make($name);
+            $image->encode('jpg', 75);
+            $image->save(public_path('upload/foto_pengguna/' . $foto));
+
+            $dataDiri->update([
+                'nik' => $request['nik'],
+                'nama_lengkap' => $request['nama_lengkap'],
+                'tempat' => $request['tempat'],
+                'jenis_kelamin' => $request['jenis_kelamin'],
+                'status_perkawinan' => $request['status_perkawinan'],
+                'pekerjaan' => $request['pekerjaan'],
+                'alamat' => $request['alamat'],
+                'foto' => $request['foto'],
+                'motivasi_berbisnis' => $request['motivasi_berbisnis'],
+                'hobi' => $request['hobi'],
+            ]);
+        }else {
+            $dataDiri->update([
+                'nik' => $request['nik'],
+                'nama_lengkap' => $request['nama_lengkap'],
+                'tempat' => $request['tempat'],
+                'jenis_kelamin' => $request['jenis_kelamin'],
+                'status_perkawinan' => $request['status_perkawinan'],
+                'pekerjaan' => $request['pekerjaan'],
+                'alamat' => $request['alamat'],
+                'motivasi_berbisnis' => $request['motivasi_berbisnis'],
+                'hobi' => $request['hobi'],
+            ]);
+        }
+
+    }
 }
