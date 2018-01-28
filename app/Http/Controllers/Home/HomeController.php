@@ -17,7 +17,7 @@ class HomeController extends Controller
     public function index() {
     	$kategori = Kategori::with('subKategori')->get()->toArray();
         $banner = Banner::select('gambar as link')->where('tipe','video')->orderBy('id_banner','DESC')->first();
-        
+
     	return view('home.index', compact('kategori','banner'));
     }
 

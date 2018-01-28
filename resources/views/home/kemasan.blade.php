@@ -40,16 +40,18 @@
 		<div class="col-md-12" style="background-color: orange">
 			<h2 style="text-align: center;">{{$subkategori['nama_subkategori']}}</h2>
 		</div>
-		<div class="col-md-12">
+		<div class="col-md-12" style="margin-top: 50px">
 				@foreach($produk as $key => $value)
 					@foreach($value['gambarproduk'] as $data)
-						@if($value['perbesar'] == 1)
-						<div class="row">
-							<div class="col-md-6">
-								<img src="{{asset('upload/gambar-produk/'.$data['gambar_tampilan'])}}" class="img-responsive">
+						{{-- @if($value['perbesar'] == 1) --}}
+						{{-- <div class="row"> --}}
+							<div class="col-md-4">
+								<a href="{{route('transaksi', $value['kode_produk'])}}">
+									<img src="{{asset('upload/gambar-produk/'.$data['gambar_tampilan'])}}" class="img-responsive">
+								</a>
 							</div>
-						</div>
-						@endif
+						{{-- </div> --}}
+						{{-- @endif --}}
 					@endforeach
 				@endforeach
 		</div>

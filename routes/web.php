@@ -10,6 +10,9 @@ Route::get('/kemasan/{id}', 'Home\HomeController@kemasan')->name('kemasan');
 Route::get('/faq', 'Home\HomeController@faq')->name('faq');
 Route::post('/faq', 'Home\HomeController@faqPost')->name('faqPost');
 
+// transaksi
+Route::get('/transaksi/{kode_produk}', 'TransaksiPenggunaController@index')->name('transaksi');
+
 
 // Admin
 // Auth Login
