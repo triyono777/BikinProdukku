@@ -19,7 +19,7 @@ class SubHargaBahanBakuController extends Controller
 
     // Bahan baku CRUD
     public function subHargaBahanBakuData($kode_produk, $id_bahan_baku) {
-        $subHargaBahanBaku = SubHargaBahanBaku::with(['satuan', 'bahanbaku'])->orderBy('created_at', 'desc')->get()->toArray();
+        $subHargaBahanBaku = SubHargaBahanBaku::with(['satuan', 'bahanbaku'])->where('kode_bahan', $id_bahan_baku)->orderBy('created_at', 'desc')->get()->toArray();
 
         $datatables = DataTables::of($subHargaBahanBaku)
             ->editColumn('kode_bahan', function($data) {

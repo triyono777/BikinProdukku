@@ -49,12 +49,6 @@
 								<img src="{{asset('upload/gambar-produk/'.$data['gambar_tampilan'])}}" class="img-responsive">
 							</div>
 						</div>
-						@else
-						<div class="row">
-							<div class="col-md-4">
-								<img src="{{asset('upload/gambar-produk/'.$data['gambar_tampilan'])}}"  class="img-responsive">
-							</div>
-						</div>
 						@endif
 					@endforeach
 				@endforeach
