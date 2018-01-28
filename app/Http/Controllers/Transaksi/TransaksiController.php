@@ -17,14 +17,14 @@ class TransaksiController extends Controller
     }
 
     public function transaksiDetailView($id) {
-        $transaksi = Transaksi::with(['tracking', 'detailTransaksi'])->where('kode_invoice', $id)->first()->toArray();
+        $transaksi = Transaksi::with(['tracking', 'detailTransaksi'])->where('kode_invoice', $id)->first();
         $kode_invoice = $id;
     	return view('admin.transaksi.detail', compact(['transaksi', 'kode_invoice']));
     }
 
     public function transaksiSubDetailView($id, $subId) {
         // $subDetailTransaksi = SubDetailTransaksi::with('detailTransaksi')->where('kode_detail', $subId)->get()->toArray();
-        $detailTransaksi = DetailTransaksi::with('subDetailTransaksi')->where('kode_detail', $subId)->first()->toArray();
+        $detailTransaksi = DetailTransaksi::with('subDetailTransaksi')->where('kode_detail', $subId)->first();
         $kode_invoice = $id;
         // $nama_produk = $subDetailTransaksi[0]['detail_transaksi']['nama_produk'];
         // dd($detailTransaksi);

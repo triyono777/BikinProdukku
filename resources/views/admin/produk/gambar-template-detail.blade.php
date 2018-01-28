@@ -56,6 +56,7 @@
 							<td>
 								<a href="#modal-edit" data-toggle="modal" class="btn btn-warning edit"
 									data-id="{{$value['kode_warna']}}"
+									data-hex_color="{{$value['hex_color']}}"
 									data-caption="{{$value['caption']}}"
 								><i class=" fa fa-edit"></i></a>
 								<a href="#!" class="btn btn-danger delete" data-id="{{$value['kode_warna']}}"><i class=" fa fa-trash"></i></a>
@@ -85,9 +86,9 @@
 						<input type="hidden" name="id" id="id">
 					</div>
 					<div class="form-group">
-							<label>Kode Warna</label>
-							<input type="text" name="hex_color" class="form-control">
-						</div>
+						<label>Kode Warna</label>
+						<input type="text" name="hex_color" class="form-control my-colorpicker2" id="hex_color">
+					</div>
 					<div class="form-group">
 						<label for="">Caption</label>
 						<textarea name="caption" id="caption" class="form-control textarea" rows="3"></textarea>
@@ -106,14 +107,15 @@
 <!-- bootstrap color picker -->
 <script src="{{URL::to('bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')}}"></script>
 <script type="text/javascript">
-    $('.my-colorpicker2').colorpicker();
+$('.my-colorpicker2').colorpicker();
 	$('#datatables').on('click', '.edit', function() {
 		const id = $(this).data('id');
+		const hex_color = $(this).data('hex_color');
 		const caption = $(this).data('caption');
 		$('#modal-edit').find('#id').val(id);
+		$('#modal-edit').find('#hex_color').val(hex_color);
 		$('iframe').contents().find('.textarea').html(caption);
 	});
-
 	$('#datatables').on('click', '.delete', function() {
 		const id = $(this).data('id');
 		alertify.confirm('Alert', 'Apakah anda yakin ingin menghapus data ini ?',
