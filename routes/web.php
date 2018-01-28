@@ -4,6 +4,8 @@
 Route::get('/', 'Home\HomeController@index')->name('home');
 Route::post('/akun/login', 'Auth\AuthController@loginPost')->name('admin.penggunaLogin');
 
+Route::get('/kemasan', 'Home\HomeController@kemasan')->name('kemasan');
+
 
 // Admin
 // Auth Login
