@@ -17,6 +17,9 @@ class SubDetailTransaksi extends Migration
             $table->increments('kode_sub', 8);
             $table->integer('kode_detail');
             $table->string('nama_bahan', 25);
+            $table->string('gambar_produk');
+            $table->string('gambar_logo');
+            $table->string('gambar_sendiri');
             $table->integer('jumlah');
             $table->integer('subtotal');
             $table->timestamps();
