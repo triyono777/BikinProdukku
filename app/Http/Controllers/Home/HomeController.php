@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Home;
 
+use DB;
 use App\Http\Controllers\Controller;
 use App\Models\Banner\Banner;
 use App\Models\Faq\Faq;
@@ -15,7 +16,9 @@ class HomeController extends Controller
 {
     public function index() {
     	$kategori = Kategori::with('subKategori')->get()->toArray();
-    	return view('home.index', compact('kategori'));
+        $banner = Banner::select('gambar as link')->where('tipe','video')->orderBy('id_banner','DESC')->first();
+        
+    	return view('home.index', compact('kategori','banner'));
     }
 
     public function kemasan($id_kategori)
