@@ -21,4 +21,5 @@ class Produk extends Model
 	public function gambarproduk() {
     	return $this->hasMany('App\Models\Produk\GambarProduk', 'kode_produk', 'kode_produk');
     }
+
 }

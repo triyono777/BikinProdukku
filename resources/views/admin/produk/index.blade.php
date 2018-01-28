@@ -56,7 +56,7 @@
 						<tr>
 							<th>No</th>
 							<th>Nama Produk</th>
-							<th>Kategori</th>
+							<th>Sub Kategori</th>
 							<th>Biaya Operasional</th>
 							<th>Sold Out</th>
 							<th>Perbesar</th>

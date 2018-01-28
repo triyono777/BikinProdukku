@@ -36,6 +36,7 @@
 						<tr>
 							<th>No</th>
 							<th>Gambar Produk</th>
+							<th>Gambar Text</th>
 							<th>
 								Caption
 							</th>
@@ -48,6 +49,9 @@
 							<td>{{++$key}}</td>
 							<td>
 								<img src="{{URL::to('upload/gambar-produk/'.$value['gambar_tampilan'])}}" class="img-thumbnail" width="100" height="80">
+							</td>
+							<td>
+								<img src="{{URL::to('upload/gambar-produk/'.$value['gambar_text'])}}" class="img-thumbnail" width="100" height="80">
 							</td>
 							<td>{{ substr(strip_tags($value['caption']), 0, 100) }}{{strlen($value['caption']) > 100 ? '...' : ' '}}</td>
 							<td>
@@ -120,7 +124,7 @@
 						<input type="hidden" name="id" id="id">
 					</div>
 					<div class="form-group">
-							<label for="">Upload Gambar Text</label>
+							<label for="">Upload Gambar Text Baru</label>
 							<input type="file" name="gambar_text" class="form-control">
 						</div>
 					<div class="form-group">

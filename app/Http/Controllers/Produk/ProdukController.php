@@ -27,11 +27,11 @@ class ProdukController extends Controller
 
     // Produk CRUD
     public function produkData() {
-        $produk = Produk::with('kategori')->get()->toArray();
+        $produk = Produk::with('subkategori')->get()->toArray();
 
         $datatables = DataTables::of($produk)
             ->editColumn('nama_kategori', function($data) {
-                return $data['kategori']['nama_kategori'];
+                return $data['subkategori']['nama_subkategori'];
             })
             ->editColumn('sold_out', function($data) {
                 return ($data['sold_out'] ? 'Ya' : 'Tidak');

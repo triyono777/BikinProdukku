@@ -25,17 +25,17 @@ class GambarProdukController extends Controller
     public function gambarProdukPost(Request $request, $kode_produk) {
         $gambarProduk = new GambarProduk;
         $gambarProduk->kode_produk = $kode_produk;
-
-        $name = $request->file('gambar_tampilan');
-        $gambar_tampilan = time() . '.' . $name->getClientOriginalExtension();
-        $image = Image::make($name);
+        // dd($request->file('gambar_tampilan'), $request->file('gambar_text'));
+        $file_gambar_tampilan = $request->file('gambar_tampilan');
+        $gambar_tampilan = time() . str_random(5) . '.' . $file_gambar_tampilan->getClientOriginalExtension();
+        $image = Image::make($file_gambar_tampilan);
         $image->encode('jpg', 75);
         $image->save(public_path('upload/gambar-produk/' . $gambar_tampilan));
         $gambarProduk->gambar_tampilan = $gambar_tampilan;
 
-        $name = $request->file('gambar_text');
-        $gambar_text = time() . '.' . $name->getClientOriginalExtension();
-        $image = Image::make($name);
+        $file_gambar_text = $request->file('gambar_text');
+        $gambar_text = time() .str_random(5) . '.' . $file_gambar_text->getClientOriginalExtension();
+        $image = Image::make($file_gambar_text);
         $image->encode('jpg', 75);
         $image->save(public_path('upload/gambar-produk/' . $gambar_text));
         $gambarProduk->gambar_text = $gambar_text;
@@ -54,9 +54,9 @@ class GambarProdukController extends Controller
         	// delete file
         	File::delete(public_path('upload/gambar-produk/'. $gambarProduk->gambar_tampilan));
 
-        	$name = $request->file('gambar_tampilan');
-	        $gambar_tampilan = time() . '.' . $name->getClientOriginalExtension();
-	        $image = Image::make($name);
+        	$file_gambar_tampilan = $request->file('gambar_tampilan');
+	        $gambar_tampilan = time() . '.' . $file_gambar_tampilan->getClientOriginalExtension();
+	        $image = Image::make($file_gambar_tampilan);
 	        $image->encode('jpg', 75);
 	        $image->save(public_path('upload/gambar-produk/' . $gambar_tampilan));
 	        $gambarProduk->gambar_tampilan = $gambar_tampilan;
@@ -65,9 +65,9 @@ class GambarProdukController extends Controller
             // delete file
             File::delete(public_path('upload/gambar-produk/'. $gambarProduk->gambar_text));
 
-            $name = $request->file('gambar_text');
-            $gambar_text = time() . '.' . $name->getClientOriginalExtension();
-            $image = Image::make($name);
+            $file_gambar_text = $request->file('gambar_text');
+            $gambar_text = time() . '.' . $file_gambar_text->getClientOriginalExtension();
+            $image = Image::make($file_gambar_text);
             $image->encode('jpg', 75);
             $image->save(public_path('upload/gambar-produk/' . $gambar_text));
             $gambarProduk->gambar_text = $gambar_text;
