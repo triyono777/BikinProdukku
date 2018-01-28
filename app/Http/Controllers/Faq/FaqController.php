@@ -26,6 +26,9 @@ class FaqController extends Controller
     		->editColumn('id_user', function($data) {
     			return $data['user']['nama'];
     		})
+            ->editColumn('status', function($data) {
+                return '<span class="btn btn-xs btn-'.($data['status'] == 1 ? 'success' : 'danger').'">'.($data['status'] == 1 ? 'Terjawab' : 'Belum Terjawab').'</span>';
+            })
     		->addColumn('action', function($data) {
 	            return '
 	            	<a href="'.route('admin.answerView', $data['id_faq']).'" class="btn btn-info"><i class=" fa fa-eye"></i></a>
@@ -38,6 +41,7 @@ class FaqController extends Controller
 					data-id="'.$data['id_faq'].'"
 					><i class=" fa fa-trash"></i></a>';
 	        })
+            ->rawColumns(['action', 'status'])
 	        ->addIndexColumn();
 
 	    return $datatables->make(true);

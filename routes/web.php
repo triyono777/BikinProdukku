@@ -4,7 +4,11 @@
 Route::get('/', 'Home\HomeController@index')->name('home');
 Route::post('/akun/login', 'Auth\AuthController@loginPost')->name('admin.penggunaLogin');
 
-Route::get('/kemasan', 'Home\HomeController@kemasan')->name('kemasan');
+Route::get('/kemasan/{id}', 'Home\HomeController@kemasan')->name('kemasan');
+
+// faq
+Route::get('/faq', 'Home\HomeController@faq')->name('faq');
+Route::post('/faq', 'Home\HomeController@faqPost')->name('faqPost');
 
 
 // Admin

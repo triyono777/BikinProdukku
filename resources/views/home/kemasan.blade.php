@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 slider">  
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 slider">
 			<div class="panel-thumbnail ">
 				<div id="myCarousel" class="carousel slide slider" data-ride="carousel">
 					<!-- Indicators -->
@@ -12,12 +12,12 @@
 						<li data-target="#carousel-example-generic" data-slide-to="{{ $loop->index }}" class="{{ $loop->first ? 'active' : '' }}"></li>
 						@endforeach
 					</ol>
-				
+
 				<div class="carousel-inner" role="listbox">
 				@foreach( $slider as $photo )
 					<div class="item {{ $loop->first ? ' active' : '' }} mySlides" >
-					<a href="{{ asset('upload/banner/'.$photo->images) }}" data-type="image" target="_blank" data-lightbox="slider">
-						<img src="{{ asset('upload/banner/'.$photo->images) }}" alt="" class="img-responsive img-slider" style="max-height: 20%;">
+					<a href="#!">
+						<img src="{{ asset('upload/banner/'.$photo->gambar) }}" alt="" class="img-responsive img-slider" style="max-height: 20%;">
 					</a>
 					</div>
 				@endforeach
@@ -35,38 +35,29 @@
 			  </div>
 		</div>
 	</div>
-	
+
 	<div class="row">
+		<div class="col-md-12" style="background-color: orange">
+			<h2 style="text-align: center;">{{$subkategori['nama_subkategori']}}</h2>
+		</div>
 		<div class="col-md-12">
-			<h2 style="text-align:center">Jadilah Bagian Dari Kami</h2>
-			{{--  //gambar  --}}
-			<div class="row">
-				<div class="col-md-8 col-md-offset-2">
-					<img src="" alt="">
-				</div>
-			</div>
-			<div class="row">
-				<div class="container">
-					<h2 style="text-align:center">Daftar Sekarang Untuk Menerima Informasi Produk,Pasar,Promosi,Bonus dan Lainnya</h2>
-					<div class="col-md-8 col-md-offset-2">
-						<form action="">
-							<div class="form-group">
-								<input type="text" class="form-control" name="" placeholder="">
+				@foreach($produk as $key => $value)
+					@foreach($value['gambarproduk'] as $data)
+						@if($value['perbesar'] == 1)
+						<div class="row">
+							<div class="col-md-6">
+								<img src="{{asset('upload/gambar-produk/'.$data['gambar_tampilan'])}}" class="img-responsive">
 							</div>
-							<div class="form-group">
-								<input type="text" class="form-control" name="" placeholder="">
+						</div>
+						@else
+						<div class="row">
+							<div class="col-md-4">
+								<img src="{{asset('upload/gambar-produk/'.$data['gambar_tampilan'])}}"  class="img-responsive">
 							</div>
-							<div class="form-group">
-								<input type="text" class="form-control" name="" placeholder="">
-							</div>
-							<input type="submit" class="btn btn-warning" value="kirim">
-						</form>
-					</div>
-				</div>
-			</div>
-			<div class="pull-right">
-				<button class="btn btn-md btn-danger">Bikin Produkmu Sekarang</button>
-			</div>
+						</div>
+						@endif
+					@endforeach
+				@endforeach
 		</div>
 	</div>
 	<br>

@@ -42,6 +42,7 @@
 							<th>User</th>
 							<th>Question</th>
 							<th>Tanggal</th>
+							<th>Status</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -91,6 +92,7 @@
 	            {data: 'id_user'},
 	            {data: 'question'},
 	            {data: 'tanggal'},
+	            {data: 'status'},
 	            {data: 'action'},
 	        ]
 	    });

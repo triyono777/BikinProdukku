@@ -13,22 +13,10 @@
 			<div class="collapse" id="collapse-tambah" style="margin-top: 10px">
 			  <div class="well">
 			    <form method="post" id="frm-tambah">
-					<div class="form-group">
-						<label for="">Nama User</label>
-						<select class="form-control select2" name="id_user" style="width: 100% !important">
-							<option disabled selected>-Pilih-</option>
-							@foreach($user as $data)
-								<option value="{{$data['id_user']}}">{{$data['nama']}}</option>
-							@endforeach
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="">Tanggal</label>
-						<input type="text" name="tanggal" class="form-control datepicker">
-					</div>
+						<input type="hidden" name="id_user" value="">
 					<div class="form-group">
 						<label for="">Jawaban</label>
-						<input type="text" name="answer" class="form-control">
+						<textarea name="answer" class="form-control textarea"></textarea>
 					</div>
 					<button  type="submit" class="btn btn-primary">Tambah</button>
 			    </form>
@@ -42,7 +30,6 @@
 							<th>User</th>
 							<th>Answer</th>
 							<th>Tanggal</th>
-							<th>Status</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -62,13 +49,6 @@
 			</div>
 			<div class="modal-body">
 				<form id="frm-edit" method="post">
-					<div class="form-group">
-						<label for="">Status</label>
-						<select class="form-control" id="status" name="status">
-							<option value="terjawab">Terjawab</option>
-							<option value="belum">Belum</option>
-						</select>
-					</div>
 					<div class="form-group">
 						<label for="">Tanggal</label>
 						<input type="text" name="tanggal" id="tanggal" class="form-control datepicker">
@@ -99,7 +79,6 @@
 	            {data: 'id_user'},
 	            {data: 'answer'},
 	            {data: 'tanggal'},
-	            {data: 'status'},
 	            {data: 'action'},
 	        ]
 	    });

@@ -13,4 +13,12 @@ class Produk extends Model
     public function kategori() {
     	return $this->belongsTo('App\Models\Kategori\Kategori', 'id_kategori', 'id_kategori');
     }
+
+    public function subkategori() {
+    	return $this->belongsTo('App\Models\Kategori\SubKategori', 'id_kategori', 'id_subkategori');
+    }
+
+	public function gambarproduk() {
+    	return $this->hasMany('App\Models\Produk\GambarProduk', 'kode_produk', 'kode_produk');
+    }
 }

@@ -80,6 +80,11 @@
                   </li>
                   <!-- Menu Footer-->
                   <li class="user-footer">
+                    @if(auth()->guard('pengguna')->check())
+                      <div class="pull-left">
+                        <a href="{{url('/')}}" class="btn btn-default btn-flat">Home</a>
+                      </div>
+                    @endif
                     <div class="pull-right">
                       <a href="{{auth()->guard('admin')->check() ? route('admin.logout') : route('akun.logout')}}" class="btn btn-default btn-flat">Sign out</a>
                     </div>

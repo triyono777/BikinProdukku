@@ -105,10 +105,9 @@
 		</div>
 	</div>
 </div>
-<div class="row">
+{{-- <div class="row">
 	<div class="col-md-12">
 		<h2 style="text-align:center">Jadilah Bagian Dari Kami</h2>
-		{{--  //gambar  --}}
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<img src="" alt="">
@@ -137,7 +136,7 @@
 			<button class="btn btn-md btn-danger">Bikin Produkmu Sekarang</button>
 		</div>
 	</div>
-</div>
+</div> --}}
 <br>
 <div class="row" style="background-color: #e87874;">
 	<div class="col-md-12">

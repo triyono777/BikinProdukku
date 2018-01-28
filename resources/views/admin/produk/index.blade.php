@@ -176,7 +176,7 @@
 	$('#frm-edit').on('submit', function(e) {
 		e.preventDefault();
 		const data = $(this).serialize();
-		$.post("{{route('admin.produkUpdate')}}", data, function() {
+		$.post("{{route('admin.produkUpdate')}}", data, function(data) {
 			$('#modal-edit').modal('hide');
 			$('#datatables').DataTable().ajax.reload();
 			alertify.success('data berhasil di update');

@@ -20,7 +20,7 @@ class ProdukController extends Controller
 
     public function produkDetailView($id) {
         $kode_produk = $id;
-        $gambarProduk = GambarProduk::get()->toArray();
+        $gambarProduk = GambarProduk::where('kode_produk', $id)->get()->toArray();
     	return view('admin.produk.detail', compact(['kode_produk', 'gambarProduk']));
     }
 
@@ -77,8 +77,10 @@ class ProdukController extends Controller
         $produk = Produk::where('kode_produk', $request['id'])->update([
             'id_kategori' => $request['id_kategori'],
             'nama_produk' => $request['nama_produk'],
+            'sold_out' => ($request['sold_out'] ? 1 : 0),
+            'perbesar' => ($request['perbesar'] ? 1 : 0),
         ]);
-        return response()->json($produk);
+        return response()->json($request->all());
     }
 
     public function produkDelete(Request $request) {

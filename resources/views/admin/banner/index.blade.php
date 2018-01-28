@@ -14,14 +14,19 @@
 			  <div class="well">
 			    <form action="{{route('admin.bannerPost')}}" method="post" id="frm-tambah" enctype="multipart/form-data">
 			    	{{csrf_field()}}
-					<div class="form-group">
-						<label for="">Upload Gambar</label>
-						<input type="file" name="gambar" id="" class="form-control">
-					</div>
-					<div class="form-group">
+			    	<div class="form-group">
 						<label for="">Tipe</label>
-						<input type="text" name="tipe" id="" class="form-control">
+						<select class="form-control" name="tipe" id="tipe">
+							<option selected="" value="gambar">Gambar</option>
+							<option value="video">Video</option>
+						</select>
 					</div>
+
+					<div class="form-group" id="form-group-tipe">
+						<label for="">Upload Gambar</label>
+						<input type="file" name="gambar" id="file" class="form-control">
+					</div>
+
 					<div class="form-group">
 						<label for="">Tipe Page</label>
 						<input type="text" name="tipe_page" id="" class="form-control">
@@ -39,7 +44,7 @@
 					<thead>
 						<tr>
 							<th>No</th>
-							<th>Gambar</th>
+							<th>Gambar/Link Video</th>
 							<th>Keterangan</th>
 							<th>Tipe</th>
 							<th>Tipe Page</th>
@@ -51,7 +56,11 @@
 						<tr>
 							<td>{{++$key}}</td>
 							<td>
-								<img src="{{URL::to('upload/banner/'.$value['gambar'])}}" class="img-thumbnail" width="100" height="80">
+								@if($value['tipe'] == 'gambar')
+									<img src="{{URL::to('upload/banner/'.$value['gambar'])}}" class="img-thumbnail" width="100" height="80">
+								@else
+									<a href="{{$value['gambar']}}">{{$value['gambar']}}</a>
+								@endif
 							</td>
 							<td>{{ substr(strip_tags($value['keterangan']), 0, 100) }}{{strlen($value['keterangan']) > 100 ? '...' : ' '}}</td>
 							<td>{{$value['tipe']}}</td>
@@ -88,17 +97,19 @@
 				<form action="{{route('admin.bannerUpdate')}}" id="frm-edit" method="post" enctype="multipart/form-data">
 					{{csrf_field()}}
 					<div class="form-group">
-						<label for="">Upload Gambar Baru</label>
-						<input type="file" name="gambar" id="gambar" class="form-control">
-						<input type="hidden" name="id" id="id">
-					</div>
-					<div class="form-group">
 						<label for="">Tipe</label>
-						<input type="text" name="tipe" id="tipe" class="form-control">
+						<select class="form-control" name="tipe" id="tipe-edit">
+							<option value="gambar">Gambar</option>
+							<option value="video">Video</option>
+						</select>
+					</div>
+					<div class="form-group" id="form-group-tipe-edit">
+
 					</div>
 					<div class="form-group">
 						<label for="">Tipe Page</label>
 						<input type="text" name="tipe_page" id="tipe_page" class="form-control">
+						<input type="hidden" name="id" id="id">
 					</div>
 					<div class="form-group">
 						<label for="">Keterangan</label>
@@ -116,11 +127,59 @@
 @endsection
 @section('customJs')
 	<script type="text/javascript">
+
+		$('#tipe').on('change', function(){
+			var upload = '<label for="">Upload Gambar</label>'+
+						'<input type="file" name="gambar" id="file" class="form-control">';
+
+			var link = '<label for="">link</label>'+
+						'<input type="text" name="gambar" id="link" class="form-control">';
+
+			if( $(this).val() != 'gambar' ){
+				$('#form-group-tipe').empty();
+				$('#form-group-tipe').append(link);
+			}else{
+				$('#form-group-tipe').empty();
+				$('#form-group-tipe').append(upload);
+			}
+		});
+
+		$('#modal-edit').on('change', '#tipe-edit',function(){
+			var upload = '<label for="">Upload Gambar</label>'+
+						'<input type="file" name="gambar" id="file" class="form-control">';
+
+			var link = '<label for="">link</label>'+
+						'<input type="text" name="gambar" id="link" class="form-control">';
+
+			if( $(this).val() != 'gambar' ){
+				$('#form-group-tipe-edit').empty();
+				$('#form-group-tipe-edit').append(link);
+			}else{
+				$('#form-group-tipe-edit').empty();
+				$('#form-group-tipe-edit').append(upload);
+			}
+		});
+
 		$('#datatables').on('click', '.edit', function() {
 			const id = $(this).data('id');
 			const keterangan = $(this).data('keterangan');
 			const tipe = $(this).data('tipe');
 			const tipe_page = $(this).data('tipe_page');
+			var upload = '<label for="">Upload Gambar</label>'+
+						'<input type="file" name="gambar" id="file" class="form-control">';
+			var link = '<label for="">link</label>'+
+						'<input type="text" name="gambar" id="link" class="form-control">';
+
+			if (tipe == 'gambar') {
+				$('#tipe-edit').val(tipe).change();
+				$('#form-group-tipe-edit').empty();
+				$('#form-group-tipe-edit').append(upload);
+			}else {
+				$('#tipe-edit').val(tipe).change();
+				$('#form-group-tipe-edit').empty();
+				$('#form-group-tipe-edit').append(link);
+			}
+
 			$('#modal-edit').find('#id').val(id);
 			$('#modal-edit').find('#tipe').val(tipe);
 			$('#modal-edit').find('#tipe_page').val(tipe_page);
