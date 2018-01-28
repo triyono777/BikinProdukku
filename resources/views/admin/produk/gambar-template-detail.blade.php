@@ -1,4 +1,8 @@
 @extends('admin.templates.app')
+@section('customCss')
+<!-- Bootstrap Color Picker -->
+<link rel="stylesheet" href="{{URL::to('bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css')}}">
+@endsection
 @section('content')
 <div class="col-md-12">
 	<div class="box">
@@ -18,6 +22,10 @@
 							<input type="file" name="gambar_warna" class="form-control">
 						</div>
 						<div class="form-group">
+							<label>Kode Warna</label>
+							<input type="text" name="hex_color" class="form-control my-colorpicker2">
+						</div>
+						<div class="form-group">
 							<label for="">Caption</label>
 							<textarea name="caption" class="form-control textarea" rows="3"></textarea>
 						</div>
@@ -31,9 +39,8 @@
 						<tr>
 							<th>No</th>
 							<th>Gambar Warna</th>
-							<th>
-								Caption
-							</th>
+							<th>Kode Warna</th>
+							<th>Caption</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -44,10 +51,12 @@
 							<td>
 								<img src="{{URL::to('upload/gambar-warna/'. $value['gambar_warna'])}}" class="img-thumbnail" width="100" height="80">
 							</td>
+							<td>{{$value['hex_color']}}</td>
 							<td>{{strip_tags($value['caption'])}}</td>
 							<td>
 								<a href="#modal-edit" data-toggle="modal" class="btn btn-warning edit"
 									data-id="{{$value['kode_warna']}}"
+									data-hex_color="{{$value['hex_color']}}"
 									data-caption="{{$value['caption']}}"
 								><i class=" fa fa-edit"></i></a>
 								<a href="#!" class="btn btn-danger delete" data-id="{{$value['kode_warna']}}"><i class=" fa fa-trash"></i></a>
@@ -77,6 +86,10 @@
 						<input type="hidden" name="id" id="id">
 					</div>
 					<div class="form-group">
+						<label>Kode Warna</label>
+						<input type="text" name="hex_color" class="form-control my-colorpicker2" id="hex_color">
+					</div>
+					<div class="form-group">
 						<label for="">Caption</label>
 						<textarea name="caption" id="caption" class="form-control textarea" rows="3"></textarea>
 					</div>
@@ -91,14 +104,18 @@
 </div>
 @endsection
 @section('customJs')
+<!-- bootstrap color picker -->
+<script src="{{URL::to('bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js')}}"></script>
 <script type="text/javascript">
+$('.my-colorpicker2').colorpicker();
 	$('#datatables').on('click', '.edit', function() {
 		const id = $(this).data('id');
+		const hex_color = $(this).data('hex_color');
 		const caption = $(this).data('caption');
 		$('#modal-edit').find('#id').val(id);
+		$('#modal-edit').find('#hex_color').val(hex_color);
 		$('iframe').contents().find('.textarea').html(caption);
 	});
-
 	$('#datatables').on('click', '.delete', function() {
 		const id = $(this).data('id');
 		alertify.confirm('Alert', 'Apakah anda yakin ingin menghapus data ini ?',

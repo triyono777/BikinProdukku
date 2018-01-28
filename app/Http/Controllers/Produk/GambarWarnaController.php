@@ -20,6 +20,7 @@ class GambarWarnaController extends Controller
         $image->encode('jpg', 75);
         $image->save(public_path('upload/gambar-warna/' . $newName));
         $gambarWarna->gambar_warna = $newName;
+        $gambarWarna->hex_color = $request['hex_color'];
         $gambarWarna->caption = $request['caption'];
         $gambarWarna->save();
 
@@ -41,6 +42,7 @@ class GambarWarnaController extends Controller
 	        $image->save(public_path('upload/gambar-warna/' . $newName));
 	        $gambarWarna->gambar_warna = $newName;
         }
+        $gambarWarna->hex_color = $request['hex_color'];
         $gambarWarna->caption = $request['caption'];
 
         $gambarWarna->save();

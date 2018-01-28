@@ -15,7 +15,7 @@
 			</div>
 			<div class="col-md-6 col-xs-12">
 				<span class="pull-right">
-					<h3>Sub Total : {{number_format($detailTransaksi['subtotal'])}}</h3>
+					<h3>Sub Total : {{number_format($detailTransaksi->subDetailTransaksi->sum('subtotal'))}}</h3>
 				</span>
 			</div>
 
@@ -31,12 +31,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($detailTransaksi['sub_detail_transaksi'] as $key => $value)
+							@foreach($detailTransaksi->subDetailTransaksi as $key => $value)
 								<tr>
 									<td>{{++$key}}</td>
 									<td>{{$value['nama_bahan']}}</td>
 									<td>{{$value['jumlah']}}</td>
-									<td>{{$value['subtotal']}}</td>
+									<td>{{number_format($value['subtotal'])}}</td>
 								</tr>
 							@endforeach
 						</tbody>

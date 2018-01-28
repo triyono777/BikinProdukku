@@ -17,7 +17,7 @@
 		<!-- /.col -->
 		<!-- info row -->
 		<div class="col-md-12">
-			<span class="pull-right"><h3>Total: {{number_format($transaksi['total'])}}</h3></span>
+			<span class="pull-right"><h3>Total: {{number_format($transaksi->detailTransaksi->sum('subtotal'))}}</h3></span>
 		</div>
 		<div class="invoice-info">
 			<div class="col-sm-6 invoice-col">
@@ -41,13 +41,13 @@
 							<tr>
 								<th>No</th>
 								<th>Gambar</th>
-								<th>Nama Bahan</th>
+								<th>Nama Produk</th>
 								<th>Sub Total</th>
 								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($transaksi['detail_transaksi'] as $key => $value)
+							@foreach($transaksi->detailTransaksi as $key => $value)
 							<tr>
 								<td>{{++$key}}</td>
 								<td><img src="{{URL::to('upload/bukti_pembayaran/'.$value['gambar_produk'])}}" class="img-thumbnail" width="100" height="80"></td>
