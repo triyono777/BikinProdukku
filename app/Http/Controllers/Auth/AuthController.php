@@ -46,6 +46,26 @@ class AuthController extends Controller
         }
     }
 
+    public function loginAkun(Request $request) {
+        $this->validate($request, [
+            'username' => 'required|max:25',
+            'password' => 'required'
+        ]);
+
+        $data = [
+                    'username' => $request['username'],
+                    'password' => $request['password']
+                ];
+
+            if (Auth::guard('pengguna')->attempt($data)) {
+                $pengguna = Pengguna::where('username', $data['username'])->first();
+                $username = $pengguna['username'];
+                $id = $pengguna['id_user'];
+                return response()->json($pengguna);
+            }
+            return response()->json(false);
+    }
+
     public function registerPost(Request $request) {
         $this->validate($request, [
             'nama' => 'required',

@@ -2,7 +2,7 @@
 
 // Home
 Route::get('/', 'Home\HomeController@index')->name('home');
-Route::post('/akun/login', 'Auth\AuthController@loginPost')->name('admin.penggunaLogin');
+Route::post('/akun/loginpengguna', 'Auth\AuthController@loginPost')->name('admin.penggunaLogin');
 
 Route::get('/kemasan/{id}', 'Home\HomeController@kemasan')->name('kemasan');
 
@@ -18,6 +18,7 @@ Route::get('/transaksi/{kode_produk}', 'TransaksiPenggunaController@index')->nam
 // Auth Login
 Route::get('/admin/login', 'Auth\AuthController@loginView')->name('admin.loginView');
 Route::post('/admin/login', 'Auth\AuthController@loginPost')->name('admin.loginPost');
+Route::post('/akun/login', 'Auth\AuthController@loginAkun')->name('admin.loginAkun');
 Route::post('/register', 'Auth\AuthController@registerPost')->name('admin.registerPost');
 
 Route::group(['middleware' => 'pengguna'], function() {

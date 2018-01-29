@@ -11,7 +11,7 @@
 		<link rel="stylesheet" type="text/css" href="{{asset('home/style.css')}}">
 		 <link rel="stylesheet" href="{{URL::to('bower_components/font-awesome/css/font-awesome.min.css')}}">
 		 <link rel="stylesheet" href="{{URL::to('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
-		 <script src="{{URL::to('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
+		@yield('customCss')
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -25,9 +25,12 @@
 			@yield('content')
 		</div>
 		<!-- jQuery -->
-		<script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
+		<script src="{{URL::to('js/jquery-3.2.1.js')}}"></script>
+
 		<!-- Bootstrap JavaScript -->
 		<script src="{{asset('bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+		<script src="{{URL::to('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
+		@yield('customJs')
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$.ajaxSetup({
@@ -38,7 +41,6 @@
 				$('.textarea').wysihtml5();
 			});
 		</script>
-		@yield('customJs')
 		@if(Session::has('login'))
 		<script type="text/javascript">
 			alert('{{ Session::get('login') }} Silahkan login !');

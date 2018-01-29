@@ -17,9 +17,9 @@ class GambarTemplateController extends Controller
         $gambarTemplate->kode_gambar = $kode_gambar;
         $name = $request->file('gambar_template');
         $newName = time() . '.' . $name->getClientOriginalExtension();
-        $image = Image::make($name);
-        $image->encode('jpg', 75);
-        $image->save(public_path('upload/gambar-template/' . $newName));
+        // $image = Image::make($name);
+        $path = public_path('upload/gambar-template/');
+        $name->move($path,$newName);
         $gambarTemplate->gambar_template = $newName;
         $gambarTemplate->harga = $request['harga'];
         $gambarTemplate->sold_out = ($request['sold_out'] == 1 ? 1 : 0);
@@ -39,9 +39,9 @@ class GambarTemplateController extends Controller
 
         	$name = $request->file('gambar_template');
 	        $newName = time() . '.' . $name->getClientOriginalExtension();
-	        $image = Image::make($name);
-	        $image->encode('jpg', 75);
-	        $image->save(public_path('upload/gambar-template/' . $newName));
+	        // $image = Image::make($name);
+	        $path = public_path('upload/gambar-template/');
+            $name->move($path,$newName);
 	        $gambarTemplate->gambar_template = $newName;
         }
         $gambarTemplate->harga = $request['harga'];

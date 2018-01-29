@@ -4,7 +4,7 @@
 	<div class="col-lg-12 col-xs-12" style="background-color: black; padding:50px 0px ">
 		<h1 style="color:#fff;font-size: 70px;text-align: center;">"1 Klik Jadi Pengusaha Millenial"</h1>
 		<div class="col-lg-8 col-xs-8 col-lg-offset-1">
-			<iframe width="1090" height="500" src="{{ $banner->link }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+			<iframe width="1090" height="500" src="{{ $banner['link'] }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 		</div>
 	</div>
 </div>

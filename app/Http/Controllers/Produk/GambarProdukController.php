@@ -28,17 +28,22 @@ class GambarProdukController extends Controller
         // dd($request->file('gambar_tampilan'), $request->file('gambar_text'));
         $file_gambar_tampilan = $request->file('gambar_tampilan');
         $gambar_tampilan = time() . str_random(5) . '.' . $file_gambar_tampilan->getClientOriginalExtension();
-        $image = Image::make($file_gambar_tampilan);
-        $image->encode('jpg', 75);
-        $image->save(public_path('upload/gambar-produk/' . $gambar_tampilan));
+        // $image = Image::make($file_gambar_tampilan);
+        // $image = Storage::disk('local');
+        // $image->encode('jpg', 75);
+        $path = public_path('upload/gambar-produk/');
+        $file_gambar_tampilan->move($path,$gambar_tampilan);
         $gambarProduk->gambar_tampilan = $gambar_tampilan;
+        if ($request->file('gambar_text')) {
+            $file_gambar_text = $request->file('gambar_text');
 
-        $file_gambar_text = $request->file('gambar_text');
-        $gambar_text = time() .str_random(5) . '.' . $file_gambar_text->getClientOriginalExtension();
-        $image = Image::make($file_gambar_text);
-        $image->encode('jpg', 75);
-        $image->save(public_path('upload/gambar-produk/' . $gambar_text));
-        $gambarProduk->gambar_text = $gambar_text;
+            $gambar_text = time() .str_random(5) . '.' . $file_gambar_text->getClientOriginalExtension();
+            // $image = Image::make($file_gambar_text);
+            // $image->encode('jpg', 75);
+            $path = public_path('upload/gambar-produk/');
+            $file_gambar_text->move($path,$gambar_text);
+            $gambarProduk->gambar_text = $gambar_text;
+        }
 
         $gambarProduk->caption = $request['caption'];
         $gambarProduk->save();
@@ -56,9 +61,9 @@ class GambarProdukController extends Controller
 
         	$file_gambar_tampilan = $request->file('gambar_tampilan');
 	        $gambar_tampilan = time() . '.' . $file_gambar_tampilan->getClientOriginalExtension();
-	        $image = Image::make($file_gambar_tampilan);
-	        $image->encode('jpg', 75);
-	        $image->save(public_path('upload/gambar-produk/' . $gambar_tampilan));
+	        // $image = Image::make($file_gambar_tampilan);
+	        $path = public_path('upload/gambar-produk/');
+            $file_gambar_tampilan->move($path,$gambar_tampilan);
 	        $gambarProduk->gambar_tampilan = $gambar_tampilan;
         }
         if ($request['gambar_text']) {
@@ -68,8 +73,8 @@ class GambarProdukController extends Controller
             $file_gambar_text = $request->file('gambar_text');
             $gambar_text = time() . '.' . $file_gambar_text->getClientOriginalExtension();
             $image = Image::make($file_gambar_text);
-            $image->encode('jpg', 75);
-            $image->save(public_path('upload/gambar-produk/' . $gambar_text));
+            $path = public_path('upload/gambar-produk/');
+            $file_gambar_text->move($path,$gambar_text);
             $gambarProduk->gambar_text = $gambar_text;
         }
         $gambarProduk->caption = $request['caption'];
