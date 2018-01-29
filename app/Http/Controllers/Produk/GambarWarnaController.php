@@ -14,12 +14,15 @@ class GambarWarnaController extends Controller
  	public function gambarWarnaPost(Request $request, $kode_produk, $kode_gambar, $kode_template) {
         $gambarWarna = new GambarWarna;
         $gambarWarna->kode_template = $kode_template;
-        $name = $request->file('gambar_warna');
-        $newName = time() . '.' . $name->getClientOriginalExtension();
-        $image = Image::make($name);
-        $image->encode('jpg', 75);
-        $image->save(public_path('upload/gambar-warna/' . $newName));
-        $gambarWarna->gambar_warna = $newName;
+        if ($request->file('gambar_warna')) {
+            $name = $request->file('gambar_warna');
+            $newName = time() . '.' . $name->getClientOriginalExtension();
+            $image = Image::make($name);
+            $image->encode('jpg', 75);
+            $image->save(public_path('upload/gambar-warna/' . $newName));
+            $gambarWarna->gambar_warna = $newName;
+        }
+
         $gambarWarna->hex_color = $request['hex_color'];
         $gambarWarna->caption = $request['caption'];
         $gambarWarna->save();

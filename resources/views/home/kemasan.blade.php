@@ -46,7 +46,7 @@
 						{{-- @if($value['perbesar'] == 1) --}}
 						{{-- <div class="row"> --}}
 							<div class="col-md-4">
-								<a href="{{route('transaksi', $value['kode_produk'])}}">
+								<a href="{{route('transaksi', [$value['kode_produk'], $data['kode_gambar']])}}">
 									<img src="{{asset('upload/gambar-produk/'.$data['gambar_tampilan'])}}" class="img-responsive">
 								</a>
 							</div>

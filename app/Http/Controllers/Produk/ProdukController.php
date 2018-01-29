@@ -8,6 +8,7 @@ use App\Models\Kategori\Kategori;
 use App\Models\Kategori\SubKategori;
 use App\Models\Produk\GambarProduk;
 use App\Models\Produk\Produk;
+use App\Models\Satuan\Satuan;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -21,7 +22,8 @@ class ProdukController extends Controller
     public function produkDetailView($id) {
         $kode_produk = $id;
         $gambarProduk = GambarProduk::where('kode_produk', $id)->get()->toArray();
-    	return view('admin.produk.detail', compact(['kode_produk', 'gambarProduk']));
+        $satuan = Satuan::get()->toArray();
+    	return view('admin.produk.detail', compact(['kode_produk', 'gambarProduk', 'satuan']));
     }
 
 

@@ -17,7 +17,7 @@ class GambarWarna extends Migration
             $table->increments('kode_warna', 8);
             $table->integer('kode_template')->unsigned();
             $table->string('hex_color');
-            $table->text('gambar_warna');
+            $table->text('gambar_warna')->nullable(s);
             $table->text('caption');
             $table->timestamps();
         });

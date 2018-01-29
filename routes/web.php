@@ -1,5 +1,8 @@
 <?php
 
+
+
+
 // Home
 Route::get('/', 'Home\HomeController@index')->name('home');
 Route::post('/akun/loginpengguna', 'Auth\AuthController@loginPost')->name('admin.penggunaLogin');
@@ -11,7 +14,11 @@ Route::get('/faq', 'Home\HomeController@faq')->name('faq');
 Route::post('/faq', 'Home\HomeController@faqPost')->name('faqPost');
 
 // transaksi
-Route::get('/transaksi/{kode_produk}', 'TransaksiPenggunaController@index')->name('transaksi');
+Route::get('/transaksi/{kode_produk}/{kode_gambar}', 'TransaksiPenggunaController@index')->name('transaksi');
+Route::get('/transaksi/{kode_produk}/{kode_gambar}/getGambarTemplate', 'TransaksiPenggunaController@getGambarTemplate')->name('getGambarTemplate');
+Route::get('/transaksi/{kode_produk}/{kode_gambar}/getGambarWarna', 'TransaksiPenggunaController@getGambarWarna')->name('getGambarWarna');
+Route::post('/transaksi/{kode_produk}/{kode_gambar}/transaksiProses', 'TransaksiPenggunaController@transaksiProses')->name('transaksiProses');
+
 
 
 // Admin

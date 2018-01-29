@@ -16,9 +16,9 @@ class GambarProdukController extends Controller
         $kode_produk = $id;
         $id_gambar = $id_gambar;
 
-        $gambarWarna = GambarWarna::orderBy('created_at', 'desc')->get()->toArray();
-        $gambarTemplate = GambarTemplate::orderBy('created_at', 'desc')->get()->toArray();
-    	return view('admin.produk.gambar-produk', compact(['kode_produk', 'id_gambar', 'gambarWarna', 'gambarTemplate']));
+        // $gambarWarna = GambarWarna::orderBy('created_at', 'desc')->get()->toArray();
+        $gambarTemplate = GambarTemplate::where('kode_gambar', $id_gambar)->orderBy('created_at', 'desc')->get()->toArray();
+    	return view('admin.produk.gambar-produk', compact(['kode_produk', 'id_gambar', 'gambarTemplate']));
     }
 
     // gambar produk CRUD

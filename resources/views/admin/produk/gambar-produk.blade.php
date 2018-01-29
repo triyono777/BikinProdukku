@@ -65,6 +65,7 @@
 								<a href="{{route('admin.gambarTemplateDetail', [$kode_produk, $id_gambar, $value['kode_template']])}}" class="btn btn-info"><i class=" fa fa-eye"></i></a>
 								<a href="#modal-edit2" data-toggle="modal" class="btn btn-warning edit"
 								data-id="{{$value['kode_template']}}"
+								data-harga="{{$value['harga']}}"
 								data-sold_out="{{$value['sold_out']}}"
 								data-caption="{{$value['caption']}}"
 								><i class=" fa fa-edit"></i></a>
@@ -96,6 +97,10 @@
 						<input type="hidden" name="id" id="id">
 					</div>
 					<div class="form-group">
+						<label>Harga</label>
+						<input type="text" name="harga" id="harga" class="form-control">
+					</div>
+					<div class="form-group">
 						<div class="checkbox">
 							<label>
 								<input type="checkbox" value="1" id="sold_out" name="sold_out">
@@ -125,8 +130,10 @@
 		const id = $(this).data('id');
 		const sold_out = $(this).data('sold_out');
 		const caption = $(this).data('caption');
+		const harga = $(this).data('harga');
 
 		$('#modal-edit2').find('#id').val(id);
+		$('#modal-edit2').find('#harga').val(harga);
 		if (sold_out == 1) {
 			$('#modal-edit2').find('#sold_out').prop('checked', true);
 		}else {

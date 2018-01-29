@@ -34,12 +34,12 @@
 					<li><a href="#">Lihat Pasar</a></li>
 				</ul>
 				@if(!auth()->guard('pengguna')->check())
-				<ul class="nav navbar-nav navbar-right">
+				<ul class="nav navbar-nav navbar-right" id="ul-login">
 					<li><a href="#modal-register" data-toggle="modal">Daftar</a></li>
 					<li><a href="#modal-login" data-toggle="modal">Login</a></li>
 				</ul>
 				@else
-				<ul class="nav navbar-nav navbar-right">
+				<ul class="nav navbar-nav navbar-right" id="ul-login">
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{auth()->guard('pengguna')->user()->username}} <b class="caret"></b></a>
 						<ul class="dropdown-menu">

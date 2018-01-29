@@ -21,6 +21,9 @@ class DetailTransaksi extends Migration
             $table->integer('biaya_kirim');
             $table->integer('subtotal');
             $table->text('caption');
+            $table->string('gambar_produk_baru')->nullable();
+            $table->string('gambar_logo')->nullable();
+            $table->string('gambar_sendiri')->nullable();
             $table->timestamps();
         });
     }

@@ -85,6 +85,31 @@
 							<input type="text" name="nama_bahan" class="form-control">
 						</div>
 						<div class="form-group">
+							<label for="">Harga</label>
+							<input type="text" name="harga" class="form-control">
+						</div>
+						<div class="form-group">
+							<label for="">Berat</label>
+							<input type="text" name="berat" class="form-control">
+						</div>
+						<div class="form-group">
+							<label for="">Satuan</label>
+							<select class="form-control" name="id_satuan">
+								<option disabled="" selected="">-Pilih Satuan-</option>
+								@foreach($satuan as $data)
+								<option value="{{$data['id_satuan']}}">{{$data['nama_satuan']}}</option>
+								@endforeach
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="">Minimal</label>
+							<input type="text" name="minimal" class="form-control">
+						</div>
+						<div class="form-group">
+							<label for="">Maximal</label>
+							<input type="text" name="maximal" class="form-control">
+						</div>
+						<div class="form-group">
 							<label for="">Caption</label>
 							<textarea name="caption" class="form-control textarea" rows="3"></textarea>
 						</div>
@@ -98,6 +123,11 @@
 						<tr>
 							<th>No</th>
 							<th>Nama Bahan</th>
+							<th>Harga</th>
+							<th>Berat</th>
+							<th>Satuan</th>
+							<th>Minimal</th>
+							<th>Maximal</th>
 							<th>Caption</th>
 							<th>Action</th>
 						</tr>
@@ -124,17 +154,17 @@
 						<input type="hidden" name="id" id="id">
 					</div>
 					<div class="form-group">
-							<label for="">Upload Gambar Text Baru</label>
-							<input type="file" name="gambar_text" class="form-control">
-						</div>
+						<label for="">Upload Gambar Text Baru</label>
+						<input type="file" name="gambar_text" class="form-control">
+					</div>
 					<div class="form-group">
 						<label for="">Caption</label>
 						<textarea name="caption" id="caption" class="form-control textarea" rows="3"></textarea>
 					</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary">Save changes</button>
-				</form>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Save changes</button>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -156,13 +186,38 @@
 						<input type="hidden" name="id" id="id">
 					</div>
 					<div class="form-group">
+						<label for="">Harga</label>
+						<input type="text" name="harga" id="harga" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="">Berat</label>
+						<input type="text" name="berat" id="berat" class="form-control">
+					</div>
+					<div class="form-group">
+						<label for="">Satuan</label>
+						<select class="form-control" name="id_satuan" id="id_satuan">
+							<option disabled="" selected="">-Pilih Satuan-</option>
+							@foreach($satuan as $data)
+							<option value="{{$data['id_satuan']}}">{{$data['nama_satuan']}}</option>
+							@endforeach
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="">Minimal</label>
+						<input type="text" name="minimal" class="form-control" id="minimal">
+					</div>
+					<div class="form-group">
+						<label for="">Maximal</label>
+						<input type="text" name="maximal" class="form-control" id="maximal">
+					</div>
+					<div class="form-group">
 						<label for="">Caption</label>
 						<textarea name="caption" id="caption" class="form-control textarea" rows="3"></textarea>
 					</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary">Save changes</button>
-				</form>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Save changes</button>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -198,6 +253,11 @@
 		columns: [
 			{data: 'DT_Row_Index', orderable: false, searchable: false},
 			{data: 'nama_bahan'},
+			{data: 'harga'},
+			{data: 'berat'},
+			{data: 'id_satuan'},
+			{data: 'minimal'},
+			{data: 'maximal'},
 			{data: 'caption'},
 			{data: 'action'},
 		]
@@ -207,17 +267,26 @@
 			const data = $(this).serialize();
 			$.post('{{route('admin.bahanBakuPost', $kode_produk)}}', data, function(data) {
 					$('#frm-tambah2')[0].reset();
-					 $('#datatables2').DataTable().ajax.reload();
-					 alertify.success('data berhasil di tambah');
+					$('#datatables2').DataTable().ajax.reload();
+					alertify.success('data berhasil di tambah');
 			});
 	})
 	$('#datatables2').on('click', '.edit', function() {
 		const id = $(this).data('id');
 		const nama_bahan = $(this).data('nama');
+		const harga = $(this).data('harga');
+		const berat = $(this).data('berat');
+		const id_satuan = $(this).data('id_satuan');
+		const minimal = $(this).data('minimal');
+		const maximal = $(this).data('maximal');
 		const caption = $(this).data('caption');
-
 		$('#modal-edit2').find('#id').val(id);
 		$('#modal-edit2').find('#nama_bahan').val(nama_bahan);
+		$('#modal-edit2').find('#harga').val(harga);
+		$('#modal-edit2').find('#berat').val(berat);
+		$('#modal-edit2').find('#id_satuan').val(id_satuan);
+		$('#modal-edit2').find('#minimal').val(minimal);
+		$('#modal-edit2').find('#maximal').val(maximal);
 		$('iframe').contents().find('.textarea').html(caption);
 	});
 	$('#frm-edit2').on('submit', function(e) {
@@ -232,15 +301,15 @@
 	$('#datatables2').on('click', '.delete', function() {
 		const id = $(this).data('id');
 		alertify.confirm('Alert', 'Apakah anda yakin ingin menghapus data ini ?',
-				 function() {
-					 	$.post('{{route('admin.bahanBakuDelete', $kode_produk)}}', {id: id}, function() {
-						 		$('#datatables2').DataTable().ajax.reload();
-						 		alertify.success('Data berhasil di hapus !');
-					 	})
-				 },
-				 function() {
-					 	alertify.error('Cancel')
-				 });
+				function() {
+						$.post('{{route('admin.bahanBakuDelete', $kode_produk)}}', {id: id}, function() {
+								$('#datatables2').DataTable().ajax.reload();
+								alertify.success('Data berhasil di hapus !');
+						})
+				},
+				function() {
+						alertify.error('Cancel')
+				});
 	})
 </script>
 @endsection
