@@ -61,7 +61,8 @@
 		<div class="col-md-12">
 			<div class="row">
 				<div class="col-md-3">
-					<img src="" alt="">
+					<img src="{{ asset('dist/img/logo.jpg') }}" alt=""  class="img-responsive" height="120px" style="margin:0 auto;
+				padding-top:8px">
 					Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt numquam iste, suscipit officiis esse blanditiis laudantium, nisi voluptates ab beatae, voluptas quae soluta eaque modi vero quod consectetur asperiores iure?
 				</div>
 				<div class="col-md-3">
