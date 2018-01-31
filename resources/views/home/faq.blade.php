@@ -1,23 +1,27 @@
-@extends('home.templates.app')
+@extends('home.templates.app2')
 @section('content')
-<div class="container ">
-	<div class="panel-group" id="faqAccordion">
+<div class="container" style="margin-top: 150px">
+	<div class="card" id="faqAccordion" style="margin-bottom: 100px;border: 2px solid #cccccc; padding: 10px">
 		@foreach($faq as $data)
 		<div class="panel panel-default ">
 			<div class="panel-heading accordion-toggle question-toggle collapsed" data-toggle="collapse" data-parent="#faqAccordion" data-target="#question{{ $loop->index }}">
 				<h4 class="panel-title">
-				<a href="#" class="ing">Q: {{ $data['question'] }} ?</a>
+				<a href="#" class="ing">Q: {{ strip_tags($data['question']) }} ?</a>
 				</h4>
 			</div>
 			<div id="question{{ $loop->index }}" class="panel-collapse collapse" style="height: 0px;">
 				<div class="panel-body">
 					<h5><span class="label label-primary">Answer</span>  <span class="label label-info">{{ date('d-m-Y',strtotime($data['tanggal'])) }}</span></h5>
-					@foreach($data['answer'] as $answer)
-						<p>
-							{!! $answer['answer'] !!}
-						</p>
-						<hr>
-					@endforeach
+					@if(!$data['answer'])
+						<span class="badge badge-danger">Belum ada Jawaban</span>
+					@else
+						@foreach($data['answer'] as $answer)
+							<p>
+								{!! $answer['answer'] !!}
+							</p>
+							<hr>
+						@endforeach
+					@endif
 				</div>
 			</div>
 		</div>
@@ -30,7 +34,7 @@
 			<form method="post" id="frm-faq">
 				<div class="form-group">
 					<label>Username</label>
-					<input type="" name="" class="form-control" value="{{ auth()->guard('pengguna')->user()->username }}">
+					<input type="" name="" readonly="" class="form-control" value="{{ auth()->guard('pengguna')->user()->username }}">
 				</div>
 				<div class="form-group">
 					<label>Pertanyaan</label>
@@ -48,7 +52,6 @@
 	$('#frm-faq').on('submit', function(e) {
 		e.preventDefault();
 		const data = $(this).serialize();
-		console.log(data);
 		$.post('{{route('faqPost')}}', data, function() {
 			alert('pertanyaan anda sudah terkirim.');
 		});

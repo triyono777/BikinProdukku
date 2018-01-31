@@ -1,17 +1,22 @@
 <?php
-
-
-
-
 // Home
 Route::get('/', 'Home\HomeController@index')->name('home');
 Route::post('/akun/loginpengguna', 'Auth\AuthController@loginPost')->name('admin.penggunaLogin');
 
 Route::get('/kemasan/{id}', 'Home\HomeController@kemasan')->name('kemasan');
-
 // faq
 Route::get('/faq', 'Home\HomeController@faq')->name('faq');
 Route::post('/faq', 'Home\HomeController@faqPost')->name('faqPost');
+
+// tentang
+Route::get('/tentang', 'Home\HomeController@tentang')->name('tentang');
+
+// testimonial
+Route::get('/testimonial', 'Home\HomeController@testimonial')->name('testimonial');
+
+// lihat pasar
+Route::get('/lihat-pasar', 'Home\HomeController@lihat_pasar')->name('lihat_pasar');
+
 
 // transaksi
 Route::get('/transaksi/{kode_produk}/{kode_gambar}', 'TransaksiPenggunaController@index')->name('transaksi');
@@ -19,6 +24,8 @@ Route::get('/transaksi/{kode_produk}/{kode_gambar}/getGambarTemplate', 'Transaks
 Route::get('/transaksi/{kode_produk}/{kode_gambar}/getGambarWarna', 'TransaksiPenggunaController@getGambarWarna')->name('getGambarWarna');
 Route::post('/transaksi/{kode_produk}/{kode_gambar}/transaksiProses', 'TransaksiPenggunaController@transaksiProses')->name('transaksiProses');
 
+// cart
+Route::get('/cart', 'TransaksiPenggunaController@cart')->name('home.cart');
 
 
 // Admin
@@ -33,7 +40,7 @@ Route::group(['middleware' => 'pengguna'], function() {
 	// pengguna login
 		Route::get('/', 'Pengguna\PenggunaController@penggunaView')->name('akun.penggunaView');
 		Route::get('/transaksi-data', 'Pengguna\PenggunaController@penggunaTransaksiData')->name('akun.penggunaTransaksiData');
-		Route::get('/transaksi/detail', 'Pengguna\PenggunaController@penggunaTransaksiDetailView')->name('akun.penggunaTransaksiDetailView');
+		Route::get('/transaksi/{kode_invoice}/detail/', 'Pengguna\PenggunaController@penggunaTransaksiDetailView')->name('akun.penggunaTransaksiDetailView');
 		Route::get('/transaksi/detail/sub-transaksi&kode={kode_detail}', 'Pengguna\PenggunaController@penggunaSubTransaksiDetailView')->name('akun.penggunaSubTransaksiDetailView');
 		Route::get('/data-pribadi', 'Pengguna\PenggunaController@dataPribadiView')->name('akun.dataPribadiView');
 		Route::post('/data-pribadi', 'Pengguna\PenggunaController@dataPribadiPost')->name('akun.dataPribadiPost');

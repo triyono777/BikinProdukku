@@ -1,141 +1,144 @@
-@extends('home.templates.app')
+@extends('home.templates.app2')
 @section('content')
-<div class="row">
-	<div class="col-lg-12 col-xs-12" style="background-color: black; padding:50px 0px ">
-		<h1 style="color:#fff;font-size: 70px;text-align: center;">"1 Klik Jadi Pengusaha Millenial"</h1>
-		<div class="col-lg-8 col-xs-8 col-lg-offset-1">
-			<iframe width="1090" height="500" src="{{ $banner['link'] }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<!-- Slider -->
+<div class="main_slider">
+	<div class="container fill_height">
+		<div class="row align-items-center fill_height">
+			<div class="col-xs-12">
+				<h1>"1 Klik Jadi Pengusaha Millenial"</h1>
+			</div>
+			<iframe width="100%" height="600" src="{{$banner->link}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 		</div>
 	</div>
 </div>
-<div class="row">
+<!-- Banner -->
+<div class="banner" style="margin-top: 100px">
 	<div class="container">
-		<div class="col-lg-12 col-xs-12" style="margin: 20px 0px 70px 0px">
-			<a href="#!" class="btn btn-danger pull-right">Bikin Produkku sekarang</a>
+		<div class="row">
+			<div class="col-md-12" style="text-align: center;margin-bottom: 80px">
+				<h3>Kami membantu kebutuhan Anda dalam menciptakan produk makanan ringan unggulan.</h3>
+			</div>
+			<div class="col-md-4">
+				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
+					<p style="text-align:center; margin-top:20px;">
+						<img src="{{URL::to('point/POINT 1 (MEMILIH BAHAN) A.png')}}" class="img-responsive" width="50%" alt="">
+					</p>
+					<div class="caption">
+						<div class="blur"></div>
+						<div class="caption-text">
+							<h2 style="color:white;padding:20px 10px 10px 10px;">Step 1</h2>
+							<h5 style="color: white">Memilih Bahan Baku</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
+					<p style="text-align:center; margin-top:20px;">
+						<img src="{{URL::to('point/POINT 2 (MENDESAIN KEMASAN) A.png')}}" class="img-responsive" width="50%" alt="">
+					</p>
+					<div class="caption">
+						<div class="blur"></div>
+						<div class="caption-text">
+							<h2 style="color:white;padding:20px 10px 10px 10px;">Step 2</h2>
+							<h5 style="color: white">Mendesain Kemasan Yang Ngilerin</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
+					<p style="text-align:center; margin-top:20px;">
+						<img src="{{URL::to('point/POINT 3 (MENGHITUNG BIAYA) A.png')}}" class="img-responsive" width="50%" alt="">
+					</p>
+					<div class="caption">
+						<div class="blur"></div>
+						<div class="caption-text">
+							<h2 style="color:white;padding:20px 10px 10px 10px;">Step 3</h2>
+							<h5 style="color: white">Menghitung Biaya Produksi (HPP)</h5>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="col-lg-12 col-xs-12" style="text-align: center;">
-			<h4 style="margin-bottom: 70px">Kami membantu kebutuhan Anda dalam menciptakan produk makanan ringan unggulan</h4>
+		<div class="row" style="margin-top: 40px">
+			<div class="col-md-4">
+				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
+					<p style="text-align:center; margin-top:20px;">
+						<img src="{{URL::to('point/POINT 4 (MENENTUKAN HARGA) A.png')}}" class="img-responsive" width="50%" alt="">
+					</p>
+					<div class="caption">
+						<div class="blur"></div>
+						<div class="caption-text">
+							<h2 style="color:white;padding:20px 10px 10px 10px;">Step 4</h2>
+							<h5 style="color: white">Menentukan Harga Jual</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
+					<p style="text-align:center; margin-top:20px;">
+						<img src="{{URL::to('point/POINT 5 (MENDAPATKAN KEUNTUNGAN) A.png')}}" class="img-responsive" width="50%" alt="">
+					</p>
+					<div class="caption">
+						<div class="blur"></div>
+						<div class="caption-text">
+							<h2 style="color:white;padding:20px 10px 10px 10px;">Step 5</h2>
+							<h5 style="color: white">Menentukan Keuntungan</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
+					<p style="text-align:center; margin-top:20px;">
+						<img src="{{URL::to('point/POINT 6 (BANTUAN MENDAPAT NOMOR) A.png')}}" class="img-responsive" width="50%" alt="">
+					</p>
+					<div class="caption">
+						<div class="blur"></div>
+						<div class="caption-text">
+							<h2 style="color:white;padding:20px 10px 10px 10px;">Step 6</h2>
+							<h5 style="color: white">Bantuan Mendapatkan Nomor Ijin Produk</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container" style="margin-top: 80px">
+		<div class="row">
+			<div class="col-md-12" style="text-align: center;margin-bottom: 80px">
+				<h3>Terima kasih Mitra B-Pro yang telah mempercayakan produknya kepada kami.</h3>
+			</div>
+			@foreach(range(1, 4) as $data)
+			<div class="col-md-3">
+				<img src="http://1.bp.blogspot.com/-yPFlDrpXBk4/VIPkXMY1Q9I/AAAAAAAAFBg/dx9fCjQgOPo/s1600/chunky1.jpg" alt="" class="img-responsive" width="80%" style="border: 2px solid #cccccc">
+			</div>
+			@endforeach
+		</div>
+	</div>
+	<!-- New Arrivals -->
+	<div class="new_arrivals" style="margin-top: 80px">
+		<div class="container">
 			<div class="row">
-				<div class="col-lg-3 col-xs-6">
-					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROQ3Yw6xjzpQo93GtRO_ib5DYmtsP87OU1lWIlNAn3AcrpAfn-1Q">
+				<div class="col-md-12 text-center">
+					<div class="section_title new_arrivals_title">
+						<h2 style="color: #fe4c50">Kenapa harus jadi Mitra B-Pro ?</h2>
+					</div>
 				</div>
-				<div class="col-lg-3 col-xs-6">
-					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROQ3Yw6xjzpQo93GtRO_ib5DYmtsP87OU1lWIlNAn3AcrpAfn-1Q">
-				</div>
-				<div class="col-lg-3 col-xs-6">
-					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROQ3Yw6xjzpQo93GtRO_ib5DYmtsP87OU1lWIlNAn3AcrpAfn-1Q">
-				</div>
-				<div class="col-lg-3 col-xs-6">
-					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROQ3Yw6xjzpQo93GtRO_ib5DYmtsP87OU1lWIlNAn3AcrpAfn-1Q">
-				</div>
-			</div>
-			<div class="row" style="margin-top: 50px">
-				<div class="col-lg-3 col-xs-6">
-					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROQ3Yw6xjzpQo93GtRO_ib5DYmtsP87OU1lWIlNAn3AcrpAfn-1Q">
-				</div>
-				<div class="col-lg-3 col-xs-6">
-					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROQ3Yw6xjzpQo93GtRO_ib5DYmtsP87OU1lWIlNAn3AcrpAfn-1Q">
-				</div>
-				<div class="col-lg-3 col-xs-6">
-					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROQ3Yw6xjzpQo93GtRO_ib5DYmtsP87OU1lWIlNAn3AcrpAfn-1Q">
-				</div>
-				<div class="col-lg-3 col-xs-6">
-					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROQ3Yw6xjzpQo93GtRO_ib5DYmtsP87OU1lWIlNAn3AcrpAfn-1Q">
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-12 col-xs-12">
-			<div style="text-align: center;margin-top: 90px">
-				<h4 style="margin-bottom: 30px">Terima kasih Mitra B-Pro yang telah mempercayakan produknya kepada kami.</h4>
-				<div class="col-lg-2 col-xs-6">
-					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROQ3Yw6xjzpQo93GtRO_ib5DYmtsP87OU1lWIlNAn3AcrpAfn-1Q" width="100">
-				</div>
-				<div class="col-lg-2 col-xs-6">
-					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROQ3Yw6xjzpQo93GtRO_ib5DYmtsP87OU1lWIlNAn3AcrpAfn-1Q" width="100">
-				</div>
-				<div class="col-lg-2 col-xs-6">
-					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROQ3Yw6xjzpQo93GtRO_ib5DYmtsP87OU1lWIlNAn3AcrpAfn-1Q" width="100">
-				</div>
-				<div class="col-lg-2 col-xs-6">
-					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROQ3Yw6xjzpQo93GtRO_ib5DYmtsP87OU1lWIlNAn3AcrpAfn-1Q" width="100">
-				</div>
-				<div class="col-lg-2 col-xs-6">
-					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROQ3Yw6xjzpQo93GtRO_ib5DYmtsP87OU1lWIlNAn3AcrpAfn-1Q" width="100">
-				</div>
-				<div class="col-lg-2 col-xs-6">
-					<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROQ3Yw6xjzpQo93GtRO_ib5DYmtsP87OU1lWIlNAn3AcrpAfn-1Q" width="100">
-				</div>
-			</div>
-		</div>
-		<div class="col-lg-12 col-xs-12">
-			<h2 style="color: red; text-align:center">Kenapa harus jadi Mitra B-Pro ?</h2>
-			<div>
-				<ul>
-					<li>Anda akan menjadi bos untuk brand sendiri</li>
-					<li>Punya produk sendirit tanpa harus produksi (sangat disarankan untuk pemula)</li>
-					<li>Tersedia 57+ jenis bahan baku</li>
-					<li>Bebas desain produk sesuka hati</li>
-					<li>Gratis konsultasi</li>
-					<li>Tanpa resiko</li>
-					<li>Garansi uang kembali</li>
-				</ul>
-				<div class="pull-right">
-					<a href="">Lihat 30 Lainnya </a>
+				<div class="col-md-8 col-xs-12 col-md-offset-2" style="margin-top: 100px">
+					<ol>
+						<li><h5>Anda akan menjadi bos untuk brand sendiri</h5></li>
+						<li><h5>Punya produk sendirit tanpa harus produksi (sangat disarankan untuk pemula)</h5></li>
+						<li><h5>Tersedia 57+ jenis bahan baku</h5></li>
+						<li><h5>Bebas desain produk sesuka hati</h5></li>
+						<li><h5>Gratis konsultasi</h5></li>
+						<li><h5>Tanpa resiko</h5></li>
+						<li><h5>Garansi uang kembali</h5></li>
+					</ol>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<div class="row" style='background-color:#c1c1c1'>
-	<div class="col-lg-12 col-xs-12">
-		<h2 style="color: red; text-align:center">Tim B-Pro Siap Membantu Anda !</h2>
-		<p style="text-align:center">Sangat Mudah untuk menggunakan Bikinprodukku.com. Tetapi Jika Memiliki Pertanyaan,tim  </p>
-		<div class="row">
-			<div class="container">
-				<div class="col-md-4">
-					<img src="" alt="" class="img-circle img-responsive">
-				</div>
-				<div class="col-md-4">
-					<img src="" alt="" class="img-circle img-responsive">
-				</div>
-				<div class="col-md-4">
-					<img src="" alt="" class="img-circle img-responsive">
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-{{-- <div class="row">
-	<div class="col-md-12">
-		<h2 style="text-align:center">Jadilah Bagian Dari Kami</h2>
-		<div class="row">
-			<div class="col-md-8 col-md-offset-2">
-				<img src="" alt="">
-			</div>
-		</div>
-		<div class="row">
-			<div class="container">
-				<h2 style="text-align:center">Daftar Sekarang Untuk Menerima Informasi Produk,Pasar,Promosi,Bonus dan Lainnya</h2>
-				<div class="col-md-8 col-md-offset-2">
-					<form action="">
-						<div class="form-group">
-							<input type="text" class="form-control" name="" placeholder="">
-						</div>
-						<div class="form-group">
-							<input type="text" class="form-control" name="" placeholder="">
-						</div>
-						<div class="form-group">
-							<input type="text" class="form-control" name="" placeholder="">
-						</div>
-						<input type="submit" class="btn btn-warning" value="kirim">
-					</form>
-				</div>
-			</div>
-		</div>
-		<div class="pull-right">
-			<button class="btn btn-md btn-danger">Bikin Produkmu Sekarang</button>
-		</div>
-	</div>
-</div> --}}
-<br>
-@endsection
+	@endsection

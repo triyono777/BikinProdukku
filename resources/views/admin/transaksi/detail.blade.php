@@ -50,7 +50,7 @@
 							@foreach($transaksi->detailTransaksi as $key => $value)
 							<tr>
 								<td>{{++$key}}</td>
-								<td><img src="{{URL::to('upload/bukti_pembayaran/'.$value['gambar_produk'])}}" class="img-thumbnail" width="100" height="80"></td>
+								<td><img src="{{URL::to('upload/gambar-produk-pengguna/'.$value['gambar_produk'])}}" class="img-thumbnail" width="100" height="80"></td>
 								<td>{{$value['nama_produk']}}</td>
 								<td>{{number_format($value['subtotal'])}}</td>
 								<td>

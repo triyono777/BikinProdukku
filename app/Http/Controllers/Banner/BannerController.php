@@ -23,7 +23,6 @@ class BannerController extends Controller
             $name = $request->file('gambar');
             $newName = time() . '.' . $name->getClientOriginalExtension();
             $image = Image::make($name);
-            $image->encode('jpg', 75);
             $image->save(public_path('upload/banner/' . $newName));
             $banner->gambar = $newName;
         }else {
@@ -49,7 +48,6 @@ class BannerController extends Controller
             	$name = $request->file('gambar');
     	        $newName = time() . '.' . $name->getClientOriginalExtension();
     	        $image = Image::make($name);
-    	        $image->encode('jpg', 75);
     	        $image->save(public_path('upload/banner/' . $newName));
     	        $banner->gambar = $newName;
             }

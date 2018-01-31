@@ -12,7 +12,7 @@
 			</a>
 			<div class="collapse" id="collapse-tambah" style="margin-top: 10px">
 			  <div class="well">
-			    <form action="" method="post" id="frm-tambah">
+			    <form method="post" id="frm-tambah">
 					<div class="form-group">
 						<label for="">Nama Testimonial</label>
 						<select class="form-control select2" id="id_user" style="width: 100% !important" name="id_user">

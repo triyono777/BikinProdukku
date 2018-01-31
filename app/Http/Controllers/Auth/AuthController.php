@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Helpers\AutoNumber;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Admin;
+use App\Models\FormulirPendaftaran\FormulirPendaftaran;
 use App\Models\Pengguna\Pengguna;
-use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Http\Request;
 use Session;
 
 class AuthController extends Controller
@@ -61,7 +62,8 @@ class AuthController extends Controller
                 $pengguna = Pengguna::where('username', $data['username'])->first();
                 $username = $pengguna['username'];
                 $id = $pengguna['id_user'];
-                return response()->json($pengguna);
+                $formulir = FormulirPendaftaran::where('id_user', $id)->get()->first();
+                return response()->json([$pengguna, $formulir]);
             }
             return response()->json(false);
     }
@@ -84,6 +86,19 @@ class AuthController extends Controller
             'whatsapp' => $request['whatsapp'],
         ]);
 
+        if ($request->ajax()) {
+            $data = [
+                    'username' => $pengguna['username'],
+                    'password' => $pengguna['password']
+                ];
+
+            if (Auth::guard('pengguna')->attempt($data)) {
+                $pengguna = Pengguna::where('username', $data['username'])->first();
+                $username = $pengguna['username'];
+                $id = $pengguna['id_user'];
+                return response()->json($pengguna);
+            }
+        }
         return redirect()->back()->with('login', 'Selamat Akun Anda Sudah jadi');
     }
 
