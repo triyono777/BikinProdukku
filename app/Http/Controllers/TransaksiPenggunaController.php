@@ -11,6 +11,7 @@ use App\Models\Produk\GambarTemplate;
 use App\Models\Produk\GambarWarna;
 use App\Models\Produk\Produk;
 use App\Models\Tagline\Tagline;
+use App\Models\Tracking\Tracking;
 use App\Models\Transaksi\DetailTransaksi;
 use App\Models\Transaksi\SubDetailTransaksi;
 use App\Models\Transaksi\Transaksi;
@@ -58,6 +59,10 @@ class TransaksiPenggunaController extends Controller
         $transaksi->total = $request['total_keseluruhan'];
         $transaksi->tanggal = date('Y-m-d');
         $transaksi->save();
+
+        // tracking
+        $tracking = new Tracking;
+        $tracking->save();
 
         // Tagline
         $tagline = new Tagline;

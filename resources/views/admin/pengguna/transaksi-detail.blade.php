@@ -17,7 +17,7 @@
 		<!-- /.col -->
 		<!-- info row -->
 		<div class="col-md-12">
-			<span class="pull-right"><h3>Total: {{number_format($pengguna['total'])}}</h3></span>
+			<span class="pull-right"><h3>Total: Rp .{{number_format($pengguna['total'])}}</h3></span>
 		</div>
 		<div class="invoice-info">
 			<div class="col-sm-6 invoice-col">
@@ -49,11 +49,11 @@
 							@foreach($pengguna['detail_transaksi'] as $key => $value)
 							<tr>
 								<td>{{++$key}}</td>
-								<td><img src="{{$value['gambar_produk']}}" class="img-thumbnail" width="100" height="80"></td>
+								<td><img src="{{URL::to('upload/gambar-produk-pengguna/'.$value['gambar_produk'])}}" class="img-thumbnail" width="100" height="80"></td>
 								<td>{{$value['nama_produk']}}</td>
 								<td>{{number_format($value['subtotal'])}}</td>
 								<td>
-									<a href="{{route('akun.penggunaSubTransaksiDetailView', [$value['kode_detail']])}}" class="btn btn-info">Detail</a>
+									<a href="{{route('akun.penggunaSubTransaksiDetailView', [$kode_invoice, $value['kode_detail']])}}" class="btn btn-info">Detail</a>
 								</td>
 							</tr>
 							@endforeach
@@ -69,7 +69,11 @@
 				<!-- accepted payments column -->
 				<div class="col-xs-4">
 					<h3>Bukti Pembayaran</h3>
+					@if($pengguna['gambar_bukti'] == null)
+						<span class="badge">Belum upload bukti pembayaran</span>
+					@else
 					<img src="{{URL::to('upload/bukti_pembayaran/'.$pengguna['gambar_bukti'])}}" class="img-responsive" width="150px" height="150px">
+					@endif
 				</div>
 				<!-- /.col -->
 				<div class="col-xs-8 col-md-8">

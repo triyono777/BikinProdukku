@@ -17,7 +17,7 @@
 		<!-- /.col -->
 		<!-- info row -->
 		<div class="col-md-12">
-			<span class="pull-right"><h3>Total: {{number_format($transaksi->detailTransaksi->sum('subtotal'))}}</h3></span>
+			<span class="pull-right"><h3>Total: {{number_format($transaksi['total'])}}</h3></span>
 		</div>
 		<div class="invoice-info">
 			<div class="col-sm-6 invoice-col">
@@ -47,7 +47,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($transaksi->detailTransaksi as $key => $value)
+							@foreach($transaksi['detail_transaksi'] as $key => $value)
 							<tr>
 								<td>{{++$key}}</td>
 								<td><img src="{{URL::to('upload/gambar-produk-pengguna/'.$value['gambar_produk'])}}" class="img-thumbnail" width="100" height="80"></td>
@@ -70,7 +70,11 @@
 				<!-- accepted payments column -->
 				<div class="col-xs-4">
 					<h3>Bukti Pembayaran</h3>
-					<img src="{{URL::to('upload/bukti_pembayaran/'.$value['gambar_produk'])}}" class="img-responsive" width="150px" height="150px">
+					@if($transaksi['gambar_bukti'] == null)
+						<span class="badge">Belum upload bukti pembayaran</span>
+					@else
+					<img src="{{URL::to('upload/bukti_pembayaran/'.$transaksi['gambar_bukti'])}}" class="img-responsive" width="150px" height="150px">
+					@endif
 				</div>
 				<!-- /.col -->
 				<div class="col-xs-8 col-md-8">
@@ -142,7 +146,7 @@
 			<!-- /.row -->
 		</div>
 	</div>
-	<div class="box">
+	{{-- <div class="box">
 		<!-- title row -->
 		<div class="box-header">
 			<h3 class="page-header">Tagline</h3>
@@ -180,9 +184,9 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> --}}
 {{-- modal tagline --}}
-<div class="modal fade" id="modal-edit">
+{{-- <div class="modal fade" id="modal-edit">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -208,7 +212,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> --}}
 {{-- modal status --}}
 <div class="modal fade" id="modal-status">
 	<div class="modal-dialog">

@@ -87,7 +87,7 @@ class TaglineController extends Controller
      */
     public function update(Request $request, $kode_invoice, $id)
     {
-        $tagline = Tagline::where('id_tagline', $id)->first();
+        $tagline = Tagline::where('id_tagline', $request['id'])->first();
         $tagline->update([
             'nama' => $request['nama'],
             'isi' => $request['isi'],

@@ -41,7 +41,7 @@ Route::group(['middleware' => 'pengguna'], function() {
 		Route::get('/', 'Pengguna\PenggunaController@penggunaView')->name('akun.penggunaView');
 		Route::get('/transaksi-data', 'Pengguna\PenggunaController@penggunaTransaksiData')->name('akun.penggunaTransaksiData');
 		Route::get('/transaksi/{kode_invoice}/detail/', 'Pengguna\PenggunaController@penggunaTransaksiDetailView')->name('akun.penggunaTransaksiDetailView');
-		Route::get('/transaksi/detail/sub-transaksi&kode={kode_detail}', 'Pengguna\PenggunaController@penggunaSubTransaksiDetailView')->name('akun.penggunaSubTransaksiDetailView');
+		Route::get('/transaksi/{kode_invoice}/detail/sub-transaksi&kode={kode_detail}', 'Pengguna\PenggunaController@penggunaSubTransaksiDetailView')->name('akun.penggunaSubTransaksiDetailView');
 		Route::get('/data-pribadi', 'Pengguna\PenggunaController@dataPribadiView')->name('akun.dataPribadiView');
 		Route::post('/data-pribadi', 'Pengguna\PenggunaController@dataPribadiPost')->name('akun.dataPribadiPost');
 	});
@@ -68,7 +68,8 @@ Route::group(['middleware' => 'admin'], function() {
 	Route::post('/transaksi/detail/{id}/statusUpdate', 'Transaksi\TransaksiController@transaksiStatusUpdate')->name('admin.transaksiStatusUpdate');
 	Route::post('/transaksi/detail/{id}/trackingUpdate', 'Transaksi\TransaksiController@transaksiTrackingUpdate')->name('admin.transaksiTrackingUpdate');
 
-	Route::resource('/transaksi/detail/{id}/tagline', 'TaglineController');
+	// Route::resource('/transaksi/detail/{id}/tagline', 'TaglineController');
+	Route::post('/transaksi/detail/{id}/sub-detail/{subId}/tagline-post', 'TaglineController@update')->name('tagline.update');
 
 	// sub transaksi detail
 	Route::get('/transaksi/detail/{id}/sub-detail/{subId}', 'Transaksi\TransaksiController@transaksiSubDetailView')->name('admin.transaksiSubDetailView');

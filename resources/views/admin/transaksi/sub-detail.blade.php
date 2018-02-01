@@ -10,15 +10,14 @@
 		</div>
 		<div class="box-body">
 			<div class="col-md-6 col-xs-12">
-					<h3><b>#{{$kode_invoice}}</b></h3>
-					<h3>{{$detailTransaksi['nama_produk']}}</h3>
+				<h3><b>#{{$kode_invoice}}</b></h3>
+				<h3>{{$detailTransaksi['nama_produk']}}</h3>
 			</div>
 			<div class="col-md-6 col-xs-12">
 				<span class="pull-right">
 					<h3>Sub Total : {{number_format($detailTransaksi->subDetailTransaksi->sum('subtotal'))}}</h3>
 				</span>
 			</div>
-
 			<div class="col-md-12 col-xs-12">
 				<div class="table-responsive">
 					<table id="datatables" class="table table-bordered table-hover">
@@ -32,12 +31,12 @@
 						</thead>
 						<tbody>
 							@foreach($detailTransaksi->subDetailTransaksi as $key => $value)
-								<tr>
-									<td>{{++$key}}</td>
-									<td>{{$value['nama_bahan']}}</td>
-									<td>{{$value['jumlah']}}</td>
-									<td>{{number_format($value['subtotal'])}}</td>
-								</tr>
+							<tr>
+								<td>{{++$key}}</td>
+								<td>{{$value['nama_bahan']}}</td>
+								<td>{{$value['jumlah']}}</td>
+								<td>{{number_format($value['subtotal'])}}</td>
+							</tr>
 							@endforeach
 						</tbody>
 					</table>
@@ -45,6 +44,75 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div class="col-md-12">
+	<div class="box">
+		<div class="col-xs-12">
+			<h2 class="page-header">
+			<i class="fa fa-hastag"></i> TagLine
+			</h2>
+		</div>
+		<div class="box-body">
+			<form method="post" id="frm-tagline">
+			<input type="text" name="nama" value="{{$tagline['nama']}}" class="form-control">
+			<input type="hidden" name="id" value="{{$tagline['id_tagline']}}">
+			<hr>
+			<textarea class="form-control textarea" name="isi">{{$tagline['isi']}}</textarea>
+			<button type="submit" class="btn btn-primary btn-block">Simpan Perubahan</button>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="col-md-4">
+	<div class="box">
+		<div class="col-xs-12">
+			<h2 class="page-header">
+			<i class="fa fa-image"></i> Gambar Produk
+			</h2>
+		</div>
+		<div class="box-body">
+			@if($detailTransaksi['gambar_produk'] != null)
+				<img src="{{URL::to('upload/gambar-produk-pengguna/'. $detailTransaksi['gambar_produk'])}}" class="img-thumbnail">
+			@else
+				<span class="badge">Belum upload gambar</span>
+			@endif
+		</div>
+	</div>
+</div>
+<div class="col-md-4">
+	<div class="box">
+		<div class="col-xs-12">
+			<h2 class="page-header">
+			<i class="fa fa-image"></i> Gambar Logo
+			</h2>
+		</div>
+		<div class="box-body">
+			@if($detailTransaksi['gambar_logo'] != null)
+				<img src="{{URL::to('upload/gambar-logo-pengguna/'. $detailTransaksi['gambar_logo'])}}" class="img-thumbnail">
+			@else
+				<span class="badge">Belum upload gambar</span>
+			@endif
+		</div>
+	</div>
+</div>
+<div class="col-md-4">
+	<div class="box">
+		<div class="col-xs-12">
+			<h2 class="page-header">
+			<i class="fa fa-image"></i> Gambar Sendiri
+			</h2>
+		</div>
+		<div class="box-body">
+			@if($detailTransaksi['gambar_sendiri'] != null)
+				<img src="{{URL::to('upload/gambar-produk-pengguna/'. $detailTransaksi['gambar_sendiri'])}}" class="img-thumbnail">
+			@else
+				<span class="badge">Belum upload gambar</span>
+			@endif
+		</div>
+	</div>
+</div>
+
+<div class="col-md-12">
 	<div class="box">
 		<!-- title row -->
 		<div class="col-xs-12">
@@ -54,17 +122,30 @@
 		</div>
 		<div class="box-body">
 			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-			tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-			quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-			consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-			cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
 			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 		</div>
 	</div>
 </div>
+</div>
+@endsection
+@section('customJs')
+<script type="text/javascript">
+	$('#frm-tagline').on('submit', function(e) {
+		e.preventDefault();
+		const data = $(this).serialize();
+		$.post("{{route('tagline.update', [$id, $subId])}}", data, function(data) {
+			console.log(data);
+			alertify.success('Data berhasil di update !');
+		})
+	})
+</script>
 @endsection

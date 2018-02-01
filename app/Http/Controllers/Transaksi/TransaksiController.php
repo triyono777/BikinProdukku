@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Transaksi;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tagline\Tagline;
 use App\Models\Tracking\Tracking;
 use App\Models\Transaksi\DetailTransaksi;
 use App\Models\Transaksi\SubDetailTransaksi;
@@ -17,7 +18,7 @@ class TransaksiController extends Controller
     }
 
     public function transaksiDetailView($id) {
-        $transaksi = Transaksi::with(['tracking', 'detailTransaksi'])->where('kode_invoice', $id)->first();
+        $transaksi = Transaksi::with(['tracking', 'detailTransaksi'])->where('kode_invoice', $id)->first()->toArray();
         $kode_invoice = $id;
     	return view('admin.transaksi.detail', compact(['transaksi', 'kode_invoice']));
     }
@@ -26,9 +27,10 @@ class TransaksiController extends Controller
         // $subDetailTransaksi = SubDetailTransaksi::with('detailTransaksi')->where('kode_detail', $subId)->get()->toArray();
         $detailTransaksi = DetailTransaksi::with('subDetailTransaksi')->where('kode_detail', $subId)->first();
         $kode_invoice = $id;
+        $tagline = Tagline::where('kode_invoice', $id)->first()->toArray();
         // $nama_produk = $subDetailTransaksi[0]['detail_transaksi']['nama_produk'];
         // dd($detailTransaksi);
-    	return view('admin.transaksi.sub-detail', compact(['detailTransaksi', 'kode_invoice']));
+    	return view('admin.transaksi.sub-detail', compact(['detailTransaksi', 'kode_invoice', 'tagline', 'id', 'subId']));
     }
 
     // transaksi CRUD
