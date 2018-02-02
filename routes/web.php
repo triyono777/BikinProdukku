@@ -1,4 +1,5 @@
 <?php
+
 // Home
 Route::get('/', 'Home\HomeController@index')->name('home');
 Route::post('/akun/loginpengguna', 'Auth\AuthController@loginPost')->name('admin.penggunaLogin');
@@ -24,8 +25,14 @@ Route::get('/transaksi/{kode_produk}/{kode_gambar}/getGambarTemplate', 'Transaks
 Route::get('/transaksi/{kode_produk}/{kode_gambar}/getGambarWarna', 'TransaksiPenggunaController@getGambarWarna')->name('getGambarWarna');
 Route::post('/transaksi/{kode_produk}/{kode_gambar}/transaksiProses', 'TransaksiPenggunaController@transaksiProses')->name('transaksiProses');
 
+
 // cart
 Route::get('/cart', 'TransaksiPenggunaController@cart')->name('home.cart');
+Route::get('/cart/detail', 'TransaksiPenggunaController@cartDetail')->name('cart.detail');
+Route::post('/cart/delete', 'TransaksiPenggunaController@cartDelete')->name('cart.delete');
+Route::get('/cart/konfirmasi-pembayaran', 'TransaksiPenggunaController@pembayaranView')->name('cart.pembayaran');
+
+Route::post('/cart/konfirmasi-pembayaran', 'TransaksiPenggunaController@pembayaranPost')->name('cart.pembayaranPost');
 
 
 // Admin

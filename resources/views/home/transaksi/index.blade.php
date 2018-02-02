@@ -54,7 +54,7 @@
 						<div id="gambar-warna">
 						</div>
 						<div class="pull-right">
-							<a class="btn" download="my-file-name.png" id="btDownload" onclick="downloadgmbr()">Downlload Gambar</a>
+							<a class="btn" download="my-file-name.png" id="btDownload" onclick="downloadgmbr()">Download Gambar</a>
 							@if(!auth()->guard('pengguna')->check())
 							<a class="btn btn-primary btn-lanjutkan" href="#modal-login" data-toggle="modal">Lanjutkan</a>
 							@endif
@@ -145,11 +145,11 @@
 				<div class="panel-body">
 					<div class="form-group">
 						<label>Nama Tagline</label>
-						<input type="text" name="nama_tagline" class="form-control">
+						<input type="text" name="nama_tagline" class="form-control" id="nama_tagline">
 					</div>
 					<div class="form-group">
 						<label>Isi Tagline</label>
-						<textarea class="form-control textarea" placeholder="Nama: Nama Produk Detail Produk : bla bla bla bla" name="tagline"></textarea>
+						<textarea class="form-control textarea" placeholder="Nama: Nama Produk Detail Produk : bla bla bla bla" name="tagline" id="tagline"></textarea>
 					</div>
 				</div>
 			</div>
@@ -169,45 +169,46 @@
 				</div>
 			</div>
 			<div class="table-responsive">
-			<table class="table">
-				<tbody>
-					@foreach($bahanBaku as $keyBahan => $valueBahan)
+				<table class="table">
+					<tbody>
+						@foreach($bahanBaku as $keyBahan => $valueBahan)
+						<tr>
+							<td>
+								<input type="text" name="bahan_baku[]" class="form-control bahan_baku" value="{{$valueBahan['nama_bahan']}}" readonly="">
+							</td>
+							<td>
+								<input type="number" name="satuan[]" min="{{$valueBahan['minimal']}}" max="{{$valueBahan['maximal']}}" class="form-control satuan" value="{{$valueBahan['berat']}}" id="satuan-{{$loop->index}}" onchange="ubahHarga('satuan-{{$loop->index}}','harga-{{$loop->index}}', '{{$valueBahan['berat']}}', '{{$valueBahan['harga']}}','{{$valueBahan['minimal']}}','{{$valueBahan['maximal']}}')">
+							</td>
+							<td>
+								{{$valueBahan['satuan']['nama_satuan']}}
+								<input type="hidden" name="nama_satuan[]" value="{{$valueBahan['satuan']['nama_satuan']}}" class="nama_satuan">
+							</td>
+							<td>
+								<div class="input-group">
+									<div class="input-group-addon">Rp.</div>
+									<input type="text" name="harga[]" class="harga form-control" value="{{$valueBahan['harga']}}" id="harga-{{$loop->index}}" readonly="" >
+								</div>
+							</td>
+						</tr>
+						@endforeach
+					</tbody>
+					<tfoot>
 					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
 						<td>
-							<input type="text" name="bahan_baku[]" class="form-control" value="{{$valueBahan['nama_bahan']}}" readonly="">
-						</td>
-						<td>
-							<input type="number" name="satuan[]" min="{{$valueBahan['minimal']}}" max="{{$valueBahan['maximal']}}" class="form-control" value="{{$valueBahan['berat']}}" id="satuan-{{$loop->index}}" onchange="ubahHarga('satuan-{{$loop->index}}','harga-{{$loop->index}}', '{{$valueBahan['berat']}}', '{{$valueBahan['harga']}}','{{$valueBahan['minimal']}}','{{$valueBahan['maximal']}}')">
-						</td>
-						<td>
-							{{$valueBahan['satuan']['nama_satuan']}}
+							<span class="label label-info">Biaya Total Produksi 1 PCS (HPP)</span>
 						</td>
 						<td>
 							<div class="input-group">
 								<div class="input-group-addon">Rp.</div>
-								<input type="text" name="harga[]" class="form-control" value="{{$valueBahan['harga']}}" id="harga-{{$loop->index}}" readonly="">
+								<input type="text" name="biaya_total" id="biaya_total" class="form-control" value="{{$totalAwal}}" onchange='ubahTotal()' readonly="">
 							</div>
 						</td>
 					</tr>
-					@endforeach
-				</tbody>
-				<tfoot>
-				<tr>
-					<td>&nbsp;</td>
-					<td>&nbsp;</td>
-					<td>
-						<span class="label label-info">Biaya Total Produksi 1 PCS (HPP)</span>
-					</td>
-					<td>
-						<div class="input-group">
-							<div class="input-group-addon">Rp.</div>
-							<input type="text" name="biaya_total" id="biaya_total" class="form-control" value="{{$totalAwal}}" onchange='ubahTotal()' readonly="">
-						</div>
-					</td>
-				</tr>
-				</tfoot>
-			</table>
-		</div>
+					</tfoot>
+				</table>
+			</div>
 			<div class="col-md-4 col-xs-12">
 				<div style="background-color: aqua; padding: 4px;">
 					<h4 style="text-align: center">Biaya Tambahan</h4>
@@ -247,6 +248,16 @@
 				</tr>
 				</tfoot>
 			</table>
+			<div class="container">
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title">Rincian Produk</h3>
+					</div>
+					<div class="panel-body" id="rincian">
+						<span style="text-align: center;" class="btn btn-rincian btn-danger btn-md">Lihat Rincian Produk</span>
+					</div>
+				</div>
+			</div>
 			@if(count($formulirPendaftaran) == 0)
 			<div class="container" id="formulir_pendaftaran1">
 				<div class="panel panel-default">
@@ -355,6 +366,7 @@
 				&nbsp;
 			</div>
 			@endif
+
 			<div class="col-md-8 col-md-offset-2">
 				<button type="submit" class="btn btn-primary btn-block">Simpan Transaksi</button>
 			</div>
@@ -374,13 +386,46 @@
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
+	$('.btn-rincian').on('click', function(){
+		var input = $('#frm-biaya');
+		const nama_tagline = input.find("input[name='nama_tagline']").val();
+		const isi_tagline = input.find("textarea#tagline").val();
+		const bahan_baku = input.find("input[name='bahan_baku[]']").map(function() {return $(this).val();}).get();
+		var jumlah = input.find("input[name='satuan[]']").map(function() {return $(this).val();}).get();
+		var nama_satuan = input.find("input[name='nama_satuan[]']").map(function() {return $(this).val();}).get();
+		var harga = input.find("input[name='harga[]']").map(function() {return $(this).val();}).get();
+		const biaya_tambahan = input.find("input[name='subtotal_biaya_tambahan']").val();
+		const total_keseluruhan = input.find("input[name='total_keseluruhan']").val();
+
+		const rincian = '<div class="col-md-12">'+
+						'<table class="table table-striped table-hover">'+
+							'<tr>'+
+								'<td>Nama Tagline</td>'+
+								'<td>:</td>'+
+								'<td>'+nama_tagline+'</td>'+
+							'</tr>'+
+							'<tr>'+
+								'<td>Isi Tagline</td>'+
+								'<td>:</td>'+
+								'<td>'+isi_tagline+'</td>'+
+							'</tr>'+
+							'<tr>'+
+								'<td>Bahan Baku</td>'+
+								'<td>:</td>'+
+								'<td>'+$.each([bahan_baku], function(key, value) {value})+'</td>'+
+							'</tr>'+
+						'</div>';
+		$(this).remove();
+		$('#rincian').append(rincian);
+
+	})
 	$('#hitung_total').on('click', function(e) {
 		e.preventDefault();
 		const subtotal_biaya_tambahan = $('#subtotal_biaya_tambahan').val();
 		const biaya_total = $('#biaya_total').val();
 		const hasil = (parseFloat(subtotal_biaya_tambahan) + parseFloat(biaya_total));
 		$('#total_keseluruhan').val(hasil);
-	})
+	});
 	$('.gambar-produk').on('click', function() {
 		var kode_gambar = $(this).data('kode_gambar');
 		$.ajax({
@@ -402,7 +447,6 @@
 			const data = $(this).serialize();
 			// console.log(data);
 			$.post('{{route('admin.loginAkun')}}',data, function(data) {
-				// console.log(data);
 const login = '<ul class="nav navbar-nav navbar-right"><li class="dropdown"><a href="#x" class="dropdown-toggle" data-toggle="dropdown">'+data[0].username+'<b class="caret"></b></a><ul class="dropdown-menu"><li><a href="{{route('akun.penggunaView')}}"> Dashboard</a></li><li><a href="{{route('akun.logout')}}">Logout</a></li></ul></li></ul>';
 const faq = '<a href="{{route('faq')}}">Faq</a>';
 const formulir = '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Formulir Pendaftaran</h3></div><div class="panel-body"><table class="table"><tbody><tr><td>NIK</td><td>:</td><td><input type="text" name="nik" class="form-control" required=""></td></tr><tr><td>Nama Lengkap</td><td>:</td><td><input type="text" name="nama_lengkap" class="form-control" required=""></td></tr><tr><td>Tempat</td><td>:</td><td><input type="text" name="tempat" class="form-control" required=""></td></tr><tr><td>Tanggal Lahir</td><td>:</td><td><input type="date" name="tgl_lahir" class="form-control" required=""></td></tr><tr><td>Jenis Kelamin</td><td>:</td><td><select class="form-control" required="" name="jenis_kelamin"><option value="pria">Pria</option><option value="wanita">Wanita</option></select></td></tr><tr><td>Status Perkawinan</td><td>:</td><td><select class="form-control" name="status_perkawinan" required=""><option disabled="" selected="">-status perkawinan-</option><option value="kawin">Kawin</option><option value="belum kawin">Belum Kawin</option><option value="janda">Janda</option><option value="duda">Duda</option></select></td></tr><tr><td>pekerjaan</td><td>:</td><td><input type="text" name="pekerjaan" class="form-control" required=""></td></tr><tr><td>Alamat</td><td>:</td><td><textarea name="alamat" required="" class="form-control" id="pekerjaan" rows="3"></textarea></td></tr><tr><td>Foto</td><td>:</td><td><input type="file" required="" name="foto" class="form-control"></td></tr><tr><td>Motivasi Berbisnis</td><td>:</td><td><input type="text" required="" name="motivasi_berbisnis" class="form-control"></td></tr><tr><td>Hobi</td><td>:</td><td><input type="text" required="" name="hobi" class="form-control"></td></tr></tbody></table></div></div>';
@@ -414,11 +458,13 @@ const formulir = '<div class="panel panel-default"><div class="panel-heading"><h
 					$('#modal-login').modal('hide');
 					$('#ul-login').append(login);
 					$('#li-faq').append(faq);
+					$('#formulir_pendaftaran1').remove();
 				}
 				if (data[1] == null) {
 					$('#formulir_pendaftaran1').hide();
 					$('#formulir_pendaftaran').append(formulir);
 				}
+				alert('anda berhasil login');
 				});
 			});
 	$('#frm-register').on('submit', function(e) {
@@ -440,21 +486,21 @@ console.log(idsatuan, idharga, beratAwal, hargaAwal);
 var satuan = document.getElementById(idsatuan).value;
 var harga = document.getElementById(idharga).value;
 if (parseFloat(satuan)<parseFloat(minimal)||parseFloat(satuan)>parseFloat(maximal)) {
-											satuan=beratAwal;
-											document.getElementById(idsatuan).value=beratAwal;
-											}
-											var subtotal = (satuan/beratAwal)*hargaAwal;
-											var biaya_total = document.getElementById('biaya_total').value;
-											biaya_total = (biaya_total - harga)+subtotal;
-											document.getElementById('biaya_total').value = biaya_total;
-											document.getElementById(idharga).value = subtotal;
-											}
-											function ubahTotal(){
-											var biaya_total = document.getElementById("biaya_total").value;
-											var subtotal_biaya_tambahan = document.getElementById("subtotal_biaya_tambahan").value;
-											var grandTot = biaya_total + subtotal_biaya_tambahan;
-											document.getElementById("total_keseluruhan").value = grandTot;
-											}
+												satuan=beratAwal;
+												document.getElementById(idsatuan).value=beratAwal;
+												}
+												var subtotal = (satuan/beratAwal)*hargaAwal;
+												var biaya_total = document.getElementById('biaya_total').value;
+												biaya_total = (biaya_total - harga)+subtotal;
+												document.getElementById('biaya_total').value = biaya_total;
+												document.getElementById(idharga).value = subtotal;
+												}
+												function ubahTotal(){
+												var biaya_total = document.getElementById("biaya_total").value;
+												var subtotal_biaya_tambahan = document.getElementById("subtotal_biaya_tambahan").value;
+												var grandTot = biaya_total + subtotal_biaya_tambahan;
+												document.getElementById("total_keseluruhan").value = grandTot;
+												}
 	</script>
 	<script>
 	var canvas, ctx, bMouseIsDown = false, iLastX, iLastY,

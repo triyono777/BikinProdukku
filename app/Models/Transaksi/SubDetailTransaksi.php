@@ -10,6 +10,8 @@ class SubDetailTransaksi extends Model
 
    protected $guarded = ['kode_sub'];
 
+   protected $primaryKey = 'kode_sub';
+
    public function detailTransaksi() {
    	return $this->belongsTo('App\Models\Transaksi\DetailTransaksi', 'kode_detail', 'kode_detail');
    }

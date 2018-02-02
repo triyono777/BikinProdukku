@@ -13,6 +13,11 @@
 								<a href="{{route('home.cart')}}">
 									Cart
 									<i class="fa fa-shopping-cart"></i>
+									@if($jumlah_cart != 0)
+										<span class="badge badge-danger">{{$jumlah_cart}}</span>
+									@else
+
+									@endif
 								</a>
 							</li>
 							@if(!auth()->guard('pengguna')->check())

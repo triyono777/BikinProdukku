@@ -16,6 +16,9 @@ use App\Models\Transaksi\DetailTransaksi;
 use App\Models\Transaksi\SubDetailTransaksi;
 use App\Models\Transaksi\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image;
 
 class TransaksiPenggunaController extends Controller
@@ -51,22 +54,35 @@ class TransaksiPenggunaController extends Controller
 
     public function transaksiProses(Request $request, $kode_produk, $kode_gambar) {
         // dd($request->all());
-        $id_user = auth()->guard('pengguna')->user()->id_user;
-        // transaksi
-        $transaksi = new Transaksi;
-        $transaksi->kode_invoice = AutoNumber::autoNumberTransaksi('transaksi', 'kode_invoice', 'INV');
-        $transaksi->id_user = $id_user;
-        $transaksi->total = $request['total_keseluruhan'];
-        $transaksi->tanggal = date('Y-m-d');
-        $transaksi->save();
+        // Session::forget('kode_invoice');
 
-        // tracking
-        $tracking = new Tracking;
-        $tracking->save();
+        $id_user = auth()->guard('pengguna')->user()->id_user;
+        if (Session::get('kode_invoice') == null) {
+            $transaksi = new Transaksi;
+            $transaksi->kode_invoice = AutoNumber::autoNumberTransaksi('transaksi', 'kode_invoice', 'INV');
+            $transaksi->id_user = $id_user;
+            $transaksi->total = $request['total_keseluruhan'];
+            $transaksi->tanggal = date('Y-m-d');
+            $transaksi->save();
+            // create session
+            Session::put('kode_invoice', $transaksi->kode_invoice);
+            // tracking
+            $tracking = new Tracking;
+            $tracking->kode_invoice = $transaksi->kode_invoice;
+            $tracking->save();
+
+        }else {
+            $transaksi = Transaksi::select(['kode_invoice', 'total'])->where('kode_invoice', Session::get('kode_invoice'))->first();
+            $penambahan_total = $transaksi['total'] += $request['total_keseluruhan'];
+            $transaksi->total = $penambahan_total;
+            $transaksi->save();
+        }
+        $cek_session = Session::get('kode_invoice');
+
 
         // Tagline
         $tagline = new Tagline;
-        $tagline->kode_invoice = $transaksi->kode_invoice;
+        $tagline->kode_invoice = $cek_session;
         $tagline->nama = $request['nama_tagline'];
         $tagline->isi = $request['tagline'];
         $tagline->save();
@@ -76,8 +92,9 @@ class TransaksiPenggunaController extends Controller
 
         // detail transaksi
         $detailTransaksi = new DetailTransaksi;
-        $detailTransaksi->kode_invoice = $transaksi->kode_invoice;
+        $detailTransaksi->kode_invoice = $cek_session;
         $detailTransaksi->nama_produk = $produk['nama_produk'];
+        $detailTransaksi->biaya_design = $request['subtotal_biaya_tambahan'];
         if ($request->file('gambar_produk_baru')) {
             $name = $request->file('gambar_produk_baru');
             $gambar_produk_baru = time() . str_random(10) . '.' . $name->getClientOriginalExtension();
@@ -106,11 +123,11 @@ class TransaksiPenggunaController extends Controller
             $detailTransaksi->gambar_sendiri = $gambar_sendiri;
         }
         $detailTransaksi->save();
-
+        // dd($detailTransaksi);
         // input sub detail transaksi
         foreach ($request['bahan_baku'] as $key => $value) {
             $subDetailTransaksi = new SubDetailTransaksi;
-            $subDetailTransaksi->kode_detail = $detailTransaksi->id;
+            $subDetailTransaksi->kode_detail = $detailTransaksi->kode_detail;
             $subDetailTransaksi->nama_bahan = $value;
             $subDetailTransaksi->jumlah = $request['satuan'][$key];
             $subDetailTransaksi->subtotal = $request['harga'][$key];
@@ -154,8 +171,94 @@ class TransaksiPenggunaController extends Controller
         }else{
             $id_user = '';
         }
-        $transaksi = Transaksi::where(['id_user' => $id_user, 'status' => 0])->get()->toArray();
-        return view('home.cart', compact('transaksi'));
+        $transaksi = Transaksi::with(['detailTransaksi'])->where(['id_user' => $id_user, 'status' => 0])->first();
+        $kode_invoice = $transaksi['kode_invoice'];
+        return view('home.cart', compact('transaksi', 'kode_invoice'));
+    }
+
+    public function cartDelete(Request $request) {
+        if ($request['count'] == 1) {
+            $transaksi = DB::table('transaksi')
+                        ->where('kode_invoice', $request['kode_detail'])
+                        ->delete();
+
+            $detailTransaksi = DB::table('detail_transaksi')
+                            ->where('kode_invoice', $request['kode_detail'])
+                            ->first();
+            File::delete('upload/gambar-produk-pengguna/'.$detailTransaksi->gambar_produk);
+            File::delete('upload/gambar-logo-pengguna/'.$detailTransaksi->gambar_logo);
+            File::delete('upload/gambar-sendiri-pengguna/'.$detailTransaksi->gambar_sendiri);
+
+
+
+            $deleteSubDetailTransaksi = DB::table('sub_detail_transaksi')
+                            ->where('kode_detail', $detailTransaksi->kode_detail)
+                            ->delete();
+
+            $deleteDetailTransaksi = DB::table('detail_transaksi')
+                            ->where('kode_invoice', $request['kode_detail'])
+                            ->delete();
+
+            $tagline = DB::table('taglines')
+                            ->where('kode_invoice', $request['kode_detail'])
+                            ->delete();
+            $tracking = DB::table('tracking')
+                            ->where('kode_invoice', $request['kode_detail'])
+                            ->delete();
+
+            session()->forget('kode_invoice');
+            return response()->json($result);
+        }else {
+            $subtotal = DB::table('detail_transaksi')
+                        ->where('kode_detail', '=', (int)$request['kode_detail'])
+                        ->sum(DB::raw('subtotal + biaya_design'));
+
+            $kode_invoice = session()->get('kode_invoice');
+
+            $transaksi = DB::table('transaksi')
+                        ->where('kode_invoice', $kode_invoice)
+                        ->select(['kode_invoice', 'total'])
+                        ->first();
+            $hasil = ($transaksi->total - $subtotal);
+            $transaksi2 = DB::table('transaksi')
+                        ->where('kode_invoice', $kode_invoice)
+                        ->update(['total' => $hasil]);
+
+            $deleteDetailTransaksi = DB::table('detail_transaksi')
+                            ->where('kode_detail', $request['kode_detail'])
+                            ->delete();
+
+            $deleteSubDetailTransaksi = DB::table('sub_detail_transaksi')
+                            ->where('kode_detail', $request['kode_detail'])
+                            ->delete();
+
+            return response()->json($deleteDetailTransaksi);
+        }
+    }
+
+    public function cartDetail(Request $request) {
+        $subDetailTransaksi = SubDetailTransaksi::where('kode_detail', $request['kode_detail'])->get();
+        return response()->json($subDetailTransaksi);
+    }
+
+    public function pembayaranView() {
+        return view('home.pembayaran');
+    }
+
+    public function pembayaranPost(Request $request) {
+        if ($request->file('bukti_pembayaran')) {
+            $name = $request->file('bukti_pembayaran');
+            $kode_invoice = session()->get('kode_invoice');
+            $transaksi = Transaksi::where('kode_invoice', $kode_invoice)->first();
+            $bukti_pembayaran = time() . str_random(10) . '.' . $name->getClientOriginalExtension();
+            $image = Image::make($name);
+            $image->encode('jpg', 75);
+            $image->save(public_path('upload/bukti_pembayaran/' . $bukti_pembayaran));
+            $transaksi->gambar_bukti = $bukti_pembayaran;
+            $transaksi->save();
+        }
+
+        return redirect()->back()->with('success', 'Berhasil di upload, sistem kami akan segera mengkonfirmasi pembayaran anda');
     }
 }
 
