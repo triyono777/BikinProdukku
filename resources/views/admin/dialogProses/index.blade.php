@@ -19,8 +19,9 @@
 						<input type="file" name="gambar" id="" class="form-control">
 					</div>
 					<div class="form-group">
-						<label for="">Gambar Text</label>
-						<input type="file" name="gambar_text" id="" class="form-control">
+						<label for="">Keterangan</label>
+						{{-- <input type="file" name="gambar_text" id="" class="form-control"> --}}
+						<input type="text" name="keterangan" class="form-control">
 					</div>
 					<button class="btn btn-primary">Tambah</button>
 			    </form>
@@ -32,7 +33,7 @@
 						<tr>
 							<th>No</th>
 							<th>Gambar</th>
-							<th>Gambar Text</th>
+							<th>Keterangan</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -44,12 +45,13 @@
 								<img src="{{URL::to('upload/dialog-proses/'.$value['gambar'])}}" class="img-thumbnail" width="100" height="80">
 							</td>
 							<td>
-								<img src="{{URL::to('upload/dialog-proses/'.$value['gambar_text'])}}" class="img-thumbnail" width="100" height="80">
+								{{-- <img src="{{URL::to('upload/dialog-proses/'.$value['gambar_text'])}}" class="img-thumbnail" width="100" height="80"> --}}
+								{{$value['keterangan']}}
 							</td>
 							<td>
 								<a href="#modal-edit" data-toggle="modal" class="btn btn-warning edit"
 								data-id="{{$value['id_dialog']}}"
-								data-gambar_text="{{$value['gambar_text']}}"
+								data-keterangan="{{$value['keterangan']}}"
 								><i class=" fa fa-edit"></i></a>
 								<a href="#!" class="btn btn-danger delete"
 								data-id="{{$value['id_dialog']}}"
@@ -80,8 +82,9 @@
 						<input type="hidden" name="id" id="id">
 					</div>
 					<div class="form-group">
-						<label for="">Gambar Text Baru</label>
-						<input type="file" name="gambar_text" id="gambar_text" class="form-control">
+						<label for="">Keterangan</label>
+						{{-- <input type="file" name="gambar_text" id="gambar_text" class="form-control"> --}}
+						<input type="text" name="keterangan" class="form-control" id="keterangan">
 					</div>
 
 				<div class="modal-footer">
@@ -98,10 +101,12 @@
 <script type="text/javascript">
 	$('#datatables').on('click', '.edit', function() {
 		const id = $(this).data('id');
-		const gambar_text = $(this).data('gambar_text');
+		const keterangan = $(this).data('keterangan');
 		// console.log(id,gambar_text)
 		$("#modal-edit").find('#id').val(id);
-		$('iframe').contents().find('.textarea').html(gambar_text);
+		$("#modal-edit").find('#keterangan').val(keterangan);
+
+		// $('iframe').contents().find('.textarea').html(keterangan);
 	});
 	$('#datatables').on('click', '.delete', function() {
 		const id = $(this).data('id');

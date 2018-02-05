@@ -9,6 +9,7 @@ use App\Models\Transaksi\DetailTransaksi;
 use App\Models\Transaksi\SubDetailTransaksi;
 use App\Models\Transaksi\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Yajra\DataTables\Facades\DataTables;
 
 class TransaksiController extends Controller
@@ -35,7 +36,7 @@ class TransaksiController extends Controller
 
     // transaksi CRUD
     public function transaksiData() {
-    	$transaksi = Transaksi::with('pengguna')->get()->toArray();
+    	$transaksi = Transaksi::with('pengguna')->orderBy('tanggal', 'desc')->get()->toArray();
 
     	$datatables = DataTables::of($transaksi)
     		->editColumn('pengguna', function($data) {
@@ -72,8 +73,27 @@ class TransaksiController extends Controller
     }
 
     public function transaksiDelete(Request $request) {
-    	$transaksi = Transaksi::where('kode_invoice', $request['id'])->delete();
-    	return response()->json($transaksi);
+        $dataTransaksi = Transaksi::where('kode_invoice', $request['id'])->first();
+
+        File::delete('upload/bukti_pembayaran/'.$dataTransaksi->gambar_bukti);
+
+        $transaksi = Transaksi::where('kode_invoice', $request['id'])->delete();
+
+        $detailTransaksi = DetailTransaksi::where('kode_invoice', $request['id'])->get();
+
+        foreach ($detailTransaksi as $key => $value) {
+            File::delete('upload/gambar-produk-pengguna/'.$value->gambar_produk);
+            File::delete('upload/gambar-sendiri-pengguna/'.$value->gambar_sendiri);
+            File::delete('upload/gambar-logo-pengguna/'.$value->gambar_logo);
+            $subDetailTransaksi = SubDetailTransaksi::where('kode_detail', $detailTransaksi[$key]['kode_detail'])->delete();
+        }
+
+
+        $tagline = Tagline::where('kode_invoice', $request['id'])->delete();
+        $tracking = Tracking::where('kode_invoice', $request['id'])->delete();
+        $deleteDetailTransaksi = DetailTransaksi::where('kode_invoice', $request['id'])->delete();
+
+    	return response()->json($detailTransaksi);
     }
 
     public function transaksiStatusUpdate(Request $request, $id) {

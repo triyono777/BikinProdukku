@@ -50,7 +50,11 @@
 							@foreach($transaksi['detail_transaksi'] as $key => $value)
 							<tr>
 								<td>{{++$key}}</td>
-								<td><img src="{{URL::to('upload/gambar-produk-pengguna/'.$value['gambar_produk'])}}" class="img-thumbnail" width="100" height="80"></td>
+								<td>
+									<a href="{{URL::to('upload/gambar-produk-pengguna/'.$value['gambar_produk'])}}">
+									<img src="{{URL::to('upload/gambar-produk-pengguna/'.$value['gambar_produk'])}}" class="img-thumbnail" width="100" height="80">
+								</a>
+								</td>
 								<td>{{$value['nama_produk']}}</td>
 								<td>{{number_format($value['subtotal'])}}</td>
 								<td>
@@ -73,7 +77,9 @@
 					@if($transaksi['gambar_bukti'] == null)
 						<span class="badge">Belum upload bukti pembayaran</span>
 					@else
+					<a href="{{URL::to('upload/bukti_pembayaran/'.$transaksi['gambar_bukti'])}}">
 					<img src="{{URL::to('upload/bukti_pembayaran/'.$transaksi['gambar_bukti'])}}" class="img-responsive" width="150px" height="150px">
+					</a>
 					@endif
 				</div>
 				<!-- /.col -->
@@ -314,26 +320,6 @@
 @endsection
 @section('customJs')
 <script type="text/javascript">
-	$('#datatables2').DataTable({
-		processing: true,
-		serverSide: true,
-		ajax: '{{route('tagline.index', $kode_invoice)}}',
-		columns: [
-			{data: 'DT_Row_Index', orderable: false, searchable: false},
-			{data: 'nama'},
-			{data: 'isi'},
-			{data: 'action'},
-		]
-	});
-	$('#frm-tagline').on('submit', function(e) {
-		e.preventDefault();
-		const data = $(this).serialize();
-		$.post('{{route('tagline.store', $kode_invoice)}}', data, function(data) {
-			$('#datatables2').DataTable().ajax.reload();
-			$('#frm-tagline')[0].reset();
-			alertify.success('Data berhasil di tambah !');
-		});
-	});
 	$('#datatables2').on('click', '.edit', function() {
 		const id = $(this).data('id');
 		const nama = $(this).data('nama');

@@ -14,6 +14,7 @@ Route::get('/tentang', 'Home\HomeController@tentang')->name('tentang');
 
 // testimonial
 Route::get('/testimonial', 'Home\HomeController@testimonial')->name('testimonial');
+Route::post('/testimonial', 'Home\HomeController@testimonialPost')->name('testimonialPost');
 
 // lihat pasar
 Route::get('/lihat-pasar', 'Home\HomeController@lihat_pasar')->name('lihat_pasar');
@@ -51,6 +52,7 @@ Route::group(['middleware' => 'pengguna'], function() {
 		Route::get('/transaksi/{kode_invoice}/detail/sub-transaksi&kode={kode_detail}', 'Pengguna\PenggunaController@penggunaSubTransaksiDetailView')->name('akun.penggunaSubTransaksiDetailView');
 		Route::get('/data-pribadi', 'Pengguna\PenggunaController@dataPribadiView')->name('akun.dataPribadiView');
 		Route::post('/data-pribadi', 'Pengguna\PenggunaController@dataPribadiPost')->name('akun.dataPribadiPost');
+		// Route::get('/proyeksi-keuangan', 'Pengguna\PenggunaController@proyeksiView')->name('akun.proyeksiView');
 	});
 });
 
@@ -63,6 +65,12 @@ Route::group(['middleware' => 'admin'], function() {
 	// Admin Landing Page
 	Route::get('/', 'Admin\AdminController@landingPageView')->name('admin.landingPageView');
 	Route::get('/transaksi-data', 'Admin\AdminController@transaksiData')->name('admin.landingPageData');
+
+	// Pengguna
+	Route::get('/pengguna', 'Admin\PenggunaController@penggunaView')->name('admin.penggunaView');
+	Route::get('/pengguna/data', 'Admin\PenggunaController@penggunaData')->name('admin.penggunaData');
+	Route::get('/pengguna/detail/{id_user}', 'Admin\PenggunaController@penggunaDetail')->name('admin.penggunaDetail');
+	Route::get('/pengguna/detail/{id_user}/transaksi', 'Admin\PenggunaController@penggunaTransaksi')->name('admin.penggunaTransaksi');
 
 	// Transaksi
 	Route::get('/transaksi', 'Transaksi\TransaksiController@transaksiView')->name('admin.transaksiView');

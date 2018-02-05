@@ -103,7 +103,8 @@
 			const id = $(this).data('id');
 			alertify.confirm('Alert', 'Apakah anda yakin ingin menghapus data ini ?',
 				 function() {
-				 	$.post('{{route('admin.transaksiDelete')}}', {id: id}, function() {
+				 	$.post('{{route('admin.transaksiDelete')}}', {id: id}, function(data) {
+				 		// console.log(data);
 				 		$('#datatables').DataTable().ajax.reload();
 				 		alertify.success('Data berhasil di hapus !');
 				 	})

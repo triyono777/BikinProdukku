@@ -14,7 +14,7 @@ class AdminController extends Controller
     }
 
     public function transaksiData() {
-    	$transaksi = Transaksi::with('pengguna')->where('status', 0)->get()->toArray();
+    	$transaksi = Transaksi::with('pengguna')->where('status', 0)->orderBy('tanggal', 'desc')->get()->toArray();
 
     	$datatables = DataTables::of($transaksi)
     		->editColumn('notifikasi', function($data) {

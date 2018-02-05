@@ -2,15 +2,14 @@
 @section('content')
 <!-- Slider -->
 <div class="main_slider">
-	<div class="container fill_height">
+	<div class=" fill_height">
+			<h1 align="center" style="margin-bottom: 0; margin-top: 0;">"1 Klik Jadi Pengusaha Millenial"</h1>
 		<div class="row align-items-center fill_height">
-			<div class="col-xs-12">
-				<h1>"1 Klik Jadi Pengusaha Millenial"</h1>
-			</div>
 			<iframe width="100%" height="600" src="{{$banner->link}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 		</div>
 	</div>
 </div>
+
 <!-- Banner -->
 <div class="banner" style="margin-top: 100px">
 	<div class="container">
@@ -18,92 +17,22 @@
 			<div class="col-md-12" style="text-align: center;margin-bottom: 80px">
 				<h3>Kami membantu kebutuhan Anda dalam menciptakan produk makanan ringan unggulan.</h3>
 			</div>
-			<div class="col-md-4">
+			@foreach($dialogProses as $key => $value)
+			<div class="col-md-4" style="margin-top: 20px">
 				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
 					<p style="text-align:center; margin-top:20px;">
-						<img src="{{URL::to('point/POINT 1 (MEMILIH BAHAN) A.png')}}" class="img-responsive" width="50%" alt="">
+						<img src="{{URL::to('upload/dialog-proses/'. $value['gambar'])}}" class="img-responsive" width="50%" alt="">
 					</p>
 					<div class="caption">
 						<div class="blur"></div>
 						<div class="caption-text">
-							<h2 style="color:white;padding:20px 10px 10px 10px;">Step 1</h2>
-							<h5 style="color: white">Memilih Bahan Baku</h5>
+							<h2 style="color:white;padding:20px 10px 10px 10px;">Step {{++$key}}</h2>
+							<h5 style="color: white">{{$value['keterangan']}}</h5>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
-					<p style="text-align:center; margin-top:20px;">
-						<img src="{{URL::to('point/POINT 2 (MENDESAIN KEMASAN) A.png')}}" class="img-responsive" width="50%" alt="">
-					</p>
-					<div class="caption">
-						<div class="blur"></div>
-						<div class="caption-text">
-							<h2 style="color:white;padding:20px 10px 10px 10px;">Step 2</h2>
-							<h5 style="color: white">Mendesain Kemasan Yang Ngilerin</h5>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
-					<p style="text-align:center; margin-top:20px;">
-						<img src="{{URL::to('point/POINT 3 (MENGHITUNG BIAYA) A.png')}}" class="img-responsive" width="50%" alt="">
-					</p>
-					<div class="caption">
-						<div class="blur"></div>
-						<div class="caption-text">
-							<h2 style="color:white;padding:20px 10px 10px 10px;">Step 3</h2>
-							<h5 style="color: white">Menghitung Biaya Produksi (HPP)</h5>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row" style="margin-top: 40px">
-			<div class="col-md-4">
-				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
-					<p style="text-align:center; margin-top:20px;">
-						<img src="{{URL::to('point/POINT 4 (MENENTUKAN HARGA) A.png')}}" class="img-responsive" width="50%" alt="">
-					</p>
-					<div class="caption">
-						<div class="blur"></div>
-						<div class="caption-text">
-							<h2 style="color:white;padding:20px 10px 10px 10px;">Step 4</h2>
-							<h5 style="color: white">Menentukan Harga Jual</h5>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
-					<p style="text-align:center; margin-top:20px;">
-						<img src="{{URL::to('point/POINT 5 (MENDAPATKAN KEUNTUNGAN) A.png')}}" class="img-responsive" width="50%" alt="">
-					</p>
-					<div class="caption">
-						<div class="blur"></div>
-						<div class="caption-text">
-							<h2 style="color:white;padding:20px 10px 10px 10px;">Step 5</h2>
-							<h5 style="color: white">Menentukan Keuntungan</h5>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="cuadro_intro_hover " style="background-color:#cccccc;">
-					<p style="text-align:center; margin-top:20px;">
-						<img src="{{URL::to('point/POINT 6 (BANTUAN MENDAPAT NOMOR) A.png')}}" class="img-responsive" width="50%" alt="">
-					</p>
-					<div class="caption">
-						<div class="blur"></div>
-						<div class="caption-text">
-							<h2 style="color:white;padding:20px 10px 10px 10px;">Step 6</h2>
-							<h5 style="color: white">Bantuan Mendapatkan Nomor Ijin Produk</h5>
-						</div>
-					</div>
-				</div>
-			</div>
+			@endforeach
 		</div>
 	</div>
 	<div class="container" style="margin-top: 80px">

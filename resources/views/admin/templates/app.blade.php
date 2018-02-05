@@ -126,11 +126,11 @@
                 </span>
               </a>
               <ul class="treeview-menu">
-                {{-- <li>
+                <li>
                   <a href="{{route('admin.penggunaView')}}">
                     <i class="fa fa-users"></i> <span>Pengguna</span>
                   </a>
-                </li> --}}
+                </li>
                 <li>
                   <a href="{{route('admin.satuanView')}}">
                     <i class="fa fa-cube"></i> <span>Satuan</span>
@@ -204,6 +204,12 @@
                 <span>Data Pribadi</span>
               </a>
             </li>
+            {{-- <li>
+              <a href="{{route('akun.proyeksiView')}}">
+                <i class="fa fa-money"></i>
+                <span>Proyeksi Keuangan</span>
+              </a>
+            </li> --}}
             @endif
             {{-- <li class="treeview">
               <a href="#">

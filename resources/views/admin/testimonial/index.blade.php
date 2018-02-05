@@ -37,6 +37,7 @@
 							<th>No</th>
 							<th>Nama Testimonial</th>
 							<th>Isi Testimonial</th>
+							<th>Status</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -61,6 +62,13 @@
 						<textarea class="form-control textarea" name="testimonial" id="testimonial"></textarea>
 						<input type="hidden" name="id" id="id">
 					</div>
+					<div class="form-group">
+						<label>Status</label>
+						<select class="form-control" name="status" id="status">
+							<option value="1">Terkonfirmasi</option>
+							<option value="0">Belum Terkonfirmasi</option>
+						</select>
+					</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -81,6 +89,7 @@
 	            {data: 'DT_Row_Index', orderable: false, searchable: false},
 	            {data: 'id_user'},
 	            {data: 'testimonial'},
+	            {data: 'status'},
 	            {data: 'action'},
 	        ]
 	    });
@@ -99,9 +108,11 @@
 			const id = $(this).data('id');
 			const id_user = $(this).data('id_user');
 			const testimonial = $(this).data('testimonial');
+			const status = $(this).data('status');
 
 			$('#modal-edit').find('#id').val(id);
 			$('#modal-edit').find('#id_user').val(id_user);
+			$('#modal-edit').find('#status').val(status).change();
 			$('iframe').contents().find('.textarea').html(testimonial);
 
 		});

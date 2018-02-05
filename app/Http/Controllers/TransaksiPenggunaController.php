@@ -105,7 +105,7 @@ class TransaksiPenggunaController extends Controller
         }
         $detailTransaksi->biaya_kirim = 0;
         $detailTransaksi->subtotal = $request['biaya_total'];
-        $detailTransaksi->caption = ' ';
+        $detailTransaksi->caption = $request['rincian_produk'];
         if ($request->file('gambar_logo')) {
             $name = $request->file('gambar_logo');
             $gambar_logo = time() . str_random(10) . '.' . $name->getClientOriginalExtension();
@@ -258,6 +258,7 @@ class TransaksiPenggunaController extends Controller
             $transaksi->save();
         }
 
+        session()->forget('kode_invoice');
         return redirect()->back()->with('success', 'Berhasil di upload, sistem kami akan segera mengkonfirmasi pembayaran anda');
     }
 }

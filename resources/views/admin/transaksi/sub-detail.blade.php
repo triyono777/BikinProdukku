@@ -54,11 +54,11 @@
 		</div>
 		<div class="box-body">
 			<form method="post" id="frm-tagline">
-			<input type="text" name="nama" value="{{$tagline['nama']}}" class="form-control">
-			<input type="hidden" name="id" value="{{$tagline['id_tagline']}}">
-			<hr>
-			<textarea class="form-control textarea" name="isi">{{$tagline['isi']}}</textarea>
-			<button type="submit" class="btn btn-primary btn-block">Simpan Perubahan</button>
+				<input type="text" name="nama" value="{{$tagline['nama']}}" class="form-control">
+				<input type="hidden" name="id" value="{{$tagline['id_tagline']}}">
+				<hr>
+				<textarea class="form-control textarea" name="isi">{{$tagline['isi']}}</textarea>
+				<button type="submit" class="btn btn-primary btn-block">Simpan Perubahan</button>
 			</form>
 		</div>
 	</div>
@@ -72,9 +72,11 @@
 		</div>
 		<div class="box-body">
 			@if($detailTransaksi['gambar_produk'] != null)
+			<a href="{{URL::to('upload/gambar-produk-pengguna/'. $detailTransaksi['gambar_produk'])}}">
 				<img src="{{URL::to('upload/gambar-produk-pengguna/'. $detailTransaksi['gambar_produk'])}}" class="img-thumbnail">
+			</a>
 			@else
-				<span class="badge">Belum upload gambar</span>
+			<span class="badge">Belum upload gambar</span>
 			@endif
 		</div>
 	</div>
@@ -88,9 +90,11 @@
 		</div>
 		<div class="box-body">
 			@if($detailTransaksi['gambar_logo'] != null)
+			<a href="{{URL::to('upload/gambar-logo-pengguna/'. $detailTransaksi['gambar_logo'])}}">
 				<img src="{{URL::to('upload/gambar-logo-pengguna/'. $detailTransaksi['gambar_logo'])}}" class="img-thumbnail">
+			</a>
 			@else
-				<span class="badge">Belum upload gambar</span>
+			<span class="badge">Belum upload gambar</span>
 			@endif
 		</div>
 	</div>
@@ -104,14 +108,15 @@
 		</div>
 		<div class="box-body">
 			@if($detailTransaksi['gambar_sendiri'] != null)
+			<a href="{{URL::to('upload/gambar-produk-pengguna/'. $detailTransaksi['gambar_sendiri'])}}">
 				<img src="{{URL::to('upload/gambar-produk-pengguna/'. $detailTransaksi['gambar_sendiri'])}}" class="img-thumbnail">
+			</a>
 			@else
-				<span class="badge">Belum upload gambar</span>
+			<span class="badge">Belum upload gambar</span>
 			@endif
 		</div>
 	</div>
 </div>
-
 <div class="col-md-12">
 	<div class="box">
 		<!-- title row -->
@@ -121,17 +126,7 @@
 			</h2>
 		</div>
 		<div class="box-body">
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+			{!! $detailTransaksi['caption'] !!}
 		</div>
 	</div>
 </div>

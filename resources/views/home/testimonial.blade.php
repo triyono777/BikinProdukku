@@ -2,7 +2,20 @@
 @section('content')
 <div class="container" style="margin-top: 140px">
 	<div class="row">
-		<div class="col-md-12" style="text-align: center;">
+		@if(auth()->guard('pengguna')->check())
+		<div class="col-md-2"></div>
+		<div class="col-md-8 col-xs-12">
+			<form action="{{route('testimonialPost')}}" method="post">
+				{{csrf_field()}}
+				<div class="form-group">
+					<label>Isi Testimonial Anda Disini</label>
+					<textarea class="form-control textarea" name="testimonial"></textarea>
+				</div>
+				<button type="submit" class="btn btn-primary">Simpan</button>
+			</form>
+		</div>
+		@endif
+		<div class="col-md-12" style="text-align: center;margin-top: 50px">
 			<h2>Testimonial</h2>
 		</div>
 		@foreach($testimonial as $data)

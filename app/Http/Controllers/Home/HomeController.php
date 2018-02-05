@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Home\lihat;
 use App\Models\Banner\Banner;
+use App\Models\DialogProses\DialogProses;
 use App\Models\Faq\Faq;
 use App\Models\Kategori\Kategori;
 use App\Models\Kategori\SubKategori;
@@ -21,8 +22,9 @@ class HomeController extends Controller
     public function index() {
     	$kategori = Kategori::with('subKategori')->get()->toArray();
         $banner = Banner::select('gambar as link')->where('tipe','video')->orderBy('id_banner','DESC')->first();
+        $dialogProses = DialogProses::get()->toArray();
 
-    	return view('home.index', compact('kategori','banner'));
+    	return view('home.index', compact('kategori','banner', 'dialogProses'));
     }
 
     public function kemasan($id_kategori)
@@ -62,8 +64,17 @@ class HomeController extends Controller
     }
 
     public function testimonial() {
-        $testimonial = Testimonial::with('pengguna')->get()->toArray();
+        $testimonial = Testimonial::with('pengguna')->where('status', 1)->get()->toArray();
         return view('home.testimonial', compact('testimonial'));
+    }
+
+    public function testimonialPost(Request $request) {
+        $id_user = auth()->guard('pengguna')->user()->id_user;
+        $testimonial = Testimonial::create([
+            'id_user' => $id_user,
+            'testimonial' => $request['testimonial']
+        ]);
+        return redirect()->back();
     }
 
     public function lihat_pasar() {

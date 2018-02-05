@@ -107,4 +107,8 @@ class PenggunaController extends Controller
         }
 
     }
+
+    // public function proyeksiView() {
+    //     return view('admin.pengguna.proyeksi');
+    // }
 }

@@ -107,7 +107,7 @@
 						<li class="menu_item has-children">
 							<a href="#">
 								My Account
-								<i class="fa fa-angle-down"></i>
+								{{-- <i class="fa fa-angle-down"></i> --}}
 							</a>
 							<ul class="menu_selection">
 								<li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Login</a></li>

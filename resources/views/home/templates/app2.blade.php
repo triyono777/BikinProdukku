@@ -72,6 +72,7 @@
 		{{-- dataTables --}}
 		<script src="{{URL::to('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
 		<script src="{{URL::to('bower_components/datatables.net-bs/js/dataTables.bootstrap4.min.js')}}"></script>
+		<script src="{{URL::to('js/chart.js')}}"></script>
 		<script src="{{URL::to('templates/plugins/easing/easing.js')}}"></script>
 		<script src="{{URL::to('templates/js/custom.js')}}"></script>
 		@yield('customJs')
