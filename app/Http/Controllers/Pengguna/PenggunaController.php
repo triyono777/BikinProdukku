@@ -58,7 +58,7 @@ class PenggunaController extends Controller
 
     public function penggunaSubTransaksiDetailView($kode_invoice, $kode_detail) {
         $id_user = $this->id_user();
-        $sub_detail_transaksi = SubDetailTransaksi::where('kode_detail', $kode_detail)->get()->toArray();
+        $sub_detail_transaksi = SubDetailTransaksi::where('kode_detail', $kode_detail)->get();
         $detailTransaksi = DetailTransaksi::where('kode_detail', $kode_detail)->first()->toArray();
         $tagline = Tagline::where('kode_invoice', $kode_invoice)->first()->toArray();
         return view('admin.pengguna.sub-detail', compact(['sub_detail_transaksi', 'detailTransaksi', 'tagline']));

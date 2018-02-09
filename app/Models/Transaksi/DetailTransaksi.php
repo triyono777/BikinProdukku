@@ -15,4 +15,8 @@ class DetailTransaksi extends Model
     public function subDetailTransaksi() {
     	return $this->hasMany('App\Models\Transaksi\SubDetailTransaksi', 'kode_detail', 'kode_detail');
     }
+
+    public function minimalPembelian() {
+        return $this->belongsTo('App\Models\MinimalPembelian\MinimalPembelian', 'jumlah_pembelian_id', 'id');
+    }
 }

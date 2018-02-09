@@ -37,10 +37,20 @@ class HomeController extends Controller
         return view('home.kemasan',compact('kategori','slider', 'produk', 'subkategori'));
     }
 
+    // public function kemasanAll()
+    // {
+    //     $kategori = Kategori::with('subKategori')->get()->toArray();
+    //     $subkategori = SubKategori::where('id_subkategori', $id_kategori)->first();
+    //     $slider = Banner::where('tipe', 'gambar')->get();
+
+    //     $produk = Produk::with(['subkategori', 'gambarproduk'])->get()->toArray();
+    //     return view('home.kemasan',compact('kategori','slider', 'produk', 'subkategori'));
+    // }
+
     public function faq() {
-        $id_user = auth()->guard('pengguna')->user()->id_user;
+        // $id_user = auth()->guard('pengguna')->user()->id_user;
         $kategori = Kategori::with('subKategori')->get()->toArray();
-        $faq = Faq::with('answer')->where('id_user', $id_user)->get()->toArray();
+        $faq = Faq::with('answer')->get()->toArray();
         return view('home.faq', compact('faq', 'kategori'));
     }
 

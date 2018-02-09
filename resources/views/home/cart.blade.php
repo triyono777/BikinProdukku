@@ -35,6 +35,7 @@
 								<th>Nama Produk</th>
 								<th>Sub Total</th>
 								<th>Biaya Design</th>
+								<th>Jumlah Pembelian</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -44,18 +45,23 @@
 							<tr>
 								<td>{{++$loop->index}}</td>
 								<td>
-									<img src="{{URL::to('upload/gambar-produk-pengguna/'.$data['gambar_produk'])}}" width="100" height="100" class="img-thumbnail">
+									<img src="{{ $data['gambar_produk'] != null ? URL::to('upload/gambar-produk-pengguna/'.$data['gambar_produk']) : URL::to('upload/gambar-sendiri-pengguna/'.$data['gambar_sendiri']) }}" width="100" height="100" class="img-thumbnail">
 								</td>
 								<td>
 									{{$data['nama_produk']}}
 								</td>
 								<td>Rp. {{number_format($data['subtotal'])}}</td>
 								<td>{{$data['biaya_design'] ? 'Rp .'. number_format($data['biaya_design']) : 'tidak ada'}}</td>
+								<td>{{$data['minimalPembelian']['jumlah_pembelian'] . ' / ' . $data['minimalPembelian']['satuan']}}</td>
 								<td>
-									<a href="#modal-detail" data-toggle="modal" class="btn btn-info btn-detail" data-kode_detail="{{$data['kode_detail']}}"><i class="fa fa-eye"></i> Detail</a>
+									<a href="#modal-detail" data-toggle="modal" class="btn btn-info btn-detail" data-kode_detail="{{$data['kode_detail']}}"><i class="fa fa-eye"></i> Detail Bahan Baku</a>
+									@if($transaksi['gambar_bukti'] == null)
 									<a href="#!" class="btn btn-delete btn-danger"
 										{{count($transaksi['detailTransaksi']) == 1 ? 'data-count='.count($transaksi['detailTransaksi']).' data-kode_detail='.$kode_invoice .'' : 'data-count='.count($transaksi['detailTransaksi']).' data-kode_detail='.$data['kode_detail'] .''}}
 									><i class="fa fa-trash"></i></a>
+									@else
+
+									@endif
 								</td>
 							</tr>
 							@endforeach

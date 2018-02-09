@@ -2,7 +2,7 @@
 @section('content')
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 150px">
+		<div class="" style="margin-top: 40px">
 			<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 				<ol class="carousel-indicators">
 					@foreach( $slider as $photo )
@@ -27,17 +27,22 @@
 			</div>
 		</div>
 	</div>
-	<div class="row" style="margin-top: 50px">
-		<div class="col-md-12" style="background-color: orange">
+	<div class="row">
+		{{-- <div class="col-md-12" style="background-color: orange">
 			<h2 style="text-align: center;">{{$subkategori['nama_subkategori']}}</h2>
+		</div> --}}
+		<div class="col-md-12" style="margin-bottom: 70px">
+			<div class=" new_arrivals_title">
+				<h2 style="color: #fe4c50" align="center">Pilih Jenis Produk Anda</h2>
+			</div>
 		</div>
 		@foreach($produk as $key => $value)
 		@foreach($value['gambarproduk'] as $data)
 		{{-- @if($value['perbesar'] == 1) --}}
 		{{-- <div class="row"> --}}
-			<div class="col-lg-4" style="margin-top: 50px">
+			<div class="col-lg-3" style="margin-top: 20px">
 				<a href="{{route('transaksi', [$value['kode_produk'], $data['kode_gambar']])}}">
-					<img src="{{asset('upload/gambar-produk/'.$data['gambar_tampilan'])}}"  width="80%">
+					<img src="{{asset('upload/gambar-produk/'.$data['gambar_tampilan'])}}"  width="100%">
 				</a>
 			</div>
 		{{-- </div> --}}

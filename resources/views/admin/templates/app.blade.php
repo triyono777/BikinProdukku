@@ -136,6 +136,11 @@
                     <i class="fa fa-cube"></i> <span>Satuan</span>
                   </a>
                 </li>
+                <li>
+                  <a href="{{route('admin.minimalPembelianView')}}">
+                    <i class="fa fa-plus"></i> <span>Minimal Pembelian</span>
+                  </a>
+                </li>
                 <li class="treeview">
                   <a href="#">
                     <i class="fa fa-info-circle"></i>

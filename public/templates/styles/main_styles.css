@@ -459,7 +459,7 @@ section
 	padding-left: 20px;
 	text-align: center;
 	vertical-align: middle;
-	background: #1e1e27;
+	/*background: #1e1e27;*/
 }
 .account > a
 {
@@ -559,7 +559,7 @@ section
 	font-size: 13px;
 	font-weight: 500;
 	text-transform: uppercase;
-	padding: 20px;
+	padding: 0px 10px;
 	-webkit-transition: color 0.3s ease;
 	-moz-transition: color 0.3s ease;
 	-ms-transition: color 0.3s ease;
@@ -826,7 +826,7 @@ section
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center center;
-	margin-top: 100px;
+	margin-top: -10px;
 }
 .main_slider_content
 {

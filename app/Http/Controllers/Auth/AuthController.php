@@ -39,7 +39,7 @@ class AuthController extends Controller
                 $pengguna = Pengguna::where('username', $data['username'])->first();
                 $username = $pengguna['username'];
                 $id = $pengguna['id_user'];
-                return redirect()->route('akun.penggunaView');
+                return redirect('/');
             }
             return redirect('/');
         }else {
@@ -113,5 +113,20 @@ class AuthController extends Controller
         }
     }
 
+    public function daftar(Request $request) {
+        $this->validate($request, [
+            'nama' => 'required',
+            'email' => 'required|unique:pengguna,email',
+            'no_wa' => 'required'
+        ]);
 
+        $user = Pengguna::create([
+            'id_user' => AutoNumber::autoNumberPengguna('pengguna', 'id_user', 'P'),
+            'nama' => $request['nama'],
+            'email' => $request['email'],
+            'whatsapp' => $request['no_wa'],
+        ]);
+
+        return redirect()->back()->with('success', 'Selamat anda sudah terdaftar !');
+    }
 }

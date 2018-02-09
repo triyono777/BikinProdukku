@@ -1,7 +1,7 @@
 <!-- Header -->
 <header class="header trans_300">
 	<!-- Top Navigation -->
-	<div class="top_nav">
+	{{-- <div class="top_nav">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6">
@@ -50,19 +50,19 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> --}}
 	<!-- Main Navigation -->
-	<div class="main_nav_container">
-		<div class="container">
+	<div class="main_nav_container" style="background-color: #F7F416">
+		<div class="">
 			<div class="row">
-				<div class="col-lg-12 text-right">
+				<div class="col-lg-12">
 					<div class="logo_container">
-						<a href="{{url('/')}}">Bikin<span>Produkku.com</span></a>
+						<a href="{{url('/')}}"><img src="{{URL::to('icon/png/28.png')}}" class="img-responsive" width="29%"></a>
 					</div>
 					<nav class="navbar">
 						<ul class="navbar_menu">
 							<li class="dropdown dropdown-large">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Kategori Produk <b class="caret"></b></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Buat Produkku <b class="caret"></b></a>
 								<ul class="dropdown-menu dropdown-menu-large row">
 									@foreach($kategori as $item)
 									<li class="col-md-3">
@@ -76,14 +76,50 @@
 									@endforeach
 								</ul>
 							</li>
-							@if(auth()->guard('pengguna')->check())
+							{{-- @if(auth()->guard('pengguna')->check()) --}}
 							<li><a href="{{route('faq')}}">Faq</a></li>
-							@else
-							<li id="li-faq">&nbsp;</li>
-							@endif
+							{{-- @else --}}
+							{{-- <li id="li-faq">&nbsp;</li> --}}
+							{{-- @endif --}}
 							<li><a href="{{route('tentang')}}">Tentang Kami</a></li>
 							<li><a href="{{route('testimonial')}}">Testimonial</a></li>
 							<li><a href="{{route('lihat_pasar')}}">Lihat Pasar</a></li>
+							<li>
+								<a href="{{route('home.cart')}}">
+									Cart
+									<i class="fa fa-shopping-cart"></i>
+									{{-- @if($jumlah_cart == 0)
+										<span class="badge badge-danger">0</span>
+									@else
+										<span class="badge badge-danger">{{$jumlah_cart}}</span>
+									@endif --}}
+								</a>
+							</li>
+							@if(!auth()->guard('pengguna')->check())
+							<span id="ul-login">
+							<li>
+								<a href="#modal-register" data-toggle="modal">Daftar</a>
+							</li>
+							<li>
+								<a href="#modal-login" data-toggle="modal">Masuk</a>
+							</li>
+							</span>
+							@else
+							<li class="account">
+								<a href="#!">
+									{{auth()->guard('pengguna')->user()->username}}
+									<i class="fa fa-angle-down"></i>
+								</a>
+								<ul class="account_selection">
+									<li>
+										<a href="{{route('akun.penggunaView')}}"> Dashboard</a>
+									</li>
+									<li>
+										<a href="{{route('akun.logout')}}">Logout</a>
+									</li>
+								</ul>
+							</li>
+							@endif
 						</ul>
 						<div class="hamburger_container">
 							<i class="fa fa-bars" aria-hidden="true"></i>
@@ -104,16 +140,45 @@
 								<i class="fa fa-shopping-cart"></i>
 							</a>
 						</li>
+						@if(!auth()->guard('pengguna')->check())
 						<li class="menu_item has-children">
 							<a href="#">
 								My Account
-								{{-- <i class="fa fa-angle-down"></i> --}}
+								<i class="fa fa-angle-down"></i>
 							</a>
 							<ul class="menu_selection">
-								<li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Login</a></li>
-								<li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
+								<span id="ul-login">
+								<li>
+									<a href="#modal-register" data-toggle="modal">Daftar</a>
+								</li>
+								<li>
+									<a href="#modal-login" data-toggle="modal">Masuk</a>
+								</li>
+								</span>
 							</ul>
 						</li>
+						@else
+						<li class="menu_item has-children">
+							<a href="#">
+								My Account
+								<i class="fa fa-angle-down"></i>
+							</a>
+							<ul class="menu_selection">
+								<a href="#!">
+									{{auth()->guard('pengguna')->user()->username}}
+									<i class="fa fa-angle-down"></i>
+								</a>
+								<ul class="account_selection">
+									<li>
+										<a href="{{route('akun.penggunaView')}}"> Dashboard</a>
+									</li>
+									<li>
+										<a href="{{route('akun.logout')}}">Logout</a>
+									</li>
+								</ul>
+							</ul>
+						</li>
+						@endif
 						<li class="menu_item"><a href="#">Faq</a></li>
 						<li class="menu_item"><a href="#">Tentang Kami</a></li>
 						<li class="menu_item"><a href="#">Testimonial</a></li>

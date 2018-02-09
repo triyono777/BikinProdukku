@@ -3,8 +3,10 @@
 // Home
 Route::get('/', 'Home\HomeController@index')->name('home');
 Route::post('/akun/loginpengguna', 'Auth\AuthController@loginPost')->name('admin.penggunaLogin');
+Route::post('/daftar', 'Auth\AuthController@daftar')->name('daftar');
 
 Route::get('/kemasan/{id}', 'Home\HomeController@kemasan')->name('kemasan');
+// Route::get('/kemasan', 'Home\HomeController@kemasanAll')->name('kemasan.all');
 // faq
 Route::get('/faq', 'Home\HomeController@faq')->name('faq');
 Route::post('/faq', 'Home\HomeController@faqPost')->name('faqPost');
@@ -95,6 +97,13 @@ Route::group(['middleware' => 'admin'], function() {
 	Route::post('/satuan/store', 'Satuan\SatuanController@satuanPost')->name('admin.satuanPost');
 	Route::post('/satuan/update', 'Satuan\SatuanController@satuanUpdate')->name('admin.satuanUpdate');
 	Route::post('/satuan/delete', 'Satuan\SatuanController@satuanDelete')->name('admin.satuanDelete');
+
+	// Minimal Pembelian
+	Route::get('/minimal-pembelian', 'MinimalPembelian\MinimalPembelianController@minimalPembelianView')->name('admin.minimalPembelianView');
+	Route::get('/minimal-pembelian/data', 'MinimalPembelian\MinimalPembelianController@minimalPembelianData')->name('admin.minimalPembelianData');
+	Route::post('/minimal-pembelian/store', 'MinimalPembelian\MinimalPembelianController@minimalPembelianPost')->name('admin.minimalPembelianPost');
+	Route::post('/minimal-pembelian/update', 'MinimalPembelian\MinimalPembelianController@minimalPembelianUpdate')->name('admin.minimalPembelianUpdate');
+	Route::post('/minimal-pembelian/delete', 'MinimalPembelian\MinimalPembelianController@minimalPembelianDelete')->name('admin.minimalPembelianDelete');
 
 	// Kategori
 	Route::get('/kategori', 'Kategori\KategoriController@kategoriView')->name('admin.kategoriView');

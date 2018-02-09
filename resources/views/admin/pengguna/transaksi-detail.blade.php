@@ -49,7 +49,11 @@
 							@foreach($pengguna['detail_transaksi'] as $key => $value)
 							<tr>
 								<td>{{++$key}}</td>
-								<td><img src="{{URL::to('upload/gambar-produk-pengguna/'.$value['gambar_produk'])}}" class="img-thumbnail" width="100" height="80"></td>
+								<td>
+									<a href="{{$value['gambar_produk'] != null ? URL::to('upload/gambar-produk-pengguna/'.$value['gambar_produk']) : URL::to('upload/gambar-sendiri-pengguna/'.$value['gambar_sendiri'])}}">
+									<img src="{{ $value['gambar_produk'] != null ? URL::to('upload/gambar-produk-pengguna/'.$value['gambar_produk']) : URL::to('upload/gambar-sendiri-pengguna/'.$value['gambar_sendiri']) }}" class="img-thumbnail" width="100" height="80">
+									</a>
+								</td>
 								<td>{{$value['nama_produk']}}</td>
 								<td>{{number_format($value['subtotal'])}}</td>
 								<td>
@@ -72,7 +76,9 @@
 					@if($pengguna['gambar_bukti'] == null)
 						<span class="badge">Belum upload bukti pembayaran</span>
 					@else
+					<a href="{{URL::to('upload/bukti_pembayaran/'.$pengguna['gambar_bukti'])}}">
 					<img src="{{URL::to('upload/bukti_pembayaran/'.$pengguna['gambar_bukti'])}}" class="img-responsive" width="150px" height="150px">
+					</a>
 					@endif
 				</div>
 				<!-- /.col -->

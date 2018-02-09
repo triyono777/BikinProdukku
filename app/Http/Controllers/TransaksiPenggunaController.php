@@ -6,6 +6,7 @@ use App\Helpers\AutoNumber;
 use App\Models\BahanBaku\BahanBaku;
 use App\Models\FormulirPendaftaran\FormulirPendaftaran;
 use App\Models\Kategori\Kategori;
+use App\Models\MinimalPembelian\MinimalPembelian;
 use App\Models\Produk\GambarProduk;
 use App\Models\Produk\GambarTemplate;
 use App\Models\Produk\GambarWarna;
@@ -38,7 +39,8 @@ class TransaksiPenggunaController extends Controller
         $formulirPendaftaran = FormulirPendaftaran::where('id_user', $id_user)->first();
         $totalLoop = count($bahanBaku);
         $totalAwal = $bahanBaku->sum('harga');
-		return view('home.transaksi.index', compact('gambarProduk', 'kategori', 'kode_produk', 'bahanBaku', 'totalLoop', 'totalAwal', 'gambarProduk2', 'kode_gambar', 'gambarTemplate', 'formulirPendaftaran'));
+        $minimal_pembelian = MinimalPembelian::get()->toArray();
+		return view('home.transaksi.index', compact('gambarProduk', 'kategori', 'kode_produk', 'bahanBaku', 'totalLoop', 'totalAwal', 'gambarProduk2', 'kode_gambar', 'gambarTemplate', 'formulirPendaftaran', 'minimal_pembelian'));
     }
 
     public function getGambarTemplate(Request $request) {
@@ -95,6 +97,7 @@ class TransaksiPenggunaController extends Controller
         $detailTransaksi->kode_invoice = $cek_session;
         $detailTransaksi->nama_produk = $produk['nama_produk'];
         $detailTransaksi->biaya_design = $request['subtotal_biaya_tambahan'];
+        $detailTransaksi->jumlah_pembelian_id = $request['minimal_pembelian'];
         if ($request->file('gambar_produk_baru')) {
             $name = $request->file('gambar_produk_baru');
             $gambar_produk_baru = time() . str_random(10) . '.' . $name->getClientOriginalExtension();
@@ -171,7 +174,8 @@ class TransaksiPenggunaController extends Controller
         }else{
             $id_user = '';
         }
-        $transaksi = Transaksi::with(['detailTransaksi'])->where(['id_user' => $id_user, 'status' => 0])->first();
+        $transaksi = Transaksi::with(['detailTransaksi.minimalPembelian'])->where(['id_user' => $id_user, 'status' => 0])->first();
+        // dd($transaksi);
         $kode_invoice = $transaksi['kode_invoice'];
         return view('home.cart', compact('transaksi', 'kode_invoice'));
     }
@@ -207,7 +211,7 @@ class TransaksiPenggunaController extends Controller
                             ->delete();
 
             session()->forget('kode_invoice');
-            return response()->json($result);
+            return response()->json($transaksi);
         }else {
             $subtotal = DB::table('detail_transaksi')
                         ->where('kode_detail', '=', (int)$request['kode_detail'])

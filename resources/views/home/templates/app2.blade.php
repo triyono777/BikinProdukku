@@ -26,34 +26,34 @@
 			@include('home.templates.nav2')
 			@yield('content')
 			<!-- Footer -->
-			<footer class="footer-bs">
+			<footer class="footer-bs" style="background-color: #F7F416">
 				<div class="row">
 					<div class="col-md-3 footer-brand animated fadeInLeft">
-						<img src="{{ asset('dist/img/logo.jpg') }}" width="70%" alt="" style="margin-bottom: 40px">
+						<img src="{{ asset('icon/png/29.png') }}" width="70%" alt="" style="margin-bottom: 40px">
 						<p>Suspendisse hendrerit tellus laoreet luctus pharetra. Aliquam porttitor vitae orci nec ultricies. Curabitur vehicula, libero eget faucibus faucibus, purus erat eleifend enim, porta pellentesque ex mi ut sem.</p>
 						<p>© {{date("Y")}} BS3 UI Kit, All rights reserved</p>
 					</div>
 					<div class="col-md-3 footer-nav animated fadeInUp">
-						<h4 style="color: white">Menu —</h4>
+						<h4 style="color:  #181818">Menu —</h4>
 						<div class="col-md-12">
 							<ul class="pages">
-								<li><a href="#">Profil</a></li>
-								<li><a href="#">Kebijakan Privasi</a></li>
+								<li><a href="{{route('tentang')}}">Profil</a></li>
+{{-- 								<li><a href="#">Kebijakan Privasi</a></li>
 								<li><a href="#">Program Mitra B-Pro</a></li>
-								<li><a href="#">Reseller B-Pro</a></li>
+								<li><a href="#">Reseller B-Pro</a></li> --}}
 							</ul>
 						</div>
 					</div>
 					<div class="col-md-3 footer-social animated fadeInDown">
-						<h4 style="color: white">Layanan Mitra B-Pro</h4>
+						<h4 style="color:  #181818">Layanan Mitra B-Pro</h4>
 						<ul>
 							<li><a href="#">Jadwal Konsultasi</a></li>
-							<li><a href="#">Kebijakan Privasi</a></li>
+							{{-- <li><a href="#">Kebijakan Privasi</a></li> --}}
 							<li><a href="#">Status Pembayaran</a></li>
 						</ul>
 					</div>
 					<div class="col-md-3 footer-social animated fadeInRight">
-						<h4 style="color: white">Follow Me</h4>
+						<h4 style="color:  #181818">Follow Me</h4>
 						<ul>
 							<li><a href="#"><i class="fa fa-facebook-official"></i> Facebook</a></li>
 							<li><a href="#"><i class="fa fa-instagram"></i> Instagram</a></li>

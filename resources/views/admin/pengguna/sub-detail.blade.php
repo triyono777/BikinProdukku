@@ -15,7 +15,7 @@
 			</div>
 			<div class="col-md-6 col-xs-12">
 				<span class="pull-right">
-					<h3>Sub Total : {{number_format($detailTransaksi['subtotal'])}}</h3>
+					<h3>Sub Total : {{number_format($sub_detail_transaksi->sum('subtotal'))}}</h3>
 				</span>
 			</div>
 			<div class="col-md-12 col-xs-12">
@@ -100,7 +100,7 @@
 		</div>
 		<div class="box-body">
 			@if($detailTransaksi['gambar_sendiri'] != null)
-				<img src="{{URL::to('upload/gambar-produk-pengguna/'. $detailTransaksi['gambar_sendiri'])}}" class="img-thumbnail">
+				<img src="{{URL::to('upload/gambar-sendiri-pengguna/'. $detailTransaksi['gambar_sendiri'])}}" class="img-thumbnail">
 			@else
 				<span class="badge">Belum upload gambar</span>
 			@endif

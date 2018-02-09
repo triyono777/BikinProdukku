@@ -19,6 +19,8 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
-        "alertifyjs": "^1.11.0"
+        "alertifyjs": "^1.11.0",
+        "watermark": "^1.0.1",
+        "watermarkjs": "^2.0.0"
     }
 }
