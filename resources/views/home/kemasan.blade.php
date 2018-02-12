@@ -12,7 +12,7 @@
 				<div class="carousel-inner">
 					@foreach( $slider as $photo )
 					<div class="carousel-item {{ $loop->first ? ' active' : '' }}">
-						<img class="d-block w-100 h-100" src="{{ asset('upload/banner/'.$photo->gambar) }}" style="max-height: 100%;max-width: 100%">
+						<img class="d-block" src="{{ asset('upload/banner/'.$photo->gambar) }}" style="height: auto;width: 100%">
 					</div>
 					@endforeach
 				</div>
@@ -41,8 +41,8 @@
 		{{-- @if($value['perbesar'] == 1) --}}
 		{{-- <div class="row"> --}}
 			<div class="col-lg-3" style="margin-top: 20px">
-				<a href="{{route('transaksi', [$value['kode_produk'], $data['kode_gambar']])}}">
-					<img src="{{asset('upload/gambar-produk/'.$data['gambar_tampilan'])}}"  width="100%">
+				<a class="bg-hover" href="{{route('transaksi', [$value['kode_produk'], $data['kode_gambar']])}}">
+					<img src="{{asset('upload/gambar-produk/'.$data['gambar_text'])}}"  width="100%">
 				</a>
 			</div>
 		{{-- </div> --}}

@@ -23,8 +23,8 @@
 						<input type="file" name="gambar" id="gambar" class="form-control">
 					</div>
 					<div class="form-group">
-						<label for="">keterangan</label>
-						<textarea class="textarea form-control" name="keterangan"></textarea>
+						<label for="">Judul</label>
+						<input type="text" name="keterangan" class="form-control">
 					</div>
 					<button class="btn btn-primary">Tambah</button>
 			    </form>
@@ -91,7 +91,7 @@
 					</div>
 					<div class="form-group">
 						<label for="">keterangan</label>
-						<textarea class="textarea form-control" name="keterangan"></textarea>
+						<input type="text" name="keterangan" class="form-control" id="keterangan">
 					</div>
 			</div>
 			<div class="modal-footer">
@@ -112,7 +112,7 @@
 
 			$('#modal-edit').find('#id').val(id);
 			$('#modal-edit').find('#link').val(link);
-			$('iframe').contents().find('.textarea').html(keterangan);
+			$('#modal-edit').find('#keterangan').val(keterangan);
 		});
 
 		$('#datatables').on('click', '.delete', function() {

@@ -20,6 +20,6 @@ class Pengguna
             return $next($request);
         }
 
-        return redirect('/');
+        return redirect('/')->with('success', 'Anda Harus  login terlebih dahulu, untuk mengakses halaman tersebut. !');
     }
 }

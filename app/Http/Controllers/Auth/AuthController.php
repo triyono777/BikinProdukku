@@ -127,6 +127,6 @@ class AuthController extends Controller
             'whatsapp' => $request['no_wa'],
         ]);
 
-        return redirect()->back()->with('success', 'Selamat anda sudah terdaftar !');
+        return redirect()->back()->with('success', 'Selamat, Anda sudah terdaftar. Nantikan informasi, promosi dan bonus dari kami !');
     }
 }

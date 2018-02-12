@@ -63,7 +63,7 @@ class TransaksiPenggunaController extends Controller
             $transaksi = new Transaksi;
             $transaksi->kode_invoice = AutoNumber::autoNumberTransaksi('transaksi', 'kode_invoice', 'INV');
             $transaksi->id_user = $id_user;
-            $transaksi->total = $request['total_keseluruhan'];
+            $transaksi->total = str_replace(',', '', $request['total_keseluruhan']);
             $transaksi->tanggal = date('Y-m-d');
             $transaksi->save();
             // create session
@@ -75,7 +75,7 @@ class TransaksiPenggunaController extends Controller
 
         }else {
             $transaksi = Transaksi::select(['kode_invoice', 'total'])->where('kode_invoice', Session::get('kode_invoice'))->first();
-            $penambahan_total = $transaksi['total'] += $request['total_keseluruhan'];
+            $penambahan_total = str_replace(',', '', $transaksi['total']) + str_replace(',', '', $request['total_keseluruhan']);
             $transaksi->total = $penambahan_total;
             $transaksi->save();
         }
@@ -96,7 +96,7 @@ class TransaksiPenggunaController extends Controller
         $detailTransaksi = new DetailTransaksi;
         $detailTransaksi->kode_invoice = $cek_session;
         $detailTransaksi->nama_produk = $produk['nama_produk'];
-        $detailTransaksi->biaya_design = $request['subtotal_biaya_tambahan'];
+        $detailTransaksi->biaya_design = str_replace(',', '',$request['subtotal_biaya_tambahan']);
         $detailTransaksi->jumlah_pembelian_id = $request['minimal_pembelian'];
         if ($request->file('gambar_produk_baru')) {
             $name = $request->file('gambar_produk_baru');
@@ -107,7 +107,7 @@ class TransaksiPenggunaController extends Controller
             $detailTransaksi->gambar_produk = $gambar_produk_baru;
         }
         $detailTransaksi->biaya_kirim = 0;
-        $detailTransaksi->subtotal = $request['biaya_total'];
+        $detailTransaksi->subtotal = str_replace(',', '', $request['biaya_total']);
         $detailTransaksi->caption = $request['rincian_produk'];
         if ($request->file('gambar_logo')) {
             $name = $request->file('gambar_logo');
@@ -133,13 +133,12 @@ class TransaksiPenggunaController extends Controller
             $subDetailTransaksi->kode_detail = $detailTransaksi->kode_detail;
             $subDetailTransaksi->nama_bahan = $value;
             $subDetailTransaksi->jumlah = $request['satuan'][$key];
-            $subDetailTransaksi->subtotal = $request['harga'][$key];
+            $subDetailTransaksi->subtotal = str_replace(',', '', $request['harga'][$key]);
             $subDetailTransaksi->save();
         }
 
         // input formulir hpp
         if ($request['nik']) {
-            // $formulir = FormulirPendaftaran::where('id_user', $id_user)->first();
             $formulir = new FormulirPendaftaran;
             $formulir->id_user = $id_user;
             $formulir->nik = $request['nik'];
@@ -174,10 +173,10 @@ class TransaksiPenggunaController extends Controller
         }else{
             $id_user = '';
         }
-        $transaksi = Transaksi::with(['detailTransaksi.minimalPembelian'])->where(['id_user' => $id_user, 'status' => 0])->first();
-        // dd($transaksi);
+        $transaksi = Transaksi::with(['detailTransaksi.minimalPembelian'])->where(['id_user' => $id_user, 'status' => 0])->orderBy('created_at','desc')->first();
+        $formulir = FormulirPendaftaran::where('id_user', $id_user)->first();
         $kode_invoice = $transaksi['kode_invoice'];
-        return view('home.cart', compact('transaksi', 'kode_invoice'));
+        return view('home.cart', compact('transaksi', 'kode_invoice', 'formulir'));
     }
 
     public function cartDelete(Request $request) {
@@ -264,6 +263,35 @@ class TransaksiPenggunaController extends Controller
 
         session()->forget('kode_invoice');
         return redirect()->back()->with('success', 'Berhasil di upload, sistem kami akan segera mengkonfirmasi pembayaran anda');
+    }
+
+    public function formulirPost(Request $request) {
+        $id_user = auth()->guard('pengguna')->user()->id_user;
+            $formulir = new FormulirPendaftaran;
+            $formulir->id_user = $id_user;
+            $formulir->nik = $request['nik'];
+            $formulir->nama_lengkap = $request['nama_lengkap'];
+            $formulir->tempat = $request['tempat'];
+            $formulir->tgl_lahir = date('Y-m-d', strtotime($request['tgl_lahir']));
+            $formulir->jenis_kelamin = $request['jenis_kelamin'];
+            $formulir->status_perkawinan = $request['status_perkawinan'];
+            $formulir->pekerjaan = $request['pekerjaan'];
+            $formulir->alamat = $request['alamat'];
+
+            if ($request->file('foto')) {
+                $name = $request->file('foto');
+                $foto = time() . str_random(10) . '.' . $name->getClientOriginalExtension();
+                $image = Image::make($name);
+                $image->encode('jpg', 75);
+                $image->save(public_path('upload/foto-pengguna/' . $foto));
+                $formulir->foto = $foto;
+            }
+
+            $formulir->motivasi_berbisnis = $request['motivasi_berbisnis'];
+            $formulir->hobi = $request['hobi'];
+            $formulir->save();
+
+            return redirect()->back()->with('success', 'Pengisian Formulir berhasil');
     }
 }
 

@@ -12,7 +12,8 @@
 			</a>
 			<div class="collapse" id="collapse-tambah" style="margin-top: 10px">
 			  <div class="well">
-			    <form method="post" id="frm-tambah">
+			    <form action="{{route('admin.testimonialPost')}}" method="post" id="frm-tambah" enctype="multipart/form-data">
+			    	{{csrf_field()}}
 					<div class="form-group">
 						<label for="">Nama Testimonial</label>
 						<select class="form-control select2" id="id_user" style="width: 100% !important" name="id_user">
@@ -21,6 +22,10 @@
 								<option value="{{$data['id_user']}}">{{$data['nama']}}</option>
 							@endforeach
 						</select>
+					</div>
+					<div class="form-group">
+						<label>Upload Gambar</label>
+						<input type="file" name="gambar" class="form-control">
 					</div>
 					<div class="form-group">
 						<label for="">Isi Testimonial</label>
@@ -35,6 +40,7 @@
 					<thead>
 						<tr>
 							<th>No</th>
+							<th>Gambar</th>
 							<th>Nama Testimonial</th>
 							<th>Isi Testimonial</th>
 							<th>Status</th>
@@ -56,11 +62,16 @@
 				<h4 class="modal-title">Edit</h4>
 			</div>
 			<div class="modal-body">
-				<form action="" id="frm-edit" method="post">
+				<form action="{{route('admin.testimonialUpdate')}}" id="frm-edit" method="post" enctype="multipart/form-data">
+					{{csrf_field()}}
 					<div class="form-group">
 						<label>Testimonial</label>
 						<textarea class="form-control textarea" name="testimonial" id="testimonial"></textarea>
 						<input type="hidden" name="id" id="id">
+					</div>
+					<div class="form-group">
+						<label>Upload Gambar</label>
+						<input type="file" name="gambar" class="form-control">
 					</div>
 					<div class="form-group">
 						<label>Status</label>
@@ -87,6 +98,7 @@
 	        ajax: '{{route('admin.testimonialData')}}',
 	        columns: [
 	            {data: 'DT_Row_Index', orderable: false, searchable: false},
+	            {data: 'gambar'},
 	            {data: 'id_user'},
 	            {data: 'testimonial'},
 	            {data: 'status'},
@@ -94,15 +106,15 @@
 	        ]
 	    });
 
-		$('#frm-tambah').on('submit', function(e) {
-			e.preventDefault();
-			const data = $(this).serialize();
-			$.post('{{route('admin.testimonialPost')}}', data, function(data) {
-				$('#frm-tambah')[0].reset();
-				 $('#datatables').DataTable().ajax.reload();
-				 alertify.success('data berhasil di tambah');
-			});
-		})
+		// $('#frm-tambah').on('submit', function(e) {
+		// 	e.preventDefault();
+		// 	const data = $(this).serialize();
+		// 	$.post('{{route('admin.testimonialPost')}}', data, function(data) {
+		// 		$('#frm-tambah')[0].reset();
+		// 		 $('#datatables').DataTable().ajax.reload();
+		// 		 alertify.success('data berhasil di tambah');
+		// 	});
+		// })
 
 		$('#datatables').on('click', '.edit', function() {
 			const id = $(this).data('id');
@@ -117,15 +129,15 @@
 
 		});
 
-		$('#frm-edit').on('submit', function(e) {
-			e.preventDefault();
-			const data = $(this).serialize();
-			$.post("{{route('admin.testimonialUpdate')}}", data, function() {
-				$('#modal-edit').modal('hide');
-				$('#datatables').DataTable().ajax.reload();
-				alertify.success('data berhasil di update');
-			})
-		});
+		// $('#frm-edit').on('submit', function(e) {
+		// 	e.preventDefault();
+		// 	const data = $(this).serialize();
+		// 	$.post("{{route('admin.testimonialUpdate')}}", data, function() {
+		// 		$('#modal-edit').modal('hide');
+		// 		$('#datatables').DataTable().ajax.reload();
+		// 		alertify.success('data berhasil di update');
+		// 	})
+		// });
 
 		$('#datatables').on('click', '.delete', function() {
 			const id = $(this).data('id');

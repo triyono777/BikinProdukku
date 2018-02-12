@@ -2,11 +2,14 @@
 
 // Home
 Route::get('/', 'Home\HomeController@index')->name('home');
+
+Route::get('/customer-service/{cs}', 'Home\HomeController@cs')->name('cs');
+
 Route::post('/akun/loginpengguna', 'Auth\AuthController@loginPost')->name('admin.penggunaLogin');
 Route::post('/daftar', 'Auth\AuthController@daftar')->name('daftar');
 
-Route::get('/kemasan/{id}', 'Home\HomeController@kemasan')->name('kemasan');
-// Route::get('/kemasan', 'Home\HomeController@kemasanAll')->name('kemasan.all');
+// Route::get('/kemasan/{id}', 'Home\HomeController@kemasan')->name('kemasan');
+Route::get('/kemasan', 'Home\HomeController@kemasanAll')->name('kemasan.all');
 // faq
 Route::get('/faq', 'Home\HomeController@faq')->name('faq');
 Route::post('/faq', 'Home\HomeController@faqPost')->name('faqPost');
@@ -31,6 +34,8 @@ Route::post('/transaksi/{kode_produk}/{kode_gambar}/transaksiProses', 'Transaksi
 
 // cart
 Route::get('/cart', 'TransaksiPenggunaController@cart')->name('home.cart');
+Route::post('/cart/formulir', 'TransaksiPenggunaController@formulirPost')->name('formulirPost');
+
 Route::get('/cart/detail', 'TransaksiPenggunaController@cartDetail')->name('cart.detail');
 Route::post('/cart/delete', 'TransaksiPenggunaController@cartDelete')->name('cart.delete');
 Route::get('/cart/konfirmasi-pembayaran', 'TransaksiPenggunaController@pembayaranView')->name('cart.pembayaran');
@@ -66,6 +71,8 @@ Route::group(['middleware' => 'admin'], function() {
 	Route::group(['prefix' => 'admin'], function() {
 	// Admin Landing Page
 	Route::get('/', 'Admin\AdminController@landingPageView')->name('admin.landingPageView');
+	Route::get('/setting-admin', 'Admin\AdminController@settingAdminView')->name('admin.settingAdminView');
+	Route::post('/setting-admin', 'Admin\AdminController@settingAdminPost')->name('admin.settingAdminPost');
 	Route::get('/transaksi-data', 'Admin\AdminController@transaksiData')->name('admin.landingPageData');
 
 	// Pengguna

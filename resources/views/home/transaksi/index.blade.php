@@ -15,8 +15,29 @@
 <section id="content" class="container-fluid" style="margin-top: 80px">
 	<div class="row">
 		<div class="col-md-12" style="margin-bottom: 10px">
+			<span class="pull-left"><a href="#modal-petunjuk" data-toggle="modal" class="btn btn-info">Petunjuk</a></span>
 			<h2 align="center">Pilih Desain</h2>
 		</div>
+
+		<div class="modal fade" id="modal-petunjuk">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Petunjuk</h4>
+					</div>
+					<div class="modal-body">
+						@foreach(range(1, 10) as $key => $value)
+							<img src="{{URL::to('petunjuk/'.$key. '.jpg')}}" alt="" width="720" height="auto">
+						@endforeach
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<div class="col-md-2">
 			<div class="card">
 				<div class="card-header bg-warning text-center">
@@ -26,14 +47,14 @@
 					<div class="scroll-area">
 						@foreach($gambarProduk as $data)
 						<div class="thumbnail">
-							<a href="{{route('transaksi', [$kode_produk, $kode_gambar])}}">
+							<a id="gP{{$loop->index}}" href="{{route('transaksi', [$kode_produk, $kode_gambar])}}">
 								<img src="{{URL::to('upload/gambar-produk/'.$data['gambar_tampilan'])}}"  data-kode_gambar="{{$data['kode_gambar']}}" data-kode_produk="{{$kode_produk}}" class="gambar-produk img-thumbnail" width="150" height="150" />
 							</a>
 						</div>
 						@endforeach
 						@foreach($gambarProduk2 as $data)
 						<div class="thumbnail" style="margin-top: 5px">
-							<a href="{{route('transaksi', [$data['kode_produk'], $data['gambar_produk'][0]['kode_gambar']])}}">
+							<a id="gP{{$loop->index}}" href="{{route('transaksi', [$data['kode_produk'], $data['gambar_produk'][0]['kode_gambar']])}}">
 								<img src="{{URL::to('upload/gambar-produk/'.$data['gambar_produk'][0]['gambar_tampilan'])}}"  data-kode_gambar="{{$data['gambar_produk'][0]['kode_gambar']}}" data-kode_produk="{{$data['kode_produk']}}" class="gambar-produk img-thumbnail" width="150" height="150" />
 							</a>
 						</div>
@@ -56,80 +77,75 @@
 					</div>
 				</div>
 				<div class="card-footer">
-					<div class="row">
-						<div id="gambar-warna">
-						</div>
-						<div class="pull-right">
-							<a class="btn" download="my-file-name.png" id="btDownload" onclick="downloadgmbr()">Download Gambar</a>
-							@if(!auth()->guard('pengguna')->check())
-							<a class="btn btn-primary btn-lanjutkan" href="#modal-login" data-toggle="modal">Lanjutkan</a>
-							@endif
-						</div>
-					</div>
-	<form action="{{route('transaksiProses', [$kode_produk, $kode_gambar])}}" id="frm-biaya" method="post" enctype="multipart/form-data">
-					<div class="row">
-						{{-- <div class="col col-md-4">
-							<label>Upload Design Logo Sendiri</label>
-							<input type="file" class="form-control" accept="image/x-png,image/gif,image/jpeg" id="imageLoader"/>
-							<br>
-							<br>
-						</div> --}}
-						<div class="col col-md-3">
-							<label>Position Uploaded Design</label>
-							<br>
-							<button class="btn" onclick="fUp()"><span class="fa fa-arrow-up "></span></button>
-							<button class="btn" onclick="fDown()"><span class="fa fa-arrow-down "></span></button>
-							<button class="btn" onclick="fLeft()"><span class="fa fa-arrow-left "></span></button>
-							<button class="btn" onclick="fRight()"><span class="fa fa-arrow-right "></span></button>
-							<br>
-							<br>
-						</div>
-
-						<div class="col-md-5 text-center">
-							<label>Upload Gambar Sendiri <br>
-							(Jika anda memiliki desain sendiri)</label>
-							<input type="file" name="gambar_sendiri" id="gambar_sendiri" class="form-control">
-						</div>
-						<div class="col col-md-3">
-							<label>Size Uploaded Design</label>
-							<br>
-							<button class="btn" onclick="fplus()"><span class="fa fa-plus "></span></button>
-							<button class="btn" onclick="fminus()"><span class="fa fa-minus"></span></button>
-						</div>
-
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-2">
-			<div class="card">
-				<div class="card-header bg-warning text-center">
-					Desain Kemasan
-				</div>
-				<div class="card-body">
-					<div class="scroll-area" id="gambar-template">
-						@foreach($gambarTemplate as $data)
-						<div class='thumbnail' id='btn-template' style="border: 2px solid #868e96;margin-bottom: 5px">
-							<img src='{{URL::to('upload/gambar-template/'.$data['gambar_template'])}}' onclick="gntgmbr('g{{$loop->index}}','gT{{$loop->index}}','{{$data['kode_template']}}','{{$data['harga']}}')" id='g{{$loop->index}}' class="img-thumbnail" width="150" height="150" />
-							<img src='{{URL::to('upload/gambar-produk/'.$gambarProduk[0]['gambar_text'])}}' style='display:none;' id='gT{{$loop->index}}'/>
-							{{-- <img src='{{URL::to('watermark.png')}}' style='display:none;' id='gT{{$loop->index}}'/> --}}
-							<div style="text-align: center;">
-								<label>&nbsp;{{$data['sold_out'] == 1 ? "Tersedia" : "Terjual"}}</label><br>
-								<label>&nbsp;Rp. {{$data['harga']}}</label>
+					{{-- <div id="gambar-warna">
+					</div> --}}
+					<a class="btn btn-success" download="my-file-name.png" id="btDownload" onclick="downloadgmbr()">Download Gambar</a>
+					@if(!auth()->guard('pengguna')->check())
+					<span class="pull-right"><a class="btn btn-primary btn-lanjutkan" href="#modal-login" data-toggle="modal">Lanjutkan ke HPP</a></span>
+					@endif
+					<form action="{{route('transaksiProses', [$kode_produk, $kode_gambar])}}" id="frm-biaya" method="post" enctype="multipart/form-data">
+						<div class="row">
+							{{-- <div class="col-md-4">
+								<label>Upload Design Logo Sendiri</label>
+								<input type="file" class="form-control" accept="image/x-png,image/gif,image/jpeg" id="imageLoader"/>
+								<br>
+								<br>
+							</div> --}}
+							{{-- <div class="col-md-3">
+								<label>Position Uploaded Design</label>
+								<br>
+								<button class="btn" onclick="fUp()"><span class="fa fa-arrow-up "></span></button>
+								<button class="btn" onclick="fDown()"><span class="fa fa-arrow-down "></span></button>
+								<button class="btn" onclick="fLeft()"><span class="fa fa-arrow-left "></span></button>
+								<button class="btn" onclick="fRight()"><span class="fa fa-arrow-right "></span></button>
+								<br>
+								<br>
 							</div>
+							--}}					<div class="col-md-2"></div>
+							<div class="col-md-8 text-center">
+								<label>Upload Gambar<br>
+								(Upload Gambar Desain yang sudah di download / upload desain anda sendiri)</label>
+								<input type="file" name="gambar_sendiri" id="gambar_sendiri" class="form-control">
+							</div>
+							{{-- <div class="col-md-3">
+								<label>Size Uploaded Design</label>
+								<br>
+								<button class="btn" onclick="fplus()"><span class="fa fa-plus "></span></button>
+								<button class="btn" onclick="fminus()"><span class="fa fa-minus"></span></button>
+							</div> --}}
 						</div>
-						@endforeach
+					</div>
+				</div>
+			</div>
+			<div class="col-md-2">
+				<div class="card">
+					<div class="card-header bg-warning text-center">
+						Desain Kemasan
+					</div>
+					<div class="card-body">
+						<div class="scroll-area" id="gambar-template">
+							@foreach($gambarTemplate as $data)
+							<div class='thumbnail' id='btn-template' style="border: 2px solid #868e96;margin-bottom: 5px">
+								<img src='{{URL::to('upload/gambar-template/'.$data['gambar_template'])}}' onclick="gntgmbr('g{{$loop->index}}','gT{{$loop->index}}','{{$data['kode_template']}}','{{$data['harga']}}', '{{$data['sold_out'] == 1 ? 1 : 0}}')" id='g{{$loop->index}}' class="img-thumbnail" width="150" height="150"/>
+								<img src='{{URL::to('watermark.png')}}' style='display:none;' id='gT{{$loop->index}}'/>
+								{{-- <img src='{{URL::to('watermark.png')}}' style='display:none;' id='gT{{$loop->index}}'/> --}}
+								<div style="text-align: center;">
+									<label>&nbsp;{{$data['sold_out'] == 1 ? "Tersedia" : "Terjual"}}</label><br>
+									<label>&nbsp;Rp. {{number_format($data['harga'])}}</label>
+								</div>
+							</div>
+							@endforeach
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-</section>
-<section id="khusus_modal">
-</section>
-<section style="margin-top: 10px;" id="biaya-produksi">
+	</section>
+	<section id="khusus_modal">
+	</section>
+	<section style="margin-top: 10px;" id="biaya-produksi">
 		{{csrf_field()}}
-		<div style="margin-top: 10px" class="container">
+		{{-- <div style="margin-top: 10px" class="container">
 			<div class="card">
 				<div class="panel-heading">
 					<div class="card-header bg-warning">
@@ -143,7 +159,7 @@
 							<label>Upload Gambar Produk<br>
 							(Gambar Hasil Download)</label>
 							<input type="file" name="gambar_produk_baru" id="gambar_produk_baru" class="form-control">
-						</div>
+						</div> --}}
 						{{-- <div class="col-md-4">
 							<label>Upload Gambar Logo<br>
 							(Gambar Logo Yang Diperlukan)</label>
@@ -154,10 +170,10 @@
 							(Jika anda memiliki desain sendiri)</label>
 							<input type="file" name="gambar_sendiri" class="form-control">
 						</div> --}}
-					</div>
+					{{-- 		</div>
 				</div>
 			</div>
-		</div>
+		</div> --}}
 		<div class="container" style="margin-top: 20px">
 			<div class="card">
 				<div class="card-header bg-warning">
@@ -165,7 +181,7 @@
 				</div>
 				<div class="card-body">
 					<div class="form-group">
-						<label>Nama Tagline</label>
+						<label>Nama Brand</label>
 						<input type="text" name="nama_tagline" class="form-control" id="nama_tagline">
 					</div>
 					<div class="form-group">
@@ -201,7 +217,7 @@
 								<input type="text" name="bahan_baku[]" class="form-control bahan_baku" value="{{$valueBahan['nama_bahan']}}" readonly="">
 							</td>
 							<td>
-								<input type="number" name="satuan[]" min="{{$valueBahan['minimal']}}" max="{{$valueBahan['maximal']}}" class="form-control satuan" value="{{$valueBahan['berat']}}" id="satuan-{{$loop->index}}" onchange="ubahHarga('satuan-{{$loop->index}}','harga-{{$loop->index}}', '{{$valueBahan['berat']}}', '{{$valueBahan['harga']}}','{{$valueBahan['minimal']}}','{{$valueBahan['maximal']}}')">
+								<input type="number" name="satuan[]" min="{{$valueBahan['minimal']}}" max="{{$valueBahan['maximal']}}" class="form-control satuan" value="{{number_format($valueBahan['berat'])}}" id="satuan-{{$loop->index}}" onchange="ubahHarga('satuan-{{$loop->index}}','harga-{{$loop->index}}', '{{$valueBahan['berat']}}', '{{$valueBahan['harga']}}','{{$valueBahan['minimal']}}','{{$valueBahan['maximal']}}')">
 							</td>
 							<td>
 								{{$valueBahan['satuan']['nama_satuan']}}
@@ -210,7 +226,7 @@
 							<td>
 								<div class="input-group">
 									<div class="input-group-addon">Rp.</div>
-									<input type="text" name="harga[]" class="harga form-control" value="{{$valueBahan['harga']}}" id="harga-{{$loop->index}}" readonly="" >
+									<input type="text" name="harga[]" class="harga form-control" value="{{number_format($valueBahan['harga'])}}" id="harga-{{$loop->index}}" readonly="" >
 								</div>
 							</td>
 						</tr>
@@ -225,7 +241,7 @@
 						<td>
 							<div class="input-group">
 								<div class="input-group-addon">Rp.</div>
-								<input type="text" name="" id="biaya_total" class="form-control" value="{{$totalAwal}}" onchange='ubahTotal()' readonly="">
+								<input type="text" name="" id="biaya_total" class="form-control" value="{{number_format($totalAwal)}}" onchange='ubahTotal()' readonly="">
 							</div>
 						</td>
 					</tr>
@@ -235,7 +251,7 @@
 						<td>&nbsp;</td>
 						<td>
 							<select class="form-control" id="minimal_pembelian" required="" name="minimal_pembelian">
-								<option disabled="" selected="">Pilih Minimal Pembelian</option>
+								<option disabled="" selected="">Pilih Jumlah Pembelian</option>
 								@foreach($minimal_pembelian as $data)
 								<option value="{{$data['id']}}" data-jumlah_pembelian="{{$data['jumlah_pembelian']}}" data-satuan="{{$data['satuan']}}">{{$data['jumlah_pembelian'] . ' / ' . $data['satuan'] }}</option>
 								@endforeach
@@ -262,28 +278,27 @@
 						<h4 style="text-align: center">Biaya Tambahan</h4>
 					</div>
 				</div>
-			<table class="table">
-				<tr>
-					<td>
-						<input type="text" class="form-control" disabled="" value="Biaya Design">
-					</td>
-					<td>
-						<input type="number" name="jumlah_biaya_tambahan" class="form-control" value="1" readonly="">
-					</td>
-					<td>
-						<div class="input-group">
-							<div class="input-group-addon">Rp.</div>
-							<input type="text" name="subtotal_biaya_tambahan" class="form-control" id="subtotal_biaya_tambahan" onchange='ubahTotal()' readonly="">
-						</div>
-					</td>
-				</tr>
-			</table>
-
+				<table class="table">
+					<tr>
+						<td>
+							<input type="text" class="form-control" disabled="" value="Biaya Design">
+						</td>
+						<td>
+							<input type="number" name="jumlah_biaya_tambahan" class="form-control" value="1" readonly="">
+						</td>
+						<td>
+							<div class="input-group">
+								<div class="input-group-addon">Rp.</div>
+								<input type="text" name="subtotal_biaya_tambahan" class="form-control" id="subtotal_biaya_tambahan" onchange='ubahTotal()' readonly="">
+							</div>
+						</td>
+					</tr>
+				</table>
 			</div>
 			<table class="table">
 				<tr>
 					@for($i= 0; $i < 15; $i++)
-						<td>&nbsp;</td>
+					<td>&nbsp;</td>
 					@endfor
 					<td>
 						<span class="label label-info pull-right">Total Keseluruhan</span>
@@ -293,7 +308,7 @@
 							<div class="input-group-addon">Rp.</div>
 							<input type="text" name="total_keseluruhan" id="total_keseluruhan" class="form-control" readonly="">
 							<div class="input-group-addon">
-								<button type="button" id="hitung_total">hitung total</button>
+								<button type="button" class="btn btn-primary" id="hitung_total">hitung total</button>
 							</div>
 						</div>
 					</td>
@@ -309,7 +324,7 @@
 					</div>
 				</div>
 			</div>
-			@if(count($formulirPendaftaran) == 0)
+			{{-- @if(count($formulirPendaftaran) == 0)
 			<div class="container" id="formulir_pendaftaran1">
 				<div class="card">
 					<div class="card-header bg-warning">
@@ -416,7 +431,7 @@
 			<div class="container" id="formulir_pendaftaran">
 				&nbsp;
 			</div>
-			@endif
+			@endif --}}
 			<input type="hidden" name="rincian_produk" id="rincian_produk">
 			<div class="row">
 				<div class="col-md-2"></div>
@@ -431,12 +446,25 @@
 					Proyeksi Keuangan
 				</div>
 				<div class="card-body">
-					<div class="form-group">
-						<label>Input Harga Jual</label>
-						<div class="input-group">
-							<input type="number" name="harga_jual" id="harga_jual" min="0" class="form-control">
-							<div class="input-group-addon" id="label-pcs"></div>
+					<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<label>Input Harga Jual</label>
+							<div class="input-group">
+								<input type="number" name="harga_jual" id="harga_jual" min="0" class="form-control">
+								<div class="input-group-addon" id="label-pcs"></div>
+							</div>
 						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>Harga Jual Rekomendasi</label>
+							<div class="input-group">
+								<input type="number" id="harga_jual2" min="0" class="form-control">
+								<div class="input-group-addon" id="label-pcs2"></div>
+							</div>
+						</div>
+					</div>
 					</div>
 					<div class="form-group">
 						<label>Input Omset</label>
@@ -522,6 +550,18 @@
 	ctx.fillRect(0, 0, chartInstance.chart.width, chartInstance.chart.height);
 	}
 	});
+	function numberFormat(nStr)
+	{
+	    nStr += '';
+	    x = nStr.split('.');
+	    x1 = x[0];
+	    x2 = x.length > 1 ? '.' + x[1] : '';
+	    var rgx = /(\d+)(\d{3})/;
+	    while (rgx.test(x1)) {
+	        x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	    }
+	    return x1 + x2;
+	}
 	function addData() {
 		var omset = $('#omset').val();
 		var data = [];
@@ -558,10 +598,11 @@
 		var total_bahan_baku = $('#biaya_total').val();
 		var jumlah_minimal = $(this).find(':selected').data('jumlah_pembelian');
 		var satuan = $(this).find(':selected').data('satuan');
-		const hasil = parseInt(total_bahan_baku) * parseInt(jumlah_minimal);
+		const hasil = parseInt(total_bahan_baku.replace(/,/g, '')) * parseInt(jumlah_minimal);
 		// console.log(total_bahan_baku, jumlah_minimal, hasil);
-		$('#biaya_total2').val(hasil);
+		$('#biaya_total2').val(numberFormat(hasil));
 		$('#label-pcs').text('/ '+satuan+' ('+jumlah_minimal+')');
+		$('#label-pcs2').text('/ '+satuan+' ('+jumlah_minimal+')');
 	})
 	$('#harga_jual').on('change' , function() {
 		const hargaJual = $(this).val();
@@ -576,19 +617,19 @@
 		$('#harga_jual').val(hasil);
 	});
 	// $('#cek-proyeksi').on('click', function() {
-			// 	var omset = $('#omset').val();
-			// 	var data = [];
-			// 	var hasillama = parseFloat(omset);
-			// 	data.push(Math.round(omset));
-			// 	// var total = 0;
-			// 	for (var i = 0; i < 11; i++) {
-					// 		var hasilbaru = (hasillama * 30) / 100;
-					// 		var total = hasillama + hasilbaru;
-					// 		hasillama = total;
-					// 		data.push(Math.round(total));
-			// 	}
-			// 	MyChart.data.datasets.data.pop();
-			// 	MyChart.data.datasets.data[0] = data;
+				// 	var omset = $('#omset').val();
+				// 	var data = [];
+				// 	var hasillama = parseFloat(omset);
+				// 	data.push(Math.round(omset));
+				// 	// var total = 0;
+				// 	for (var i = 0; i < 11; i++) {
+							// 		var hasilbaru = (hasillama * 30) / 100;
+							// 		var total = hasillama + hasilbaru;
+							// 		hasillama = total;
+							// 		data.push(Math.round(total));
+				// 	}
+				// 	MyChart.data.datasets.data.pop();
+				// 	MyChart.data.datasets.data[0] = data;
 	// });
 	$('.btn-rincian').on('click', function(){
 		var input = $('#frm-biaya');
@@ -599,128 +640,138 @@
 		var jumlah = table.find("input[name='satuan[]']").map(function() {return $(this).val();}).get();
 		var nama_satuan = table.find("input[name='nama_satuan[]']").map(function() {return $(this).val();}).get();
 		var harga = table.find("input[name='harga[]']").map(function() {return $(this).val();}).get();
-		var biaya_tambahan = $("#subtotal_biaya_tambahan").val();
-		const total_keseluruhan = $("#total_keseluruhan").val();
+		var hpp = numberFormat($('#biaya_total').val());
+		const minimal_pembelian = $('#minimal_pembelian').find(':selected').data('jumlah_pembelian');
+		const satuan = $('#minimal_pembelian').find(':selected').data('satuan');
+		var biaya_tambahan = numberFormat($("#subtotal_biaya_tambahan").val());
+		const total_keseluruhan = numberFormat($("#total_keseluruhan").val());
 		const rincian = '<div class="col-md-12">'+
-								'<table class="table table-striped table-hover">'+
-											'<tr>'+
-														'<td>Nama Tagline</td>'+
-														'<td>:</td>'+
-														'<td>'+nama_tagline+'</td>'+
-											'</tr>'+
-											'<tr>'+
-														'<td>Isi Tagline</td>'+
-														'<td>:</td>'+
-														'<td>'+isi_tagline+'</td>'+
-											'</tr>'+
-											'<tr>'+
-														'<td>Bahan Baku</td>'+
-														'<td>:</td>'+
-														'<td>'+$.map(bahan_baku, function(value, index) {return value + ' ' + jumlah[index]  +  ' ' + nama_satuan[index] + ' ' + ' subtotal : ' + harga[index] + ', '})+'</td>'+
-											'</tr>'+
-											'<tr>'+
-														'<td>Biaya Tambahan</td>'+
-														'<td>:</td>'+
-														'<td>'+(biaya_tambahan == 0 ? 0 : biaya_tambahan )+'</td>'+
-											'</tr>'+
-											'<tr>'+
-														'<td>Total Biaya Keseluruhan</td>'+
-														'<td>:</td>'+
-														'<td> Rp. '+total_keseluruhan+'</td>'+
-											'</tr>'+
-								'</div>';
-				$(this).remove();
-				$('#rincian').append(rincian);
-				$('#rincian_produk').val(rincian);
-			})
-			$('#hitung_total').on('click', function(e) {
-				e.preventDefault();
-				const subtotal_biaya_tambahan = $('#subtotal_biaya_tambahan').val() ? $('#subtotal_biaya_tambahan').val() : 0;
-				const biaya_total = $('#biaya_total2').val();
-				var minimal_pembelian = $('#minimal_pembelian').find(':selected').data('jumlah_pembelian');
-				const hasil = (parseFloat(subtotal_biaya_tambahan) + parseFloat(biaya_total));
-				$('#total_keseluruhan').val(hasil);
-				const hargaJual = (hasil / minimal_pembelian);
-				$('#harga_jual').val(hargaJual);
-				const hasil2 = (hargaJual*minimal_pembelian);
-				$('#omset').val(hasil2);
-			});
-			$('.gambar-produk').on('click', function() {
-				var kode_gambar = $(this).data('kode_gambar');
-				$.ajax({
-					type:"GET",
-					url:"{{route('getGambarTemplate', [$kode_produk, $kode_gambar])}}",
-					data:"kode_gambar="+kode_gambar,
-					success:function(data){
-						// console.log(data);
-						$('#gambar-template').empty();
-						$.each(data[0], function(key, value) {
-							const template = "<div class='thumbnail' id='btn-template'><img src='/upload/gambar-template/"+value.gambar_template+"' onclick=gntgmbr('g"+key+"','gT"+key+"','"+value.kode_template+"','"+value.harga+"') id='g"+key+"'/><img src='/upload/gambar-produk/"+data[1].gambar_text+"' style='display:none;' id='gT"+key+"'/><label>"+(value.sold_out == 1 ? 'Tersedia' : 'Terjual')+"</label><br><label>Rp "+value.harga+"</label></div>";
-							$('#gambar-template').append(template);
-						});
-					}
+									'<table class="table table-striped table-hover">'+
+													'<tr>'+
+																	'<td>Jenis Produk</td>'+
+																	'<td>:</td>'+
+																	'<td>'+'{{$gambarProduk2[0]['nama_produk']}}'+'</td>'+
+													'</tr>'+
+													'<tr>'+
+																	'<td>Nama Brand</td>'+
+																	'<td>:</td>'+
+																	'<td>'+nama_tagline+'</td>'+
+													'</tr>'+
+													'<tr>'+
+																	'<td>Isi Tagline</td>'+
+																	'<td>:</td>'+
+																	'<td>'+isi_tagline+'</td>'+
+													'</tr>'+
+													'<tr>'+
+																	'<td>Berat bersih</td>'+
+																	'<td>:</td>'+
+																	'<td>'+$.map(bahan_baku, function(value, index) {return value + ' ' + jumlah[index]  +  ' ' + nama_satuan[index] +  ', '})+'</td>'+
+													'</tr>'+
+													'<tr>'+
+																	'<td>HPP</td>'+
+																	'<td>:</td>'+
+																	'<td>'+hpp+'</td>'+
+													'</tr>'+
+													'<tr>'+
+																	'<td>Jumlah Pesanan</td>'+
+																	'<td>:</td>'+
+																	'<td>'+minimal_pembelian+ ' / '+satuan+'</td>'+
+													'</tr>'+
+									'</div>';
+					$(this).remove();
+					$('#rincian').append(rincian);
+					$('#rincian_produk').val(rincian);
+				})
+				$('#hitung_total').on('click', function(e) {
+					e.preventDefault();
+					const subtotal_biaya_tambahan = $('#subtotal_biaya_tambahan').val() ? $('#subtotal_biaya_tambahan').val().replace(/,/g, '') : 0;
+					const biaya_total = $('#biaya_total2').val().replace(/,/g, '');
+					var minimal_pembelian = $('#minimal_pembelian').find(':selected').data('jumlah_pembelian');
+					const hasil = (parseFloat(subtotal_biaya_tambahan) + parseFloat(biaya_total));
+					$('#total_keseluruhan').val(numberFormat(hasil));
+					const hargaJual = (hasil / minimal_pembelian)*2;
+					$('#harga_jual').val(hargaJual);
+					$('#harga_jual2').val(hargaJual);
+					const hasil2 = (hargaJual*minimal_pembelian);
+					$('#omset').val(hasil2);
 				});
-			});
-			$('#loginAkun').on('submit', function(e) {
-					e.preventDefault();
-					const data = $(this).serialize();
-					// console.log(data);
-					$.post('{{route('admin.loginAkun')}}',data, function(data) {
-		const login = '<li class="account"><a href="#">'+data[0].username+'<i class="fa fa-angle-down"></i></a><ul class="account_selection"><li><a href="{{route('akun.penggunaView')}}"> Dashboard</a></li><li><a href="{{route('akun.logout')}}">Logout</a></li></ul></li>';
-		// const login = '<ul class="nav navbar-nav navbar-right"><li class="dropdown"><a href="#x" class="dropdown-toggle" data-toggle="dropdown">'+data[0].username+'<i class="fa fa-angle-down"></i></a><ul class="dropdown-menu"><li><a href="{{route('akun.penggunaView')}}"> Dashboard</a></li><li><a href="{{route('akun.logout')}}">Logout</a></li></ul></li></ul>';
-		// const faq = '<a href="{{route('faq')}}">Faq</a>';
-		const formulir = '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Formulir Pendaftaran</h3></div><div class="panel-body"><table class="table"><tbody><tr><td>NIK</td><td>:</td><td><input type="text" name="nik" class="form-control" required=""></td></tr><tr><td>Nama Lengkap</td><td>:</td><td><input type="text" name="nama_lengkap" class="form-control" required=""></td></tr><tr><td>Tempat</td><td>:</td><td><input type="text" name="tempat" class="form-control" required=""></td></tr><tr><td>Tanggal Lahir</td><td>:</td><td><input type="date" name="tgl_lahir" class="form-control" required=""></td></tr><tr><td>Jenis Kelamin</td><td>:</td><td><select class="form-control" required="" name="jenis_kelamin"><option value="pria">Pria</option><option value="wanita">Wanita</option></select></td></tr><tr><td>Status Perkawinan</td><td>:</td><td><select class="form-control" name="status_perkawinan" required=""><option disabled="" selected="">-status perkawinan-</option><option value="kawin">Kawin</option><option value="belum kawin">Belum Kawin</option><option value="janda">Janda</option><option value="duda">Duda</option></select></td></tr><tr><td>pekerjaan</td><td>:</td><td><input type="text" name="pekerjaan" class="form-control" required=""></td></tr><tr><td>Alamat</td><td>:</td><td><textarea name="alamat" required="" class="form-control" id="pekerjaan" rows="3"></textarea></td></tr><tr><td>Foto</td><td>:</td><td><input type="file" required="" name="foto" class="form-control"></td></tr><tr><td>Motivasi Berbisnis</td><td>:</td><td><input type="text" required="" name="motivasi_berbisnis" class="form-control"></td></tr><tr><td>Hobi</td><td>:</td><td><input type="text" required="" name="hobi" class="form-control"></td></tr></tbody></table></div></div>';
-						if (data) {
-							// $('#li-faq').empty();
-							$('#ul-login').empty();
-							$('.btn-lanjutkan').hide();
-							$('#biaya-produksi').show();
-							$('#modal-login').modal('hide');
-							$('#ul-login').append(login);
-							// $('#li-faq').append(faq);
-							$('#formulir_pendaftaran1').remove();
+				$('.gambar-produk').on('click', function() {
+					var kode_gambar = $(this).data('kode_gambar');
+					$.ajax({
+						type:"GET",
+						url:"{{route('getGambarTemplate', [$kode_produk, $kode_gambar])}}",
+						data:"kode_gambar="+kode_gambar,
+						success:function(data){
+							// console.log(data);
+							$('#gambar-template').empty();
+							$.each(data[0], function(key, value) {
+								const template = "<div class='thumbnail' id='btn-template'><img src='/upload/gambar-template/"+value.gambar_template+"' onclick=gntgmbr('g"+key+"','gT"+key+"','"+value.kode_template+"','"+value.harga+"') id='g"+key+"'/><img src='/upload/gambar-produk/"+data[1].gambar_text+"' style='display:none;' id='gT"+key+"'/><label>"+(value.sold_out == 1 ? 'Tersedia' : 'Terjual')+"</label><br><label>Rp "+value.harga+"</label></div>";
+								$('#gambar-template').append(template);
+							});
 						}
-						if (data[1] == null) {
-							$('#formulir_pendaftaran1').hide();
-							$('#formulir_pendaftaran').append(formulir);
-						}
-						alert('anda berhasil login');
-						});
 					});
-			$('#frm-register').on('submit', function(e) {
-					e.preventDefault();
-					const data = $(this).serialize();
-					// console.log(data);
-					$.post('{{route('admin.registerPost')}}',data, function(data) {
-		alert('Akun Anda Berhasil dibuat, Silahkan login !');
-		if (data) {
-		$('.btn-lanjutkan').hide();
-		$('#biaya-produksi').show();
-		$('#modal-register').modal('hide');
-		}
-		})
-		});
-		});
-		function ubahHarga(idsatuan,idharga, beratAwal, hargaAwal,minimal,maximal){
-		console.log(idsatuan, idharga, beratAwal, hargaAwal);
-		var satuan = document.getElementById(idsatuan).value;
-		var harga = document.getElementById(idharga).value;
-		if (parseFloat(satuan)<parseFloat(minimal)||parseFloat(satuan)>parseFloat(maximal)) {
-																satuan=beratAwal;
-																document.getElementById(idsatuan).value=beratAwal;
-																}
-																var subtotal = (satuan/beratAwal)*hargaAwal;
-																var biaya_total = document.getElementById('biaya_total').value;
-																biaya_total = (biaya_total - harga)+subtotal;
-																document.getElementById('biaya_total').value = biaya_total;
-																document.getElementById(idharga).value = subtotal;
-																}
-																function ubahTotal(){
-																var biaya_total = document.getElementById("biaya_total").value;
-																var subtotal_biaya_tambahan = document.getElementById("subtotal_biaya_tambahan").value;
-																var grandTot = biaya_total + subtotal_biaya_tambahan;
-																document.getElementById("total_keseluruhan").value = grandTot;
-																}
+				});
+				$('#loginAkun').on('submit', function(e) {
+						e.preventDefault();
+						const data = $(this).serialize();
+						// console.log(data);
+						$.post('{{route('admin.loginAkun')}}',data, function(data) {
+			const login = '<li class="account"><a href="#">'+data[0].username+'<i class="fa fa-angle-down"></i></a><ul class="account_selection"><li><a href="{{route('akun.penggunaView')}}"> Dashboard</a></li><li><a href="{{route('akun.logout')}}">Logout</a></li></ul></li>';
+			// const login = '<ul class="nav navbar-nav navbar-right"><li class="dropdown"><a href="#x" class="dropdown-toggle" data-toggle="dropdown">'+data[0].username+'<i class="fa fa-angle-down"></i></a><ul class="dropdown-menu"><li><a href="{{route('akun.penggunaView')}}"> Dashboard</a></li><li><a href="{{route('akun.logout')}}">Logout</a></li></ul></li></ul>';
+			// const faq = '<a href="{{route('faq')}}">Faq</a>';
+			// const formulir = '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Formulir Pendaftaran</h3></div><div class="panel-body"><table class="table"><tbody><tr><td>NIK</td><td>:</td><td><input type="text" name="nik" class="form-control" required=""></td></tr><tr><td>Nama Lengkap</td><td>:</td><td><input type="text" name="nama_lengkap" class="form-control" required=""></td></tr><tr><td>Tempat</td><td>:</td><td><input type="text" name="tempat" class="form-control" required=""></td></tr><tr><td>Tanggal Lahir</td><td>:</td><td><input type="date" name="tgl_lahir" class="form-control" required=""></td></tr><tr><td>Jenis Kelamin</td><td>:</td><td><select class="form-control" required="" name="jenis_kelamin"><option value="pria">Pria</option><option value="wanita">Wanita</option></select></td></tr><tr><td>Status Perkawinan</td><td>:</td><td><select class="form-control" name="status_perkawinan" required=""><option disabled="" selected="">-status perkawinan-</option><option value="kawin">Kawin</option><option value="belum kawin">Belum Kawin</option><option value="janda">Janda</option><option value="duda">Duda</option></select></td></tr><tr><td>pekerjaan</td><td>:</td><td><input type="text" name="pekerjaan" class="form-control" required=""></td></tr><tr><td>Alamat</td><td>:</td><td><textarea name="alamat" required="" class="form-control" id="pekerjaan" rows="3"></textarea></td></tr><tr><td>Foto</td><td>:</td><td><input type="file" required="" name="foto" class="form-control"></td></tr><tr><td>Motivasi Berbisnis</td><td>:</td><td><input type="text" required="" name="motivasi_berbisnis" class="form-control"></td></tr><tr><td>Hobi</td><td>:</td><td><input type="text" required="" name="hobi" class="form-control"></td></tr></tbody></table></div></div>';
+							if (data) {
+								// $('#li-faq').empty();
+								$('#ul-login').empty();
+								$('.btn-lanjutkan').hide();
+								$('#biaya-produksi').show();
+								$('#modal-login').modal('hide');
+								$('#ul-login').append(login);
+								// $('#li-faq').append(faq);
+								// $('#formulir_pendaftaran1').remove();
+							}
+							if (data[1] == null) {
+								// $('#formulir_pendaftaran1').hide();
+								// $('#formulir_pendaftaran').append(formulir);
+							}
+							alert('anda berhasil login');
+							});
+						});
+				$('#frm-register').on('submit', function(e) {
+						e.preventDefault();
+						const data = $(this).serialize();
+						// console.log(data);
+						$.post('{{route('admin.registerPost')}}',data, function(data) {
+			alert('Akun Anda Berhasil dibuat, Silahkan login !');
+			if (data) {
+			$('.btn-lanjutkan').hide();
+			$('#biaya-produksi').show();
+			$('#modal-register').modal('hide');
+			}
+			})
+			});
+			});
+			function ubahHarga(idsatuan,idharga, beratAwal, hargaAwal,minimal,maximal){
+			// console.log(idsatuan, idharga, beratAwal, hargaAwal);
+			var satuan = document.getElementById(idsatuan).value;
+			var harga = document.getElementById(idharga).value;
+			if (parseFloat(satuan)<parseFloat(minimal)||parseFloat(satuan)>parseFloat(maximal)) {
+				satuan=beratAwal;
+				document.getElementById(idsatuan).value=beratAwal;
+				}
+				var subtotal = (satuan/beratAwal)*hargaAwal;
+				var biaya_total = document.getElementById('biaya_total').value;
+				// console.log(biaya_total, parseInt(biaya_total.replace(/,/g, '')), parseInt(harga.replace(/,/g, '')), subtotal);
+				biaya_total = (parseInt(biaya_total.replace(/,/g, '')) - parseInt(harga.replace(/,/g, '')))+subtotal;
+				document.getElementById('biaya_total').value = numberFormat(biaya_total);
+				document.getElementById(idharga).value = numberFormat(subtotal);
+				}
+				function ubahTotal(){
+				var biaya_total = document.getElementById("biaya_total").value;
+				var subtotal_biaya_tambahan = document.getElementById("subtotal_biaya_tambahan").value;
+				var grandTot = parseInt(biaya_total.replace(/,/g, '')) + parseInt(subtotal_biaya_tambahan.replace(/,/g, ''));
+				document.getElementById("total_keseluruhan").value = numberFormat(grandTot);
+				}
 		</script>
 		<script>
 		var canvas, ctx, bMouseIsDown = false, iLastX, iLastY,
@@ -755,28 +806,29 @@
 		}, false);
 		document.body.appendChild(link);
 		}
-
 		function readURL(input) {
-	        if (input.files && input.files[0]) {
-	            var reader = new FileReader();
-	            $('#cvs').hide();
-	            reader.onload = function (e) {
-	                $('#gambar_upload').attr('src', e.target.result);
-	                $('#gambar_upload').attr('width', 720);
-	                $('#gambar_upload').attr('height', 480);
-	            }
-	            reader.readAsDataURL(input.files[0]);
-	        }
-	    }
-
-	    $("#gambar_sendiri").change(function(){
-	    	$('#gambar_upload').show();
-	    	$('#gambar_produk_baru').attr('disabled', true);
-	    	$('#table-biaya-tambahan').hide();
-	        readURL(this);
-	    });
-
-		function gntgmbr(kodegambar,kodetext, kode_template, harga_template) {
+		if (input.files && input.files[0]) {
+		var reader = new FileReader();
+		$('#cvs').hide();
+		reader.onload = function (e) {
+		$('#gambar_upload').attr('src', e.target.result);
+		$('#gambar_upload').attr('width', 720);
+		$('#gambar_upload').attr('height', 480);
+		}
+		reader.readAsDataURL(input.files[0]);
+		}
+		}
+		// $("#gambar_sendiri").change(function(){
+		// $('#gambar_upload').show();
+		// $('#gambar_produk_baru').attr('disabled', true);
+		// $('#table-biaya-tambahan').hide();
+		// readURL(this);
+		// });
+		function gntgmbr(kodegambar,kodetext, kode_template, harga_template, status) {
+			if (status == 0) {
+				alert('Desain sudah terjual, tidak dapat dipilih!');
+				return false;
+			}
 			$('#cvs').show();
 			$('#gambar_upload').hide();
 			$('#gambar_produk_baru').attr('disabled', false);
@@ -799,7 +851,7 @@
 		ctx.drawImage(imgU,xULD,yULD,widthULD,heightULD);
 		}
 		ctx.drawImage(img2, 0, 0, xGmbr, xGmbr * img2.height / img2.width);
-		$('#subtotal_biaya_tambahan').val(harga_template);
+		$('#subtotal_biaya_tambahan').val(numberFormat(harga_template));
 		$.ajax({
 			type:"GET",
 			url:"{{route('getGambarWarna', [$kode_produk, $kode_gambar])}}",
@@ -807,8 +859,8 @@
 			success:function(data){
 				$('#gambar-warna').empty();
 				// $.each(data, function(key, value) {
-				// 		const template = "<button class='btn' style='background-color:"+value.hex_color+";color:"+value.hex_color+";margin-right:5px' onclick=warna('"+value.hex_color+"')>test</button>";
-				// 		$('#gambar-warna').append(template);
+						// 		const template = "<button class='btn' style='background-color:"+value.hex_color+";color:"+value.hex_color+";margin-right:5px' onclick=warna('"+value.hex_color+"')>test</button>";
+						// 		$('#gambar-warna').append(template);
 				// });
 			}
 		});

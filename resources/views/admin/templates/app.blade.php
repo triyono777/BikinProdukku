@@ -196,6 +196,12 @@
                 <li><a href="{{route('admin.bannerView')}}"><i class="fa fa-circle-o"></i> Banner</a></li>
               </ul>
             </li>
+            <li>
+              <a href="{{route('admin.settingAdminView')}}">
+                <i class="fa fa-gears"></i>
+                <span>Setting Admin</span>
+              </a>
+            </li>
             @else
             <li>
               <a href="{{route('akun.penggunaView')}}">

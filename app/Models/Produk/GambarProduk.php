@@ -15,4 +15,8 @@ class GambarProduk extends Model
     public function produk() {
     	return $this->belongsTo('App\Models\Produk\Produk', 'kode_produk', 'kode_produk');
     }
+
+    public function gambarTemplate() {
+    	return $this->belongsTo('App\Models\Produk\GambarTemplate', 'kode_gambar', 'kode_gambar');
+    }
 }

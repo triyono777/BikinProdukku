@@ -1,16 +1,124 @@
 @extends('home.templates.app2')
 @section('content')
-<div class="col-md-12 col-xs-12" style="margin-top: 150px">
+<div class="col-md-12 col-xs-12" style="margin-top: 100px">
+	@if($formulir == null && auth()->guard('pengguna')->check())
+	<div class="container">
+		<h4 align="center">Untuk Pemesanan,Isi Formulir Pendaftaran berikut</h4>
+		<div class="card" style="margin-bottom: 50px">
+			<div class="card-header bg-warning">
+				Formulir Pendaftaran
+			</div>
+			<form action="{{route('formulirPost')}}" method="post" enctype="multipart/form-data">
+				{{csrf_field()}}
+				<div class="card-body">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td>NIK</td>
+								<td>:</td>
+								<td>
+									<input type="text" name="nik" class="form-control" required="">
+								</td>
+							</tr>
+							<tr>
+								<td>Nama Lengkap</td>
+								<td>:</td>
+								<td>
+									<input type="text" name="nama_lengkap" class="form-control" required="">
+								</td>
+							</tr>
+							<tr>
+								<td>Tempat</td>
+								<td>:</td>
+								<td>
+									<input type="text" name="tempat" class="form-control" required="">
+								</td>
+							</tr>
+							<tr>
+								<td>Tanggal Lahir</td>
+								<td>:</td>
+								<td>
+									<input type="date" name="tgl_lahir" class="form-control" required="">
+								</td>
+							</tr>
+							<tr>
+								<td>Jenis Kelamin</td>
+								<td>:</td>
+								<td>
+									<select class="form-control" required="" name="jenis_kelamin">
+										<option value="pria">Pria</option>
+										<option value="wanita">Wanita</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>Status Perkawinan</td>
+								<td>:</td>
+								<td>
+									<select class="form-control" name="status_perkawinan" required="">
+										<option disabled="" selected="">-status perkawinan-</option>
+										<option value="kawin">Kawin</option>
+										<option value="belum kawin">Belum Kawin</option>
+										<option value="janda">Janda</option>
+										<option value="duda">Duda</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>pekerjaan</td>
+								<td>:</td>
+								<td>
+									<input type="text" name="pekerjaan" class="form-control" required="">
+								</td>
+							</tr>
+							<tr>
+								<td>Alamat</td>
+								<td>:</td>
+								<td>
+									<textarea name="alamat" required="" class="form-control" id="pekerjaan" rows="3"></textarea>
+								</td>
+							</tr>
+							<tr>
+								<td>Foto</td>
+								<td>:</td>
+								<td>
+									<input type="file" required="" name="foto" class="form-control">
+								</td>
+							</tr>
+							<tr>
+								<td>Motivasi Berbisnis</td>
+								<td>:</td>
+								<td>
+									<input type="text" required="" name="motivasi_berbisnis" class="form-control">
+								</td>
+							</tr>
+							<tr>
+								<td>Hobi</td>
+								<td>:</td>
+								<td>
+									<input type="text" required="" name="hobi" class="form-control">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<br>
+					<button type="submit" class="btn btn-block btn-primary pull-right">Simpan</button>
+			</form>
+		</div>
+	</div>
+	@endif
+	@if($formulir != null || !auth()->guard('pengguna')->check())
 	<div class="card">
 		<div class="card-header">
 			<h5>
 			Keranjang Belanja <i class="fa fa-shopping-cart"></i>
 			@if($transaksi['gambar_bukti'] == null)
-				<span class="pull-right badge badge-danger">Status: Belum Upload bukti pembayaran</span>
+			<span class="pull-right badge badge-danger">Status: Belum Upload bukti pembayaran</span>
 			@elseif($transaksi['gambar_bukti'])
-				<span class="pull-right badge badge-warning">Status: Proses Konfirmasi Pembayaran</span>
+			<span class="pull-right badge badge-warning">Status: Proses Konfirmasi Pembayaran</span>
 			@elseif($transaksi['status'] == 1)
-				<span class="pull-right badge badge-success">Status: Sudah di Konfirmasi</span>
+			<span class="pull-right badge badge-success">Status: Sudah di Konfirmasi</span>
 			@endif
 			</h5>
 		</div>
@@ -60,7 +168,6 @@
 										{{count($transaksi['detailTransaksi']) == 1 ? 'data-count='.count($transaksi['detailTransaksi']).' data-kode_detail='.$kode_invoice .'' : 'data-count='.count($transaksi['detailTransaksi']).' data-kode_detail='.$data['kode_detail'] .''}}
 									><i class="fa fa-trash"></i></a>
 									@else
-
 									@endif
 								</td>
 							</tr>
@@ -80,6 +187,7 @@
 				</div>
 			</div>
 		</div>
+		@endif
 	</div>
 </div>
 <div class="modal fade" id="modal-detail">
@@ -136,6 +244,11 @@
 				$('#table-detail').append(template);
 			});
 		});
-	})
+	});
+	@if(Session::has('success'))
+		$(document).ready(function() {
+			alert('{{Session::get('success')}}')
+		})
+	@endif
 </script>
 @endsection

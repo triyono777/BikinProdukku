@@ -61,9 +61,10 @@
 					</div>
 					<nav class="navbar">
 						<ul class="navbar_menu">
-							<li class="dropdown dropdown-large">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Buat Produkku <b class="caret"></b></a>
-								<ul class="dropdown-menu dropdown-menu-large row">
+							<li class="active">
+								{{-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">Buat Produkku <b class="caret"></b></a> --}}
+								<a href="{{route('kemasan.all')}}">Buat Produkku</a>
+								{{-- <ul class="dropdown-menu dropdown-menu-large row">
 									@foreach($kategori as $item)
 									<li class="col-md-3">
 										<ul>
@@ -74,15 +75,16 @@
 										</ul>
 									</li>
 									@endforeach
-								</ul>
+								</ul> --}}
 							</li>
 							{{-- @if(auth()->guard('pengguna')->check()) --}}
-							<li><a href="{{route('faq')}}">Faq</a></li>
+							<li class="{{SetActive::active('faq')}}"><a href="{{route('faq')}}">Faq</a></li>
 							{{-- @else --}}
 							{{-- <li id="li-faq">&nbsp;</li> --}}
 							{{-- @endif --}}
-							<li><a href="{{route('tentang')}}">Tentang Kami</a></li>
-							<li><a href="{{route('testimonial')}}">Testimonial</a></li>
+							{{-- <li><a href="{{route('tentang')}}">Tentang Kami</a></li> --}}
+							{{-- <li><a href="{{route('testimonial')}}">Testimonial</a></li> --}}
+							<li><a href="{{route('cs', 'beli-terpisah')}}">Beli Terpisah</a></li>
 							<li><a href="{{route('lihat_pasar')}}">Lihat Pasar</a></li>
 							<li>
 								<a href="{{route('home.cart')}}">

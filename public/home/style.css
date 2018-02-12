@@ -108,11 +108,11 @@
   }
   .cuadro_intro_hover:hover .caption{
     opacity: 1;
-    transform: translateY(-150px);
-    -webkit-transform:translateY(-150px);
-    -moz-transform:translateY(-150px);
-    -ms-transform:translateY(-150px);
-    -o-transform:translateY(-150px);
+    transform: translateY(-300px);
+    -webkit-transform:translateY(-300px);
+    -moz-transform:translateY(-300px);
+    -ms-transform:translateY(-300px);
+    -o-transform:translateY(-300px);
   }
   .cuadro_intro_hover img{
     /*z-index: 4;*/
@@ -128,7 +128,7 @@
     width: 100%;
   }
   .cuadro_intro_hover .blur{
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(180, 232, 249, 0.7);
     height: 300px;
     /*z-index: 5;*/
     position: absolute;
@@ -197,5 +197,18 @@
 }
 
 .carousel-item {
-  min-height: 540px !important;
+  height: auto;
+}
+
+.bg-hover:hover {
+  opacity: 0.5;
+}
+
+.active {
+  background-color: #E30000;
+  padding: 38px 10px;
+}
+
+.active a {
+  color: white;
 }

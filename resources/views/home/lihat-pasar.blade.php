@@ -10,8 +10,7 @@
 			<div class="card">
 				<img class="card-img-top" src="{{URL::to('upload/lihat-pasar/'.$data['gambar'])}}" alt="Card image">
 				<div class="card-body">
-					<h5 class="card-title"><a href="{{$data['link']}}">{{$data['link']}}</a></h5>
-					<p class="card-text">{!! $data['keterangan'] !!}</p>
+					<h5 class="card-title"><a href="{{$data['link']}}">{{strip_tags($data['keterangan'])}}</a></h5>
 				</div>
 			</div>
 		</div>

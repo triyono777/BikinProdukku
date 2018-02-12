@@ -24,7 +24,9 @@ class HomeController extends Controller
         $banner = Banner::select('gambar as link')->where('tipe','video')->orderBy('id_banner','DESC')->first();
         $dialogProses = DialogProses::get()->toArray();
 
-    	return view('home.index', compact('kategori','banner', 'dialogProses'));
+        $testimonial = Testimonial::with('pengguna')->take(4)->get()->toArray();
+
+    	return view('home.index', compact('kategori','banner', 'dialogProses', 'testimonial'));
     }
 
     public function kemasan($id_kategori)
@@ -37,15 +39,16 @@ class HomeController extends Controller
         return view('home.kemasan',compact('kategori','slider', 'produk', 'subkategori'));
     }
 
-    // public function kemasanAll()
-    // {
-    //     $kategori = Kategori::with('subKategori')->get()->toArray();
-    //     $subkategori = SubKategori::where('id_subkategori', $id_kategori)->first();
-    //     $slider = Banner::where('tipe', 'gambar')->get();
+    public function kemasanAll()
+    {
+        // $kategori = Kategori::with('subKategori')->get()->toArray();
+        // $subkategori = SubKategori::where('id_subkategori', $id_kategori)->first();
+        $slider = Banner::where('tipe', 'gambar')->get();
 
-    //     $produk = Produk::with(['subkategori', 'gambarproduk'])->get()->toArray();
-    //     return view('home.kemasan',compact('kategori','slider', 'produk', 'subkategori'));
-    // }
+        $produk = Produk::with(['gambarproduk.gambarTemplate'])->paginate(30);
+        // dd($produk);
+        return view('home.kemasan',compact('slider', 'produk'));
+    }
 
     public function faq() {
         // $id_user = auth()->guard('pengguna')->user()->id_user;
@@ -90,5 +93,9 @@ class HomeController extends Controller
     public function lihat_pasar() {
         $lihat_pasar = LihatPasar::get()->toArray();
         return view('home.lihat-pasar', compact('lihat_pasar'));
+    }
+
+    public function cs($cs) {
+        return view('home.cs', compact('cs'));
     }
 }

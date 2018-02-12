@@ -47,9 +47,9 @@
 					<div class="col-md-3 footer-social animated fadeInDown">
 						<h4 style="color:  #181818">Layanan Mitra B-Pro</h4>
 						<ul>
-							<li><a href="#">Jadwal Konsultasi</a></li>
+							<li><a href="{{route('cs', 'jadwal')}}">Jadwal Konsultasi</a></li>
 							{{-- <li><a href="#">Kebijakan Privasi</a></li> --}}
-							<li><a href="#">Status Pembayaran</a></li>
+							<li><a href="{{route('akun.penggunaView')}}">Status Pembayaran</a></li>
 						</ul>
 					</div>
 					<div class="col-md-3 footer-social animated fadeInRight">

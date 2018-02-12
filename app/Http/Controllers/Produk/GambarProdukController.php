@@ -26,18 +26,20 @@ class GambarProdukController extends Controller
         $gambarProduk = new GambarProduk;
         $gambarProduk->kode_produk = $kode_produk;
         // dd($request->file('gambar_tampilan'), $request->file('gambar_text'));
-        $file_gambar_tampilan = $request->file('gambar_tampilan');
-        $gambar_tampilan = time() . str_random(5) . '.' . $file_gambar_tampilan->getClientOriginalExtension();
-        // $image = Image::make($file_gambar_tampilan);
-        // $image = Storage::disk('local');
-        // $image->encode('jpg', 75);
-        $path = public_path('upload/gambar-produk/');
-        $file_gambar_tampilan->move($path,$gambar_tampilan);
-        $gambarProduk->gambar_tampilan = $gambar_tampilan;
+        if ($request->file('gambar_produk')) {
+            $file_gambar_tampilan = $request->file('gambar_tampilan');
+            $gambar_tampilan = time() . str_random(10) . '.' . $file_gambar_tampilan->getClientOriginalExtension();
+            // $image = Image::make($file_gambar_tampilan);
+            // $image = Storage::disk('local');
+            // $image->encode('jpg', 75);
+            $path = public_path('upload/gambar-produk/');
+            $file_gambar_tampilan->move($path,$gambar_tampilan);
+            $gambarProduk->gambar_tampilan = $gambar_tampilan;
+        }
         if ($request->file('gambar_text')) {
             $file_gambar_text = $request->file('gambar_text');
 
-            $gambar_text = time() .str_random(5) . '.' . $file_gambar_text->getClientOriginalExtension();
+            $gambar_text = time() .str_random(10) . '.' . $file_gambar_text->getClientOriginalExtension();
             // $image = Image::make($file_gambar_text);
             // $image->encode('jpg', 75);
             $path = public_path('upload/gambar-produk/');

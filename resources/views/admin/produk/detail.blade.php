@@ -19,7 +19,7 @@
 							<input type="hidden" name="id" id="id">
 						</div>
 						<div class="form-group">
-							<label for="">Upload Gambar Text</label>
+							<label for="">Upload Gambar Makanan</label>
 							<input type="file" name="gambar_text" class="form-control">
 						</div>
 						<div class="form-group">
@@ -36,7 +36,7 @@
 						<tr>
 							<th>No</th>
 							<th>Gambar Produk</th>
-							<th>Gambar Text</th>
+							<th>Gambar Makanan</th>
 							<th>
 								Caption
 							</th>
