@@ -61,7 +61,7 @@
 					</div>
 					<nav class="navbar">
 						<ul class="navbar_menu">
-							<li class="active">
+							<li class="{{active('kemasan.all')}}">
 								{{-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">Buat Produkku <b class="caret"></b></a> --}}
 								<a href="{{route('kemasan.all')}}">Buat Produkku</a>
 								{{-- <ul class="dropdown-menu dropdown-menu-large row">
@@ -78,23 +78,23 @@
 								</ul> --}}
 							</li>
 							{{-- @if(auth()->guard('pengguna')->check()) --}}
-							<li class="{{SetActive::active('faq')}}"><a href="{{route('faq')}}">Faq</a></li>
+							<li class="{{active('faq')}}"><a href="{{route('faq')}}">Faq</a></li>
 							{{-- @else --}}
 							{{-- <li id="li-faq">&nbsp;</li> --}}
 							{{-- @endif --}}
 							{{-- <li><a href="{{route('tentang')}}">Tentang Kami</a></li> --}}
 							{{-- <li><a href="{{route('testimonial')}}">Testimonial</a></li> --}}
-							<li><a href="{{route('cs', 'beli-terpisah')}}">Beli Terpisah</a></li>
-							<li><a href="{{route('lihat_pasar')}}">Lihat Pasar</a></li>
-							<li>
+							<li class="{{active('cs')}}"><a href="{{route('cs', 'beli-terpisah')}}">Beli Terpisah</a></li>
+							<li class="{{active('lihat_pasar')}}"><a href="{{route('lihat_pasar')}}">Lihat Pasar</a></li>
+							<li class="{{active('home.cart')}}">
 								<a href="{{route('home.cart')}}">
 									Cart
 									<i class="fa fa-shopping-cart"></i>
-									{{-- @if($jumlah_cart == 0)
-										<span class="badge badge-danger">0</span>
+									@if($jumlah_cart == 0)
+										<span class="badge badge-info">0</span>
 									@else
-										<span class="badge badge-danger">{{$jumlah_cart}}</span>
-									@endif --}}
+										<span class="badge badge-info">{{$jumlah_cart}}</span>
+									@endif
 								</a>
 							</li>
 							@if(!auth()->guard('pengguna')->check())

@@ -25,11 +25,32 @@ class PenggunaController extends Controller
     	return view('admin.pengguna.index', compact('pengguna'));
     }
 
-    public function penggunaTransaksiData() {
+    public function penggunaTransaksiData(Request $request) {
         $id_user = $this->id_user();
-    	$pengguna = Pengguna::with('transaksi')->where('id_user', $id_user)->get()->toArray();
+        if ($request['cari']) {
+           $pengguna = Transaksi::where('kode_invoice', $request['cari'])->first()->toArray();
 
-    	$datatables = DataTables::of($pengguna[0]['transaksi'])
+           $datatables = DataTables::of($pengguna)
+            // ->editColumn('status', function($data) {
+            //     return '<span class="btn btn-xs '.($data['status'] == 1 ? 'btn-success' : 'btn-danger').'">'.($data['status'] == 1 ? "Finished" : "Pending").'</span>';
+            // })
+            // ->editColumn('tanggal', function($data) {
+            //     return date('d-F-Y', strtotime($data['tanggal']));
+            // })
+            // ->editColumn('total', function($data) {
+            //     return 'Rp. '.number_format($data['total']);
+            // })
+            ->addColumn('action', function($data) {
+                return $data;
+            })
+            // ->rawColumns(['status', 'action'])
+            ->addIndexColumn();
+           // return response()->json($pengguna);
+           return $datatables->make(true);
+        }else {
+    	   $pengguna = Pengguna::with('transaksi')->where('id_user', $id_user)->get()->toArray();
+
+           $datatables = DataTables::of($pengguna[0]['transaksi'])
             ->editColumn('status', function($data) {
                 return '<span class="btn btn-xs '.($data['status'] == 1 ? 'btn-success' : 'btn-danger').'">'.($data['status'] == 1 ? "Finished" : "Pending").'</span>';
             })
@@ -44,9 +65,9 @@ class PenggunaController extends Controller
                         <a class="btn btn-xs btn-flat btn-info" href="'.route('akun.penggunaTransaksiDetailView', $data['kode_invoice']).'">detail <i class="fa fa-search"></i></a>';
             })
             ->rawColumns(['status', 'action'])
-	        ->addIndexColumn();
-
-	    return $datatables->make(true);
+            ->addIndexColumn();
+	       return $datatables->make(true);
+        }
     }
 
     public function penggunaTransaksiDetailView($kode_invoice) {

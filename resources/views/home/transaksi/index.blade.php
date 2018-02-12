@@ -186,7 +186,7 @@
 					</div>
 					<div class="form-group">
 						<label>Isi Tagline</label>
-						<textarea class="form-control textarea" placeholder="Nama: Nama Produk Detail Produk : bla bla bla bla" name="tagline" id="tagline"></textarea>
+						<textarea class="form-control textarea" placeholder="Tuliskan penjelasan produk anda..." name="tagline" id="tagline"></textarea>
 					</div>
 				</div>
 			</div>
@@ -663,7 +663,7 @@
 																	'<td>'+isi_tagline+'</td>'+
 													'</tr>'+
 													'<tr>'+
-																	'<td>Berat bersih</td>'+
+																	'<td>Rincian Pesanan</td>'+
 																	'<td>:</td>'+
 																	'<td>'+$.map(bahan_baku, function(value, index) {return value + ' ' + jumlah[index]  +  ' ' + nama_satuan[index] +  ', '})+'</td>'+
 													'</tr>'+

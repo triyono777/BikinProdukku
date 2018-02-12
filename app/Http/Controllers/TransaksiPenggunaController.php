@@ -180,6 +180,7 @@ class TransaksiPenggunaController extends Controller
     }
 
     public function cartDelete(Request $request) {
+        $id_user = auth()->guard('pengguna')->user()->id_user;
         if ($request['count'] == 1) {
             $transaksi = DB::table('transaksi')
                         ->where('kode_invoice', $request['kode_detail'])
@@ -216,7 +217,12 @@ class TransaksiPenggunaController extends Controller
                         ->where('kode_detail', '=', (int)$request['kode_detail'])
                         ->sum(DB::raw('subtotal + biaya_design'));
 
-            $kode_invoice = session()->get('kode_invoice');
+            if (session()->get('kode_invoice')) {
+                $kode_invoice = session()->get('kode_invoice');
+            }else {
+                $kode_invoice = Transaksi::select(['id_user', 'kode_invoice', 'created_at'])->where('id_user', $id_user)->orderBy('created_at', 'desc')->first()->toArray();
+                $kode_invoice = $kode_invoice['kode_invoice'];
+            }
 
             $transaksi = DB::table('transaksi')
                         ->where('kode_invoice', $kode_invoice)
@@ -235,7 +241,7 @@ class TransaksiPenggunaController extends Controller
                             ->where('kode_detail', $request['kode_detail'])
                             ->delete();
 
-            return response()->json($deleteDetailTransaksi);
+            return response()->json($hasil);
         }
     }
 
