@@ -62,28 +62,9 @@
 					<nav class="navbar">
 						<ul class="navbar_menu">
 							<li class="{{active('kemasan.all')}}">
-								{{-- <a href="#" class="dropdown-toggle" data-toggle="dropdown">Buat Produkku <b class="caret"></b></a> --}}
 								<a href="{{route('kemasan.all')}}">Buat Produkku</a>
-								{{-- <ul class="dropdown-menu dropdown-menu-large row">
-									@foreach($kategori as $item)
-									<li class="col-md-3">
-										<ul>
-											<li class="dropdown-header">{{$item['nama_kategori']}}</li>
-											@foreach($item['sub_kategori'] as $value)
-											<li><a href="{{route('kemasan', $value['id_subkategori'])}}">{{$value['nama_subkategori']}}</a></li>
-											@endforeach
-										</ul>
-									</li>
-									@endforeach
-								</ul> --}}
 							</li>
-							{{-- @if(auth()->guard('pengguna')->check()) --}}
 							<li class="{{active('faq')}}"><a href="{{route('faq')}}">Faq</a></li>
-							{{-- @else --}}
-							{{-- <li id="li-faq">&nbsp;</li> --}}
-							{{-- @endif --}}
-							{{-- <li><a href="{{route('tentang')}}">Tentang Kami</a></li> --}}
-							{{-- <li><a href="{{route('testimonial')}}">Testimonial</a></li> --}}
 							<li class="{{active('cs')}}"><a href="{{route('cs', 'beli-terpisah')}}">Beli Terpisah</a></li>
 							<li class="{{active('lihat_pasar')}}"><a href="{{route('lihat_pasar')}}">Lihat Pasar</a></li>
 							<li class="{{active('home.cart')}}">
@@ -136,41 +117,39 @@
 				<div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
 				<div class="hamburger_menu_content text-right">
 					<ul class="menu_top_nav">
-						<li class="">
-							<a href="#">
-								Cart
-								<i class="fa fa-shopping-cart"></i>
-							</a>
-						</li>
-						@if(!auth()->guard('pengguna')->check())
-						<li class="menu_item has-children">
-							<a href="#">
-								My Account
-								<i class="fa fa-angle-down"></i>
-							</a>
-							<ul class="menu_selection">
-								<span id="ul-login">
-								<li>
-									<a href="#modal-register" data-toggle="modal">Daftar</a>
-								</li>
-								<li>
-									<a href="#modal-login" data-toggle="modal">Masuk</a>
-								</li>
-								</span>
-							</ul>
-						</li>
-						@else
-						<li class="menu_item has-children">
-							<a href="#">
-								My Account
-								<i class="fa fa-angle-down"></i>
-							</a>
-							<ul class="menu_selection">
+						<li class="{{active('kemasan.all')}} menu_item">
+								<a href="{{route('kemasan.all')}}">Buat Produkku</a>
+							</li>
+							<li class="{{active('faq')}} menu_item"><a href="{{route('faq')}}">Faq</a></li>
+							<li class="{{active('cs')}} menu_item"><a href="{{route('cs', 'beli-terpisah')}}">Beli Terpisah</a></li>
+							<li class="{{active('lihat_pasar')}} menu_item"><a href="{{route('lihat_pasar')}}">Lihat Pasar</a></li>
+							<li class="{{active('home.cart')}} menu_item">
+								<a href="{{route('home.cart')}}">
+									Cart
+									<i class="fa fa-shopping-cart"></i>
+									@if($jumlah_cart == 0)
+										<span class="badge badge-info">0</span>
+									@else
+										<span class="badge badge-info">{{$jumlah_cart}}</span>
+									@endif
+								</a>
+							</li>
+							@if(!auth()->guard('pengguna')->check())
+							<span id="ul-login">
+							<li class="menu_item">
+								<a href="#modal-register" data-toggle="modal">Daftar</a>
+							</li>
+							<li class="menu_item">
+								<a href="#modal-login" data-toggle="modal">Masuk</a>
+							</li>
+							</span>
+							@else
+							<li class="menu_item has-children">
 								<a href="#!">
 									{{auth()->guard('pengguna')->user()->username}}
 									<i class="fa fa-angle-down"></i>
 								</a>
-								<ul class="account_selection">
+								<ul class="menu_selection">
 									<li>
 										<a href="{{route('akun.penggunaView')}}"> Dashboard</a>
 									</li>
@@ -178,13 +157,8 @@
 										<a href="{{route('akun.logout')}}">Logout</a>
 									</li>
 								</ul>
-							</ul>
-						</li>
-						@endif
-						<li class="menu_item"><a href="#">Faq</a></li>
-						<li class="menu_item"><a href="#">Tentang Kami</a></li>
-						<li class="menu_item"><a href="#">Testimonial</a></li>
-						<li class="menu_item"><a href="#">Lihat Pasar</a></li>
+							</li>
+							@endif
 					</ul>
 				</div>
 			</div>

@@ -21,9 +21,9 @@ class AnswerController extends Controller
     	$answer = Answer::with('user')->where('id_faq',$id_faq)->get()->toArray();
 
     	$datatables = DataTables::of($answer)
-    		->editColumn('id_user', function($data) {
-    			return $data['user']['nama'];
-    		})
+    		// ->editColumn('id_user', function($data) {
+    		// 	return $data['user']['nama'];
+    		// })
             ->editColumn('answer', function($data) {
                 return strip_tags(str_limit($data['answer'],100,' ...'));
             })

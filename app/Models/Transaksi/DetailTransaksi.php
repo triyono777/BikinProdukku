@@ -19,4 +19,12 @@ class DetailTransaksi extends Model
     public function minimalPembelian() {
         return $this->belongsTo('App\Models\MinimalPembelian\MinimalPembelian', 'jumlah_pembelian_id', 'id');
     }
+
+    public function kemasan() {
+        return $this->belongsTo('App\Models\Kemasan\Kemasan', 'kemasan_id', 'id');
+    }
+
+    public function transVarian() {
+        return $this->hasMany('App\Models\Varian\TransVarian', 'detail_transaksi_id', 'kode_detail');
+    }
 }

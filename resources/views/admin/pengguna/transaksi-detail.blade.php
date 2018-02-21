@@ -42,6 +42,8 @@
 								<th>Gambar</th>
 								<th>Nama Bahan</th>
 								<th>Sub Total</th>
+								<th>Ukuran Kemasan</th>
+								<th>Varian Rasa</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -56,6 +58,12 @@
 								</td>
 								<td>{{$value['nama_produk']}}</td>
 								<td>{{number_format($value['subtotal'])}}</td>
+								<td>{{$value['kemasan']['ukuran']}}</td>
+								<td>
+									@for($i= 0; $i < count($value['trans_varian']); $i++)
+										{{$value['trans_varian'][$i]['varian']['nama_varian']. ', '}}
+									@endfor
+								</td>
 								<td>
 									<a href="{{route('akun.penggunaSubTransaksiDetailView', [$kode_invoice, $value['kode_detail']])}}" class="btn btn-info">Detail</a>
 								</td>

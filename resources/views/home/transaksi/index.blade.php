@@ -12,13 +12,13 @@
 </style>
 @endsection
 @section('content')
+<form action="{{route('transaksiProses', [$kode_produk, $kode_gambar])}}" id="frm-biaya" method="post" enctype="multipart/form-data">
 <section id="content" class="container-fluid" style="margin-top: 80px">
 	<div class="row">
 		<div class="col-md-12" style="margin-bottom: 10px">
 			<span class="pull-left"><a href="#modal-petunjuk" data-toggle="modal" class="btn btn-info">Petunjuk</a></span>
 			<h2 align="center">Pilih Desain</h2>
 		</div>
-
 		<div class="modal fade" id="modal-petunjuk">
 			<div class="modal-dialog modal-lg">
 				<div class="modal-content">
@@ -28,7 +28,7 @@
 					</div>
 					<div class="modal-body">
 						@foreach(range(1, 10) as $key => $value)
-							<img src="{{URL::to('petunjuk/'.$key. '.jpg')}}" alt="" width="720" height="auto">
+						<img src="{{URL::to('petunjuk/'.$key. '.jpg')}}" alt="" class="img-responsive img-thumbnail" width="720" height="auto">
 						@endforeach
 					</div>
 					<div class="modal-footer">
@@ -37,25 +37,22 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="col-md-2">
 			<div class="card">
 				<div class="card-header bg-warning text-center">
-					Jenis Kemasan
+					Jenis Produk
 				</div>
 				<div class="card-body">
 					<div class="scroll-area">
-						@foreach($gambarProduk as $data)
 						<div class="thumbnail">
-							<a id="gP{{$loop->index}}" href="{{route('transaksi', [$kode_produk, $kode_gambar])}}">
-								<img src="{{URL::to('upload/gambar-produk/'.$data['gambar_tampilan'])}}"  data-kode_gambar="{{$data['kode_gambar']}}" data-kode_produk="{{$kode_produk}}" class="gambar-produk img-thumbnail" width="150" height="150" />
+							<a id="gP-0" href="{{route('transaksi', [$kode_produk, $kode_gambar])}}">
+								<img src="{{URL::to('upload/gambar-produk/'.$gambarProduk['gambar_tampilan'])}}"  data-kode_gambar="{{$gambarProduk['kode_gambar']}}" data-kode_produk="{{$kode_produk}}" class="gambar-produk img-thumbnail" width="150" height="150" />
 							</a>
 						</div>
-						@endforeach
 						@foreach($gambarProduk2 as $data)
 						<div class="thumbnail" style="margin-top: 5px">
-							<a id="gP{{$loop->index}}" href="{{route('transaksi', [$data['kode_produk'], $data['gambar_produk'][0]['kode_gambar']])}}">
-								<img src="{{URL::to('upload/gambar-produk/'.$data['gambar_produk'][0]['gambar_tampilan'])}}"  data-kode_gambar="{{$data['gambar_produk'][0]['kode_gambar']}}" data-kode_produk="{{$data['kode_produk']}}" class="gambar-produk img-thumbnail" width="150" height="150" />
+							<a id="gP{{$loop->index}}" href="{{route('transaksi', [$data['kode_produk'], $data['kode_gambar']])}}">
+								<img src="{{URL::to('upload/gambar-produk/'.$data['gambar_tampilan'])}}"  data-kode_gambar="{{$data['kode_gambar']}}" data-kode_produk="{{$data['kode_produk']}}" class="gambar-produk img-thumbnail" width="150" height="150" />
 							</a>
 						</div>
 						@endforeach
@@ -70,7 +67,7 @@
 				</div>
 				<div class="card-body">
 					<div>
-						<canvas width="720" height="480" id="cvs"  style="display:block;margin:0 auto;"></canvas>
+						<canvas id="cvs"  style="width: 100%; height: auto;display:block;margin:0 auto;"></canvas>
 					</div>
 					<div>
 						<img src="" id="gambar_upload" alt="" style="display: block;margin: 0 auto">
@@ -83,7 +80,7 @@
 					@if(!auth()->guard('pengguna')->check())
 					<span class="pull-right"><a class="btn btn-primary btn-lanjutkan" href="#modal-login" data-toggle="modal">Lanjutkan ke HPP</a></span>
 					@endif
-					<form action="{{route('transaksiProses', [$kode_produk, $kode_gambar])}}" id="frm-biaya" method="post" enctype="multipart/form-data">
+
 						<div class="row">
 							{{-- <div class="col-md-4">
 								<label>Upload Design Logo Sendiri</label>
@@ -210,7 +207,7 @@
 			</div>
 			<div class="table-responsive">
 				<table class="table" id="table-bahan">
-					<tbody>
+					<tbody id="varian_table">
 						@foreach($bahanBaku as $keyBahan => $valueBahan)
 						<tr>
 							<td>
@@ -231,8 +228,6 @@
 							</td>
 						</tr>
 						@endforeach
-					</tbody>
-					<tfoot>
 					<tr>
 						<td>&nbsp;</td>
 						<td colspan="2">
@@ -248,6 +243,25 @@
 					<tr>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
+						<td colspan="1">
+							<select name="kemasan_id" id="kemasan_id" class="form-control">
+								<option disabled selected>-Pilih Ukuran Kemasan-</option>
+								@foreach($kemasan_id as $data)
+								<option value="{{$data['id']}}" data-harga="{{$data['harga']}}">{{$data['ukuran']}}</option>
+								@endforeach
+							</select>
+						</td>
+						<td>
+							<div class="input-group">
+								<div class="input-group-addon">Rp.</div>
+								<input type="text" name="harga_kemasan" id="harga_kemasan" class="form-control" readonly="">
+							</div>
+
+						</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td>
 							<select class="form-control" id="minimal_pembelian" required="" name="minimal_pembelian">
@@ -258,6 +272,19 @@
 							</select>
 						</td>
 					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td colspan="2">
+							<select class="form-control select3" multiple="" id="varian_id">
+								@foreach($varian as $data)
+								<option class="sub-varian{{$data['id']}}" value="{{$data['id']}}" data-id="{{$data['id']}}" data-nama_varian="{{$data['nama_varian']}}">{{$data['nama_varian']}}</option>
+								@endforeach
+							</select>
+						</td>
+					</tr>
+					</tbody>
+					<tfoot>
 					<tr>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
@@ -432,11 +459,12 @@
 				&nbsp;
 			</div>
 			@endif --}}
+			<span id="input-varian"></span>
 			<input type="hidden" name="rincian_produk" id="rincian_produk">
 			<div class="row">
 				<div class="col-md-2"></div>
 				<div class="col-md-8">
-					<button type="submit" class="btn btn-primary btn-block">Simpan Transaksi</button>
+					<button type="submit" class="btn btn-primary btn-block">saya produksi sekarang</button>
 				</div>
 			</div>
 		</form>
@@ -447,24 +475,24 @@
 				</div>
 				<div class="card-body">
 					<div class="row">
-					<div class="col-md-8">
-						<div class="form-group">
-							<label>Input Harga Jual</label>
-							<div class="input-group">
-								<input type="number" name="harga_jual" id="harga_jual" min="0" class="form-control">
-								<div class="input-group-addon" id="label-pcs"></div>
+						<div class="col-md-8">
+							<div class="form-group">
+								<label>Input Harga Jual</label>
+								<div class="input-group">
+									<input type="number" name="harga_jual" id="harga_jual" min="0" class="form-control">
+									<div class="input-group-addon" id="label-pcs"></div>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="form-group">
-							<label>Harga Jual Rekomendasi</label>
-							<div class="input-group">
-								<input type="number" id="harga_jual2" min="0" class="form-control">
-								<div class="input-group-addon" id="label-pcs2"></div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Harga Jual Rekomendasi</label>
+								<div class="input-group">
+									<input type="number" id="harga_jual2" min="0" class="form-control">
+									<div class="input-group-addon" id="label-pcs2"></div>
+								</div>
 							</div>
 						</div>
-					</div>
 					</div>
 					<div class="form-group">
 						<label>Input Omset</label>
@@ -475,7 +503,7 @@
 					<canvas id="myChart" width="400" height="150"></canvas>
 					<br>
 					<blockquote class="blockquote">
-						Dengan target omset di bulan pertama sebesar Rp. <span id="bulan1">0</span>, kamu akan mendapatkan omset sebesar Rp. <span id="bulan12">0</span>, jika melakukan penjualan dengan kenaikan 30% setiap bulannya.
+						Dengan target omset di bulan pertama sebesar Rp. <span id="bulan1">0</span>, <br> kamu akan mendapatkan omset sebesar Rp. <span id="bulan12">0</span>,<br> jika melakukan penjualan dengan kenaikan 30% setiap bulannya.
 					</blockquote>
 				</div>
 			</div>
@@ -552,15 +580,15 @@
 	});
 	function numberFormat(nStr)
 	{
-	    nStr += '';
-	    x = nStr.split('.');
-	    x1 = x[0];
-	    x2 = x.length > 1 ? '.' + x[1] : '';
-	    var rgx = /(\d+)(\d{3})/;
-	    while (rgx.test(x1)) {
-	        x1 = x1.replace(rgx, '$1' + ',' + '$2');
-	    }
-	    return x1 + x2;
+	nStr += '';
+	x = nStr.split('.');
+	x1 = x[0];
+	x2 = x.length > 1 ? '.' + x[1] : '';
+	var rgx = /(\d+)(\d{3})/;
+	while (rgx.test(x1)) {
+	x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	}
+	return x1 + x2;
 	}
 	function addData() {
 		var omset = $('#omset').val();
@@ -593,16 +621,47 @@
 		button.href = dataURL;
 	}
 	$(document).ready(function() {
+
+	$('#varian_id').on('change', function(e) {
+		$(".select3 option:selected").each(function() {
+			var id = $(this).data('id');
+			var nama_varian = $(this).data('nama_varian');
+			if ($(id == id)) {
+               $('.sub-varian'+id).remove();
+               var row = '<tr><td>&nbsp;</td><td><input type="text" value="'+nama_varian+'" class="form-control pull-right" readonly=""><input type="hidden" name="id_varian[]" value="'+id+'"></td><td><input type="number" name="jumlah_varian[]" min="0" class="form-control pull-right" placeholder="jumlah varian rasa"></td><td><a class="btn btn-xs btn-danger hapus"><i class="fa fa-close pull-right"></i></a></td></tr>';
+			   $('#varian_table').append(row);
+            }
+
+             $('.hapus').on('click', function() {
+                var option = '<option class="sub-varian'+id+'" value="'+id+' data-nama_varian="'+nama_varian+'">'+nama_varian+'</option>';
+                $('#varian_id').append(option);
+                $(this).closest('tr').remove();
+                return false;
+            });
+		});
+	});
+
+
+
+	$('#kemasan_id').on('change', function() {
+		var kemasan_harga = $(this).find(':selected').data('harga');
+		$('#harga_kemasan').val(numberFormat(kemasan_harga));
+	})
+
 		$('#table-biaya-tambahan').hide();
 	$('#minimal_pembelian').on('change', function() {
 		var total_bahan_baku = $('#biaya_total').val();
 		var jumlah_minimal = $(this).find(':selected').data('jumlah_pembelian');
 		var satuan = $(this).find(':selected').data('satuan');
-		const hasil = parseInt(total_bahan_baku.replace(/,/g, '')) * parseInt(jumlah_minimal);
+		var kemasan_harga = $('#harga_kemasan').val().replace(/,/g, '');
+
+		const hasil_kemasan = kemasan_harga*jumlah_minimal;
+		const hasil = parseInt(total_bahan_baku.replace(/,/g, '')) * parseInt(jumlah_minimal)+hasil_kemasan;
+
 		// console.log(total_bahan_baku, jumlah_minimal, hasil);
 		$('#biaya_total2').val(numberFormat(hasil));
-		$('#label-pcs').text('/ '+satuan+' ('+jumlah_minimal+')');
-		$('#label-pcs2').text('/ '+satuan+' ('+jumlah_minimal+')');
+		$('#label-pcs').text('/ '+satuan+'');
+		$('#label-pcs2').text('/ '+satuan+'');
 	})
 	$('#harga_jual').on('change' , function() {
 		const hargaJual = $(this).val();
@@ -617,19 +676,19 @@
 		$('#harga_jual').val(hasil);
 	});
 	// $('#cek-proyeksi').on('click', function() {
-				// 	var omset = $('#omset').val();
-				// 	var data = [];
-				// 	var hasillama = parseFloat(omset);
-				// 	data.push(Math.round(omset));
-				// 	// var total = 0;
-				// 	for (var i = 0; i < 11; i++) {
-							// 		var hasilbaru = (hasillama * 30) / 100;
-							// 		var total = hasillama + hasilbaru;
-							// 		hasillama = total;
-							// 		data.push(Math.round(total));
-				// 	}
-				// 	MyChart.data.datasets.data.pop();
-				// 	MyChart.data.datasets.data[0] = data;
+					// 	var omset = $('#omset').val();
+					// 	var data = [];
+					// 	var hasillama = parseFloat(omset);
+					// 	data.push(Math.round(omset));
+					// 	// var total = 0;
+					// 	for (var i = 0; i < 11; i++) {
+									// 		var hasilbaru = (hasillama * 30) / 100;
+									// 		var total = hasillama + hasilbaru;
+									// 		hasillama = total;
+									// 		data.push(Math.round(total));
+					// 	}
+					// 	MyChart.data.datasets.data.pop();
+					// 	MyChart.data.datasets.data[0] = data;
 	// });
 	$('.btn-rincian').on('click', function(){
 		var input = $('#frm-biaya');
@@ -646,132 +705,134 @@
 		var biaya_tambahan = numberFormat($("#subtotal_biaya_tambahan").val());
 		const total_keseluruhan = numberFormat($("#total_keseluruhan").val());
 		const rincian = '<div class="col-md-12">'+
-									'<table class="table table-striped table-hover">'+
-													'<tr>'+
-																	'<td>Jenis Produk</td>'+
-																	'<td>:</td>'+
-																	'<td>'+'{{$gambarProduk2[0]['nama_produk']}}'+'</td>'+
-													'</tr>'+
-													'<tr>'+
-																	'<td>Nama Brand</td>'+
-																	'<td>:</td>'+
-																	'<td>'+nama_tagline+'</td>'+
-													'</tr>'+
-													'<tr>'+
-																	'<td>Isi Tagline</td>'+
-																	'<td>:</td>'+
-																	'<td>'+isi_tagline+'</td>'+
-													'</tr>'+
-													'<tr>'+
-																	'<td>Rincian Pesanan</td>'+
-																	'<td>:</td>'+
-																	'<td>'+$.map(bahan_baku, function(value, index) {return value + ' ' + jumlah[index]  +  ' ' + nama_satuan[index] +  ', '})+'</td>'+
-													'</tr>'+
-													'<tr>'+
-																	'<td>HPP</td>'+
-																	'<td>:</td>'+
-																	'<td>'+hpp+'</td>'+
-													'</tr>'+
-													'<tr>'+
-																	'<td>Jumlah Pesanan</td>'+
-																	'<td>:</td>'+
-																	'<td>'+minimal_pembelian+ ' / '+satuan+'</td>'+
-													'</tr>'+
-									'</div>';
-					$(this).remove();
-					$('#rincian').append(rincian);
-					$('#rincian_produk').val(rincian);
-				})
-				$('#hitung_total').on('click', function(e) {
-					e.preventDefault();
-					const subtotal_biaya_tambahan = $('#subtotal_biaya_tambahan').val() ? $('#subtotal_biaya_tambahan').val().replace(/,/g, '') : 0;
-					const biaya_total = $('#biaya_total2').val().replace(/,/g, '');
-					var minimal_pembelian = $('#minimal_pembelian').find(':selected').data('jumlah_pembelian');
-					const hasil = (parseFloat(subtotal_biaya_tambahan) + parseFloat(biaya_total));
-					$('#total_keseluruhan').val(numberFormat(hasil));
-					const hargaJual = (hasil / minimal_pembelian)*2;
-					$('#harga_jual').val(hargaJual);
-					$('#harga_jual2').val(hargaJual);
-					const hasil2 = (hargaJual*minimal_pembelian);
-					$('#omset').val(hasil2);
-				});
-				$('.gambar-produk').on('click', function() {
-					var kode_gambar = $(this).data('kode_gambar');
-					$.ajax({
-						type:"GET",
-						url:"{{route('getGambarTemplate', [$kode_produk, $kode_gambar])}}",
-						data:"kode_gambar="+kode_gambar,
-						success:function(data){
-							// console.log(data);
-							$('#gambar-template').empty();
-							$.each(data[0], function(key, value) {
-								const template = "<div class='thumbnail' id='btn-template'><img src='/upload/gambar-template/"+value.gambar_template+"' onclick=gntgmbr('g"+key+"','gT"+key+"','"+value.kode_template+"','"+value.harga+"') id='g"+key+"'/><img src='/upload/gambar-produk/"+data[1].gambar_text+"' style='display:none;' id='gT"+key+"'/><label>"+(value.sold_out == 1 ? 'Tersedia' : 'Terjual')+"</label><br><label>Rp "+value.harga+"</label></div>";
-								$('#gambar-template').append(template);
-							});
-						}
+										'<table class="table table-striped table-hover">'+
+															'<tr>'+
+																				'<td>Jenis Produk</td>'+
+																				'<td>:</td>'+
+																				'<td>'+'{{$gambarProduk['produk']['nama_produk']}}'+'</td>'+
+															'</tr>'+
+															'<tr>'+
+																				'<td>Nama Brand</td>'+
+																				'<td>:</td>'+
+																				'<td>'+nama_tagline+'</td>'+
+															'</tr>'+
+															'<tr>'+
+																				'<td>Isi Tagline</td>'+
+																				'<td>:</td>'+
+																				'<td>'+isi_tagline+'</td>'+
+															'</tr>'+
+															'<tr>'+
+																				'<td>Rincian Pesanan</td>'+
+																				'<td>:</td>'+
+																				'<td>'+$.map(bahan_baku, function(value, index) {return value + ' ' + jumlah[index]  +  ' ' + nama_satuan[index] +  ', '})+'</td>'+
+															'</tr>'+
+															'<tr>'+
+																				'<td>HPP</td>'+
+																				'<td>:</td>'+
+																				'<td>'+hpp+'</td>'+
+															'</tr>'+
+															'<tr>'+
+																				'<td>Jumlah Pesanan</td>'+
+																				'<td>:</td>'+
+																				'<td>'+minimal_pembelian+ ' / '+satuan+'</td>'+
+															'</tr>'+
+										'</div>';
+						$(this).remove();
+						$('#rincian').append(rincian);
+						$('#rincian_produk').val(rincian);
+					})
+					$('#hitung_total').on('click', function(e) {
+						e.preventDefault();
+						const subtotal_biaya_tambahan = $('#subtotal_biaya_tambahan').val() ? $('#subtotal_biaya_tambahan').val().replace(/,/g, '') : 0;
+						const biaya_total = $('#biaya_total2').val().replace(/,/g, '');
+						const biaya_total1 = $('#biaya_total').val().replace(/,/g, '');
+						var minimal_pembelian = $('#minimal_pembelian').find(':selected').data('jumlah_pembelian');
+						const hasil = (parseFloat(subtotal_biaya_tambahan) + parseFloat(biaya_total));
+						$('#total_keseluruhan').val(numberFormat(hasil));
+						const hargaJual = (hasil / minimal_pembelian)*2;
+						$('#harga_jual').val(hargaJual);
+						const hargaJual2 = parseFloat(biaya_total1)*2;
+						$('#harga_jual2').val(hargaJual2);
+						const hasil2 = (hargaJual*minimal_pembelian);
+						$('#omset').val(hasil2);
 					});
-				});
-				$('#loginAkun').on('submit', function(e) {
-						e.preventDefault();
-						const data = $(this).serialize();
-						// console.log(data);
-						$.post('{{route('admin.loginAkun')}}',data, function(data) {
-			const login = '<li class="account"><a href="#">'+data[0].username+'<i class="fa fa-angle-down"></i></a><ul class="account_selection"><li><a href="{{route('akun.penggunaView')}}"> Dashboard</a></li><li><a href="{{route('akun.logout')}}">Logout</a></li></ul></li>';
-			// const login = '<ul class="nav navbar-nav navbar-right"><li class="dropdown"><a href="#x" class="dropdown-toggle" data-toggle="dropdown">'+data[0].username+'<i class="fa fa-angle-down"></i></a><ul class="dropdown-menu"><li><a href="{{route('akun.penggunaView')}}"> Dashboard</a></li><li><a href="{{route('akun.logout')}}">Logout</a></li></ul></li></ul>';
-			// const faq = '<a href="{{route('faq')}}">Faq</a>';
-			// const formulir = '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Formulir Pendaftaran</h3></div><div class="panel-body"><table class="table"><tbody><tr><td>NIK</td><td>:</td><td><input type="text" name="nik" class="form-control" required=""></td></tr><tr><td>Nama Lengkap</td><td>:</td><td><input type="text" name="nama_lengkap" class="form-control" required=""></td></tr><tr><td>Tempat</td><td>:</td><td><input type="text" name="tempat" class="form-control" required=""></td></tr><tr><td>Tanggal Lahir</td><td>:</td><td><input type="date" name="tgl_lahir" class="form-control" required=""></td></tr><tr><td>Jenis Kelamin</td><td>:</td><td><select class="form-control" required="" name="jenis_kelamin"><option value="pria">Pria</option><option value="wanita">Wanita</option></select></td></tr><tr><td>Status Perkawinan</td><td>:</td><td><select class="form-control" name="status_perkawinan" required=""><option disabled="" selected="">-status perkawinan-</option><option value="kawin">Kawin</option><option value="belum kawin">Belum Kawin</option><option value="janda">Janda</option><option value="duda">Duda</option></select></td></tr><tr><td>pekerjaan</td><td>:</td><td><input type="text" name="pekerjaan" class="form-control" required=""></td></tr><tr><td>Alamat</td><td>:</td><td><textarea name="alamat" required="" class="form-control" id="pekerjaan" rows="3"></textarea></td></tr><tr><td>Foto</td><td>:</td><td><input type="file" required="" name="foto" class="form-control"></td></tr><tr><td>Motivasi Berbisnis</td><td>:</td><td><input type="text" required="" name="motivasi_berbisnis" class="form-control"></td></tr><tr><td>Hobi</td><td>:</td><td><input type="text" required="" name="hobi" class="form-control"></td></tr></tbody></table></div></div>';
-							if (data) {
-								// $('#li-faq').empty();
-								$('#ul-login').empty();
-								$('.btn-lanjutkan').hide();
-								$('#biaya-produksi').show();
-								$('#modal-login').modal('hide');
-								$('#ul-login').append(login);
-								// $('#li-faq').append(faq);
-								// $('#formulir_pendaftaran1').remove();
+					$('.gambar-produk').on('click', function() {
+						var kode_gambar = $(this).data('kode_gambar');
+						$.ajax({
+							type:"GET",
+							url:"{{route('getGambarTemplate', [$kode_produk, $kode_gambar])}}",
+							data:"kode_gambar="+kode_gambar,
+							success:function(data){
+								// console.log(data);
+								$('#gambar-template').empty();
+								$.each(data[0], function(key, value) {
+									const template = "<div class='thumbnail' id='btn-template'><img src='/upload/gambar-template/"+value.gambar_template+"' onclick=gntgmbr('g"+key+"','gT"+key+"','"+value.kode_template+"','"+value.harga+"') id='g"+key+"'/><img src='/upload/gambar-produk/"+data[1].gambar_text+"' style='display:none;' id='gT"+key+"'/><label>"+(value.sold_out == 1 ? 'Tersedia' : 'Terjual')+"</label><br><label>Rp "+value.harga+"</label></div>";
+									$('#gambar-template').append(template);
+								});
 							}
-							if (data[1] == null) {
-								// $('#formulir_pendaftaran1').hide();
-								// $('#formulir_pendaftaran').append(formulir);
-							}
-							alert('anda berhasil login');
-							});
 						});
-				$('#frm-register').on('submit', function(e) {
-						e.preventDefault();
-						const data = $(this).serialize();
-						// console.log(data);
-						$.post('{{route('admin.registerPost')}}',data, function(data) {
-			alert('Akun Anda Berhasil dibuat, Silahkan login !');
-			if (data) {
-			$('.btn-lanjutkan').hide();
-			$('#biaya-produksi').show();
-			$('#modal-register').modal('hide');
-			}
-			})
-			});
-			});
-			function ubahHarga(idsatuan,idharga, beratAwal, hargaAwal,minimal,maximal){
-			// console.log(idsatuan, idharga, beratAwal, hargaAwal);
-			var satuan = document.getElementById(idsatuan).value;
-			var harga = document.getElementById(idharga).value;
-			if (parseFloat(satuan)<parseFloat(minimal)||parseFloat(satuan)>parseFloat(maximal)) {
-				satuan=beratAwal;
-				document.getElementById(idsatuan).value=beratAwal;
+					});
+					$('#loginAkun').on('submit', function(e) {
+							e.preventDefault();
+							const data = $(this).serialize();
+							// console.log(data);
+							$.post('{{route('admin.loginAkun')}}',data, function(data) {
+				const login = '<li class="account"><a href="#">'+data[0].username+'<i class="fa fa-angle-down"></i></a><ul class="account_selection"><li><a href="{{route('akun.penggunaView')}}"> Dashboard</a></li><li><a href="{{route('akun.logout')}}">Logout</a></li></ul></li>';
+				// const login = '<ul class="nav navbar-nav navbar-right"><li class="dropdown"><a href="#x" class="dropdown-toggle" data-toggle="dropdown">'+data[0].username+'<i class="fa fa-angle-down"></i></a><ul class="dropdown-menu"><li><a href="{{route('akun.penggunaView')}}"> Dashboard</a></li><li><a href="{{route('akun.logout')}}">Logout</a></li></ul></li></ul>';
+				// const faq = '<a href="{{route('faq')}}">Faq</a>';
+				// const formulir = '<div class="panel panel-default"><div class="panel-heading"><h3 class="panel-title">Formulir Pendaftaran</h3></div><div class="panel-body"><table class="table"><tbody><tr><td>NIK</td><td>:</td><td><input type="text" name="nik" class="form-control" required=""></td></tr><tr><td>Nama Lengkap</td><td>:</td><td><input type="text" name="nama_lengkap" class="form-control" required=""></td></tr><tr><td>Tempat</td><td>:</td><td><input type="text" name="tempat" class="form-control" required=""></td></tr><tr><td>Tanggal Lahir</td><td>:</td><td><input type="date" name="tgl_lahir" class="form-control" required=""></td></tr><tr><td>Jenis Kelamin</td><td>:</td><td><select class="form-control" required="" name="jenis_kelamin"><option value="pria">Pria</option><option value="wanita">Wanita</option></select></td></tr><tr><td>Status Perkawinan</td><td>:</td><td><select class="form-control" name="status_perkawinan" required=""><option disabled="" selected="">-status perkawinan-</option><option value="kawin">Kawin</option><option value="belum kawin">Belum Kawin</option><option value="janda">Janda</option><option value="duda">Duda</option></select></td></tr><tr><td>pekerjaan</td><td>:</td><td><input type="text" name="pekerjaan" class="form-control" required=""></td></tr><tr><td>Alamat</td><td>:</td><td><textarea name="alamat" required="" class="form-control" id="pekerjaan" rows="3"></textarea></td></tr><tr><td>Foto</td><td>:</td><td><input type="file" required="" name="foto" class="form-control"></td></tr><tr><td>Motivasi Berbisnis</td><td>:</td><td><input type="text" required="" name="motivasi_berbisnis" class="form-control"></td></tr><tr><td>Hobi</td><td>:</td><td><input type="text" required="" name="hobi" class="form-control"></td></tr></tbody></table></div></div>';
+								if (data) {
+									// $('#li-faq').empty();
+									$('#ul-login').empty();
+									$('.btn-lanjutkan').hide();
+									$('#biaya-produksi').show();
+									$('#modal-login').modal('hide');
+									$('#ul-login').append(login);
+									// $('#li-faq').append(faq);
+									// $('#formulir_pendaftaran1').remove();
+								}
+								if (data[1] == null) {
+									// $('#formulir_pendaftaran1').hide();
+									// $('#formulir_pendaftaran').append(formulir);
+								}
+								alert('anda berhasil login');
+								});
+							});
+					$('#frm-register').on('submit', function(e) {
+							e.preventDefault();
+							const data = $(this).serialize();
+							// console.log(data);
+							$.post('{{route('admin.registerPost')}}',data, function(data) {
+				alert('Akun Anda Berhasil dibuat, Silahkan login !');
+				if (data) {
+				$('.btn-lanjutkan').hide();
+				$('#biaya-produksi').show();
+				$('#modal-register').modal('hide');
 				}
-				var subtotal = (satuan/beratAwal)*hargaAwal;
-				var biaya_total = document.getElementById('biaya_total').value;
-				// console.log(biaya_total, parseInt(biaya_total.replace(/,/g, '')), parseInt(harga.replace(/,/g, '')), subtotal);
-				biaya_total = (parseInt(biaya_total.replace(/,/g, '')) - parseInt(harga.replace(/,/g, '')))+subtotal;
-				document.getElementById('biaya_total').value = numberFormat(biaya_total);
-				document.getElementById(idharga).value = numberFormat(subtotal);
-				}
-				function ubahTotal(){
-				var biaya_total = document.getElementById("biaya_total").value;
-				var subtotal_biaya_tambahan = document.getElementById("subtotal_biaya_tambahan").value;
-				var grandTot = parseInt(biaya_total.replace(/,/g, '')) + parseInt(subtotal_biaya_tambahan.replace(/,/g, ''));
-				document.getElementById("total_keseluruhan").value = numberFormat(grandTot);
-				}
+				})
+				});
+				});
+				function ubahHarga(idsatuan,idharga, beratAwal, hargaAwal,minimal,maximal){
+				// console.log(idsatuan, idharga, beratAwal, hargaAwal);
+				var satuan = document.getElementById(idsatuan).value;
+				var harga = document.getElementById(idharga).value;
+				if (parseFloat(satuan)<parseFloat(minimal)||parseFloat(satuan)>parseFloat(maximal)) {
+						satuan=beratAwal;
+						document.getElementById(idsatuan).value=beratAwal;
+						}
+						var subtotal = (satuan/beratAwal)*hargaAwal;
+						var biaya_total = document.getElementById('biaya_total').value;
+						// console.log(biaya_total, parseInt(biaya_total.replace(/,/g, '')), parseInt(harga.replace(/,/g, '')), subtotal);
+						biaya_total = (parseInt(biaya_total.replace(/,/g, '')) - parseInt(harga.replace(/,/g, '')))+subtotal;
+						document.getElementById('biaya_total').value = numberFormat(biaya_total);
+						document.getElementById(idharga).value = numberFormat(subtotal);
+						}
+						function ubahTotal(){
+						var biaya_total = document.getElementById("biaya_total").value;
+						var subtotal_biaya_tambahan = document.getElementById("subtotal_biaya_tambahan").value;
+						var grandTot = parseInt(biaya_total.replace(/,/g, '')) + parseInt(subtotal_biaya_tambahan.replace(/,/g, ''));
+						document.getElementById("total_keseluruhan").value = numberFormat(grandTot);
+						}
 		</script>
 		<script>
 		var canvas, ctx, bMouseIsDown = false, iLastX, iLastY,
@@ -845,12 +906,13 @@
 		canvas.height = xGmbr * img2.height / img2.width;
 		yWarna = xGmbr * img2.height / img2.width;
 		ctx.fillStyle = grd;
-		ctx.fillRect(0,0,xGmbr,yWarna);
-		ctx.drawImage(imgT, 0, 0, xGmbr, xGmbr * img2.height / img2.width);
+		ctx.fillRect(0,0,canvas.width,canvas.height);
+
+		ctx.drawImage(imgT, 0, 0, canvas.width, canvas.width * img2.height / img2.width);
 		if (imgU!="") {
 		ctx.drawImage(imgU,xULD,yULD,widthULD,heightULD);
 		}
-		ctx.drawImage(img2, 0, 0, xGmbr, xGmbr * img2.height / img2.width);
+		ctx.drawImage(img2, 0, 0, canvas.width, canvas.width * img2.height / img2.width);
 		$('#subtotal_biaya_tambahan').val(numberFormat(harga_template));
 		$.ajax({
 			type:"GET",
@@ -859,8 +921,8 @@
 			success:function(data){
 				$('#gambar-warna').empty();
 				// $.each(data, function(key, value) {
-						// 		const template = "<button class='btn' style='background-color:"+value.hex_color+";color:"+value.hex_color+";margin-right:5px' onclick=warna('"+value.hex_color+"')>test</button>";
-						// 		$('#gambar-warna').append(template);
+								// 		const template = "<button class='btn' style='background-color:"+value.hex_color+";color:"+value.hex_color+";margin-right:5px' onclick=warna('"+value.hex_color+"')>test</button>";
+								// 		$('#gambar-warna').append(template);
 				// });
 			}
 		});

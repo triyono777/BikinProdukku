@@ -31,7 +31,8 @@ class PenggunaController extends Controller
 
     public function penggunaDetail($id_user) {
 		$pengguna = Pengguna::where('id_user', $id_user)->first()->toArray();
-		$formulirEdar = FormulirPendaftaran::where('id_user', $id_user)->first()->toArray();
+		$formulirEdar = FormulirPendaftaran::where('id_user', $id_user)->first();
+
 		return view('admin.pengguna.pengguna-detail', compact('pengguna', 'formulirEdar'));
     }
 

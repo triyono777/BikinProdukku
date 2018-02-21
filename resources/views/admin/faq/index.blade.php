@@ -13,7 +13,7 @@
 			<div class="collapse" id="collapse-tambah" style="margin-top: 10px">
 			  <div class="well">
 			    <form action="" method="post" id="frm-tambah">
-					<div class="form-group">
+					{{-- <div class="form-group">
 						<label for="">Nama User</label>
 						<select class="form-control select2" id="id_user" name="id_user" style="width: 100% !important">
 							<option disabled selected>-Pilih-</option>
@@ -21,7 +21,7 @@
 								<option value="{{$data['id_user']}}">{{$data['nama']}}</option>
 							@endforeach
 						</select>
-					</div>
+					</div> --}}
 					<div class="form-group">
 						<label for="">Tanggal</label>
 						<input type="text" name="tanggal" class="form-control datepicker">
@@ -39,7 +39,7 @@
 					<thead>
 						<tr>
 							<th>No</th>
-							<th>User</th>
+							{{-- <th>User</th> --}}
 							<th>Question</th>
 							<th>Tanggal</th>
 							<th>Status</th>
@@ -89,7 +89,7 @@
 	        ajax: '{{route('admin.faqData')}}',
 	        columns: [
 	            {data: 'DT_Row_Index', orderable: false, searchable: false},
-	            {data: 'id_user'},
+	            // {data: 'id_user'},
 	            {data: 'question'},
 	            {data: 'tanggal'},
 	            {data: 'status'},

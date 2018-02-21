@@ -291,8 +291,8 @@
 	});
 	$('#frm-edit2').on('submit', function(e) {
 		e.preventDefault();
-		const data = $(this).serialize();
-		$.post("{{route('admin.bahanBakuUpdate', $kode_produk)}}", data, function() {
+		const id = $(this).data('id');
+		$.post("{{route('admin.bahanBakuUpdate', $kode_produk)}}", id, function() {
 			$('#modal-edit2').modal('hide');
 			$('#datatables2').DataTable().ajax.reload();
 			alertify.success('data berhasil di update');
@@ -302,7 +302,7 @@
 		const id = $(this).data('id');
 		alertify.confirm('Alert', 'Apakah anda yakin ingin menghapus data ini ?',
 				function() {
-						$.post('{{route('admin.bahanBakuDelete', $kode_produk)}}', {id: id}, function() {
+						$.post('{{route('admin.bahanBakuDelete', $kode_produk)}}', {id: id}, function(data) {
 								$('#datatables2').DataTable().ajax.reload();
 								alertify.success('Data berhasil di hapus !');
 						})

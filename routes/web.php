@@ -105,6 +105,20 @@ Route::group(['middleware' => 'admin'], function() {
 	Route::post('/satuan/update', 'Satuan\SatuanController@satuanUpdate')->name('admin.satuanUpdate');
 	Route::post('/satuan/delete', 'Satuan\SatuanController@satuanDelete')->name('admin.satuanDelete');
 
+	// Kemasan
+	Route::get('/kemasan', 'Kemasan\KemasanController@kemasanView')->name('admin.kemasanView');
+	Route::get('/kemasan/data', 'Kemasan\KemasanController@kemasanData')->name('admin.kemasanData');
+	Route::post('/kemasan/store', 'Kemasan\KemasanController@kemasanPost')->name('admin.kemasanPost');
+	Route::post('/kemasan/update', 'Kemasan\KemasanController@kemasanUpdate')->name('admin.kemasanUpdate');
+	Route::post('/kemasan/delete', 'Kemasan\KemasanController@kemasanDelete')->name('admin.kemasanDelete');
+
+	// Varian Rasa
+	Route::get('/varian-rasa', 'VarianRasa\VarianRasaController@varianRasaView')->name('admin.varianRasaView');
+	Route::get('/varian-rasa/data', 'VarianRasa\VarianRasaController@varianRasaData')->name('admin.varianRasaData');
+	Route::post('/varian-rasa/store', 'VarianRasa\VarianRasaController@varianRasaPost')->name('admin.varianRasaPost');
+	Route::post('/varian-rasa/update', 'VarianRasa\VarianRasaController@varianRasaUpdate')->name('admin.varianRasaUpdate');
+	Route::post('/varian-rasa/delete', 'VarianRasa\VarianRasaController@varianRasaDelete')->name('admin.varianRasaDelete');
+
 	// Minimal Pembelian
 	Route::get('/minimal-pembelian', 'MinimalPembelian\MinimalPembelianController@minimalPembelianView')->name('admin.minimalPembelianView');
 	Route::get('/minimal-pembelian/data', 'MinimalPembelian\MinimalPembelianController@minimalPembelianData')->name('admin.minimalPembelianData');

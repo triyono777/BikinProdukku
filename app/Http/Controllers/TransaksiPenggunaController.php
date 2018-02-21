@@ -6,6 +6,7 @@ use App\Helpers\AutoNumber;
 use App\Models\BahanBaku\BahanBaku;
 use App\Models\FormulirPendaftaran\FormulirPendaftaran;
 use App\Models\Kategori\Kategori;
+use App\Models\Kemasan\Kemasan;
 use App\Models\MinimalPembelian\MinimalPembelian;
 use App\Models\Produk\GambarProduk;
 use App\Models\Produk\GambarTemplate;
@@ -16,6 +17,8 @@ use App\Models\Tracking\Tracking;
 use App\Models\Transaksi\DetailTransaksi;
 use App\Models\Transaksi\SubDetailTransaksi;
 use App\Models\Transaksi\Transaksi;
+use App\Models\Varian\TransVarian;
+use App\Models\Varian\VarianRasa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -26,10 +29,10 @@ class TransaksiPenggunaController extends Controller
 {
     public function index($kode_produk, $kode_gambar) {
     	$kategori = Kategori::with('subKategori')->get()->toArray();
-    	$gambarProduk = GambarProduk::where('kode_produk', $kode_produk)->get()->toArray();
+    	$gambarProduk = GambarProduk::with('produk')->where('kode_produk', $kode_produk)->first()->toArray();
         $bahanBaku = BahanBaku::with(['satuan'])->where('kode_produk', $kode_produk)->get();
         // dd($bahanBaku);
-        $gambarProduk2 = Produk::with('gambarProduk')->where('kode_produk', '!=', $kode_produk)->get()->toArray();
+        $gambarProduk2 = GambarProduk::where('kode_produk', '!=', $kode_produk)->get()->toArray();
         $gambarTemplate = GambarTemplate::where('kode_gambar', $kode_gambar)->get()->toArray();
         if (auth()->guard('pengguna')->check()) {
             $id_user = auth()->guard('pengguna')->user()->id_user;
@@ -40,7 +43,10 @@ class TransaksiPenggunaController extends Controller
         $totalLoop = count($bahanBaku);
         $totalAwal = $bahanBaku->sum('harga');
         $minimal_pembelian = MinimalPembelian::get()->toArray();
-		return view('home.transaksi.index', compact('gambarProduk', 'kategori', 'kode_produk', 'bahanBaku', 'totalLoop', 'totalAwal', 'gambarProduk2', 'kode_gambar', 'gambarTemplate', 'formulirPendaftaran', 'minimal_pembelian'));
+        $kemasan_id = Kemasan::where('status', 1)->get()->toArray();
+        $varian = VarianRasa::get()->toArray();
+        // dd($gambarProduk);
+		return view('home.transaksi.index', compact('gambarProduk', 'kategori', 'kode_produk', 'bahanBaku', 'totalLoop', 'totalAwal', 'gambarProduk2', 'kode_gambar', 'gambarTemplate', 'formulirPendaftaran', 'minimal_pembelian', 'kemasan_id', 'varian'));
     }
 
     public function getGambarTemplate(Request $request) {
@@ -96,7 +102,8 @@ class TransaksiPenggunaController extends Controller
         $detailTransaksi = new DetailTransaksi;
         $detailTransaksi->kode_invoice = $cek_session;
         $detailTransaksi->nama_produk = $produk['nama_produk'];
-        $detailTransaksi->biaya_design = str_replace(',', '',$request['subtotal_biaya_tambahan']);
+        $detailTransaksi->kemasan_id = $request['kemasan_id'];
+        $detailTransaksi->biaya_design = (str_replace(',', '',$request['subtotal_biaya_tambahan']) == null ? null :  str_replace(',', '',$request['subtotal_biaya_tambahan']));
         $detailTransaksi->jumlah_pembelian_id = $request['minimal_pembelian'];
         if ($request->file('gambar_produk_baru')) {
             $name = $request->file('gambar_produk_baru');
@@ -126,6 +133,15 @@ class TransaksiPenggunaController extends Controller
             $detailTransaksi->gambar_sendiri = $gambar_sendiri;
         }
         $detailTransaksi->save();
+
+        // trans varian
+        foreach ($request['id_varian'] as $key => $value) {
+            TransVarian::create([
+                'detail_transaksi_id' => $detailTransaksi->kode_detail,
+                'varian_id' => $value,
+                'jumlah' => $request['jumlah_varian'][$key]
+            ]);
+        }
         // dd($detailTransaksi);
         // input sub detail transaksi
         foreach ($request['bahan_baku'] as $key => $value) {

@@ -14,18 +14,18 @@ class TentangController extends Controller
     }
 
     public function tentangPost(Request $request) {
-    	$tentang = Tentang::where('id_tentang', $request['id_tentang'])->first();
+    	$tentang = Tentang::where('id_tentang', $request['id'])->first();
     	if ($tentang == null) {
     		$tentang = Tentang::create([
     			'tentang' => $request['tentang']
     		]);
 
     		return response()->json($tentang);
-    	}
+    	}else {
+            $tentang->tentang = $request['tentang'];
+            $tentang->save();
 
-    	$tentang->tentang = $request['tentang'];
-    	$tentang->save();
-
-    	return response()->json($tentang);
+            return response()->json($tentang);
+        }
     }
 }

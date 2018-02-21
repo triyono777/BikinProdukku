@@ -49,7 +49,6 @@ class FaqController extends Controller
 
     public function FaqPost(Request $request) {
     	$faq = Faq::create([
-    		'id_user' => $request['id_user'],
     		'question' => $request['question'],
     		'tanggal' => date('Y-m-d', strtotime($request['tanggal'])),
     	]);

@@ -117,7 +117,7 @@
 		</div>
 		@foreach(range(1, 3) as $data)
 		<div class="col-md-4">
-			<img src="{{URL::to('1.jpg')}}" alt="" class="rounded-circle img-responsive" width="100%%" style="border: 2px solid #E5E5E5">
+			<img src="{{ asset('icon/png/29.png') }}" alt="" class="rounded-circle img-responsive" width="100%%" style="border: 2px solid #E5E5E5">
 		</div>
 		@endforeach
 	</div>

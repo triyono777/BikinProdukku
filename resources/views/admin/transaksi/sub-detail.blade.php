@@ -42,6 +42,40 @@
 					</table>
 				</div>
 			</div>
+			<div class="col-md-6">
+				<div class="table-responsive">
+					<table class="table table-hover table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>Varian Rasa</th>
+								<th>Jumlah</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($detailTransaksi['transVarian'] as $key => $value)
+							<tr>
+								<td>{{$value['varian']['nama_varian']}}</td>
+								<td>{{$value['jumlah']}}</td>
+							</tr>
+							@endforeach
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="table-responsive">
+					<table class="table table-hover table-bordered table-striped">
+						<tr>
+							<th>Ukuran Kemasan</th>
+							<td>{{$detailTransaksi['kemasan']['ukuran']}}</td>
+						</tr>
+						<tr>
+							<th>Jumlah Kemasan</th>
+							<td>{{$detailTransaksi['minimalPembelian']['jumlah_pembelian']}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -108,8 +142,8 @@
 		</div>
 		<div class="box-body">
 			@if($detailTransaksi['gambar_sendiri'] != null)
-			<a href="{{URL::to('upload/gambar-produk-pengguna/'. $detailTransaksi['gambar_sendiri'])}}">
-				<img src="{{URL::to('upload/gambar-produk-pengguna/'. $detailTransaksi['gambar_sendiri'])}}" class="img-thumbnail">
+			<a href="{{URL::to('upload/gambar-sendiri-pengguna/'. $detailTransaksi['gambar_sendiri'])}}">
+				<img src="{{URL::to('upload/gambar-sendiri-pengguna/'. $detailTransaksi['gambar_sendiri'])}}" class="img-thumbnail">
 			</a>
 			@else
 			<span class="badge">Belum upload gambar</span>

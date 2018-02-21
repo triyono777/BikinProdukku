@@ -43,6 +43,8 @@
 								<th>Gambar</th>
 								<th>Nama Produk</th>
 								<th>Sub Total</th>
+								<th>Ukuran Kemasan</th>
+								<th>Varian Rasa</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -51,12 +53,18 @@
 							<tr>
 								<td>{{++$key}}</td>
 								<td>
-									<a href="{{URL::to('upload/gambar-produk-pengguna/'.$value['gambar_produk'])}}">
-									<img src="{{URL::to('upload/gambar-produk-pengguna/'.$value['gambar_produk'])}}" class="img-thumbnail" width="100" height="80">
+									<a href="{{URL::to('upload/gambar-sendiri-pengguna/'.$value['gambar_sendiri'])}}">
+									<img src="{{URL::to('upload/gambar-sendiri-pengguna/'.$value['gambar_sendiri'])}}" class="img-thumbnail" width="100" height="80">
 								</a>
 								</td>
 								<td>{{$value['nama_produk']}}</td>
 								<td>{{number_format($value['subtotal'])}}</td>
+								<td>{{$value['kemasan']['ukuran']}}</td>
+								<td>
+									@for($i= 0; $i < count($value['trans_varian']); $i++)
+										{{$value['trans_varian'][$i]['varian']['nama_varian']. ', '}}
+									@endfor
+								</td>
 								<td>
 									<a href="{{route('admin.transaksiSubDetailView', [$transaksi['kode_invoice'], $value['kode_detail']])}}" class="btn btn-info">Detail</a>
 								</td>

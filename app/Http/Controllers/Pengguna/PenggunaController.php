@@ -73,15 +73,16 @@ class PenggunaController extends Controller
     public function penggunaTransaksiDetailView($kode_invoice) {
         $id_user = $this->id_user();
         // $pengguna = Pengguna::select(['id_user'])->with(['transaksi.detailTransaksi.subDetailTransaksi', 'transaksi.tracking'])->where('id_user', $id_user)->get()->toArray();
-        $pengguna = Transaksi::with(['detailTransaksi.subDetailTransaksi', 'tracking'])->where('kode_invoice', $kode_invoice)->first()->toArray();
+        $pengguna = Transaksi::with(['detailTransaksi.subDetailTransaksi','detailTransaksi.kemasan', 'tracking', 'detailTransaksi.transVarian.varian'])->where('kode_invoice', $kode_invoice)->first()->toArray();
         return view('admin.pengguna.transaksi-detail', compact(['pengguna', 'id_user', 'kode_invoice']));
     }
 
     public function penggunaSubTransaksiDetailView($kode_invoice, $kode_detail) {
         $id_user = $this->id_user();
         $sub_detail_transaksi = SubDetailTransaksi::where('kode_detail', $kode_detail)->get();
-        $detailTransaksi = DetailTransaksi::where('kode_detail', $kode_detail)->first()->toArray();
+        $detailTransaksi = DetailTransaksi::with(['minimalPembelian', 'kemasan', 'transVarian.varian'])->where('kode_detail', $kode_detail)->first()->toArray();
         $tagline = Tagline::where('kode_invoice', $kode_invoice)->first()->toArray();
+        // dd($detailTransaksi);
         return view('admin.pengguna.sub-detail', compact(['sub_detail_transaksi', 'detailTransaksi', 'tagline']));
     }
 

@@ -137,6 +137,16 @@
                   </a>
                 </li>
                 <li>
+                  <a href="{{route('admin.kemasanView')}}">
+                    <i class="fa fa-file"></i> <span>Kemasan</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{route('admin.varianRasaView')}}">
+                    <i class="fa fa-envira"></i> <span>Varian Rasa</span>
+                  </a>
+                </li>
+                <li>
                   <a href="{{route('admin.minimalPembelianView')}}">
                     <i class="fa fa-plus"></i> <span>Minimal Pembelian</span>
                   </a>

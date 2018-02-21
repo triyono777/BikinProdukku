@@ -33,7 +33,7 @@ class BahanBakuController extends Controller
                     data-maximal="'.$data['maximal'].'"
                     data-caption="'.$data['caption'].'"
                     ><i class=" fa fa-edit"></i></a>
-					<a href="#!" class="btn btn-danger delete"><i class=" fa fa-trash"></i></a>
+					<a href="#!" class="btn btn-danger delete" data-id="'.$data['kode_bahan'].'"><i class=" fa fa-trash"></i></a>
                 ';
             })
             ->addIndexColumn();
@@ -71,7 +71,7 @@ class BahanBakuController extends Controller
     }
 
     public function bahanBakuDelete(Request $request) {
-        $bahanBaku = BahanBaku::where('kode_produk', $request['id'])->delete();
+        $bahanBaku = BahanBaku::where('kode_bahan', $request['id'])->delete();
         return response()->json($bahanBaku);
     }
 }

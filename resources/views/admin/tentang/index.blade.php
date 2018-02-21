@@ -14,7 +14,7 @@
 						<textarea class="form-control textarea" name="tentang" id="tentang">{{$tentang['tentang']}}</textarea>
 					<input type="hidden" name="id" id="id" value="{{$tentang['id_tentang']}}">
 					</div>
-					<button type="submit" class="btn btn-primary" type="submit">Tambah</button>
+					<button type="submit" class="btn btn-primary" type="submit">Update</button>
 				</form>
 			</div>
 		</div>

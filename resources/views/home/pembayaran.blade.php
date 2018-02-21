@@ -11,8 +11,8 @@
 					<span class="badge badge-danger">Upload bukti pembayaran di Halaman ini. !</span>
 					<p>Kirim pembayaran melalui rekening kami.</p>
 					<ul>
-						<li>BNI : 847538458734658345</li>
-						<li>BRI : 837482364823743423</li>
+						<li>BRI : 6277-01-020678-53-5</li>
+						<li>BNI : 0562365881</li>
 					</ul>
 				</div>
 				<div class="col-md-6">
