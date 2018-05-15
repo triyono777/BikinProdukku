@@ -28,7 +28,7 @@
 					</div>
 					<div class="modal-body">
 						@foreach(range(1, 10) as $key => $value)
-						<img src="{{URL::to('petunjuk/'.$key. '.jpg')}}" alt="" class="img-responsive img-thumbnail" width="720" height="auto">
+						<img src="{{URL::to('petunjuk/'.$key. '.png')}}" alt="" class="img-responsive img-thumbnail" width="720" height="auto">
 						@endforeach
 					</div>
 					<div class="modal-footer">
@@ -127,7 +127,7 @@
 								<img src='{{URL::to('watermark.png')}}' style='display:none;' id='gT{{$loop->index}}'/>
 								{{-- <img src='{{URL::to('watermark.png')}}' style='display:none;' id='gT{{$loop->index}}'/> --}}
 								<div style="text-align: center;">
-									<label>&nbsp;{{$data['sold_out'] == 1 ? "Tersedia" : "Terjual"}}</label><br>
+									<label>&nbsp;{{$data['sold_out'] == 1 ? "Terjual" : "Tersedia"}}</label><br>
 									<label>&nbsp;Rp. {{number_format($data['harga'])}}</label>
 								</div>
 							</div>
@@ -230,18 +230,6 @@
 						@endforeach
 					<tr>
 						<td>&nbsp;</td>
-						<td colspan="2">
-							<span class="label label-info"><b>Biaya Total Untuk 1 Pcs</b></span>
-						</td>
-						<td>
-							<div class="input-group">
-								<div class="input-group-addon">Rp.</div>
-								<input type="text" name="" id="biaya_total" class="form-control" value="{{number_format($totalAwal)}}" onchange='ubahTotal()' readonly="">
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td colspan="1">
 							<select name="kemasan_id" id="kemasan_id" class="form-control">
@@ -257,6 +245,19 @@
 								<input type="text" name="harga_kemasan" id="harga_kemasan" class="form-control" readonly="">
 							</div>
 
+						</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td colspan="2">
+							<span class="label label-info"><b>Biaya Total Untuk 1 Pcs</b></span>
+						</td>
+						<td>
+							<div class="input-group">
+								<div class="input-group-addon">Rp.</div>
+								<input type="text" name="" id="biaya_total" class="form-control" value="{{number_format($totalAwal)}}" onchange='ubahTotal()' readonly="">
+								<input type="hidden" name="" id="biaya_total3" class="form-control" value="{{number_format($totalAwal)}}" onchange='ubahTotal()' readonly="">
+							</div>
 						</td>
 					</tr>
 					<tr>
@@ -503,17 +504,34 @@
 					<canvas id="myChart" width="400" height="150"></canvas>
 					<br>
 					<blockquote class="blockquote">
-						Dengan target omset di bulan pertama sebesar Rp. <span id="bulan1">0</span>, <br> kamu akan mendapatkan omset sebesar Rp. <span id="bulan12">0</span>,<br> jika melakukan penjualan dengan kenaikan 30% setiap bulannya.
+						Dengan target omset di bulan pertama sebesar Rp. <span id="bulan1">0</span>, Di bulan ke-12 kamu akan mendapatkan omset sebesar Rp. <span id="bulan12">0</span>, jika melakukan penjualan dengan kenaikan 30% setiap bulannya.
 					</blockquote>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
+<div class="modal fade" id="modal-pop">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Petunjuk !</h4>
+			</div>
+			<div class="modal-body">
+				Klik Tombol <a href="#!" class="btn btn-info btn-xs">Petunjuk</a> yang berada di sebelah kiri untuk melihat tata cara pembelian produk kami
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 @endsection
 @section('customJs')
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('#modal-pop').modal('show');
 		@if(!auth()->guard('pengguna')->check())
 			$('#biaya-produksi').hide();
 		@else
@@ -645,6 +663,10 @@
 
 	$('#kemasan_id').on('change', function() {
 		var kemasan_harga = $(this).find(':selected').data('harga');
+		// const total = $('#biaya_total').val().replace(/,/g, '');
+		const totalAwal = $('#biaya_total3').val().replace(/,/g, '');
+		const result = parseInt(kemasan_harga) + parseInt(totalAwal);
+		$('#biaya_total').val(numberFormat(result));
 		$('#harga_kemasan').val(numberFormat(kemasan_harga));
 	})
 
@@ -654,14 +676,12 @@
 		var jumlah_minimal = $(this).find(':selected').data('jumlah_pembelian');
 		var satuan = $(this).find(':selected').data('satuan');
 		var kemasan_harga = $('#harga_kemasan').val().replace(/,/g, '');
-
-		const hasil_kemasan = kemasan_harga*jumlah_minimal;
-		const hasil = parseInt(total_bahan_baku.replace(/,/g, '')) * parseInt(jumlah_minimal)+hasil_kemasan;
+		const hasil = parseInt(total_bahan_baku.replace(/,/g, '')) * parseInt(jumlah_minimal);
 
 		// console.log(total_bahan_baku, jumlah_minimal, hasil);
 		$('#biaya_total2').val(numberFormat(hasil));
-		$('#label-pcs').text('/ '+satuan+'');
-		$('#label-pcs2').text('/ '+satuan+'');
+		$('#label-pcs').text(satuan+'');
+		$('#label-pcs2').text(satuan+'');
 	})
 	$('#harga_jual').on('change' , function() {
 		const hargaJual = $(this).val();
@@ -766,7 +786,7 @@
 								// console.log(data);
 								$('#gambar-template').empty();
 								$.each(data[0], function(key, value) {
-									const template = "<div class='thumbnail' id='btn-template'><img src='/upload/gambar-template/"+value.gambar_template+"' onclick=gntgmbr('g"+key+"','gT"+key+"','"+value.kode_template+"','"+value.harga+"') id='g"+key+"'/><img src='/upload/gambar-produk/"+data[1].gambar_text+"' style='display:none;' id='gT"+key+"'/><label>"+(value.sold_out == 1 ? 'Tersedia' : 'Terjual')+"</label><br><label>Rp "+value.harga+"</label></div>";
+									const template = "<div class='thumbnail' id='btn-template'><img src='/upload/gambar-template/"+value.gambar_template+"' onclick=gntgmbr('g"+key+"','gT"+key+"','"+value.kode_template+"','"+value.harga+"') id='g"+key+"'/><img src='/upload/gambar-produk/"+data[1].gambar_text+"' style='display:none;' id='gT"+key+"'/><label>"+(value.sold_out == 1 ? 'Terjual' : 'Tersedia')+"</label><br><label>Rp "+value.harga+"</label></div>";
 									$('#gambar-template').append(template);
 								});
 							}
@@ -803,29 +823,32 @@
 							const data = $(this).serialize();
 							// console.log(data);
 							$.post('{{route('admin.registerPost')}}',data, function(data) {
-				alert('Akun Anda Berhasil dibuat, Silahkan login !');
-				if (data) {
-				$('.btn-lanjutkan').hide();
-				$('#biaya-produksi').show();
-				$('#modal-register').modal('hide');
-				}
-				})
-				});
+							alert('Akun Anda Berhasil dibuat, Silahkan login !');
+							if (data) {
+							$('.btn-lanjutkan').hide();
+							$('#biaya-produksi').show();
+							$('#modal-register').modal('hide');
+							}
+							})
+					});
 				});
 				function ubahHarga(idsatuan,idharga, beratAwal, hargaAwal,minimal,maximal){
-				// console.log(idsatuan, idharga, beratAwal, hargaAwal);
 				var satuan = document.getElementById(idsatuan).value;
-				var harga = document.getElementById(idharga).value;
+				var harga = document.getElementById(idharga).value.replace(/,/g, '');
+				// console.log(Math.ceil(harga))
 				if (parseFloat(satuan)<parseFloat(minimal)||parseFloat(satuan)>parseFloat(maximal)) {
 						satuan=beratAwal;
 						document.getElementById(idsatuan).value=beratAwal;
 						}
-						var subtotal = (satuan/beratAwal)*hargaAwal;
+						var subtotal = Math.ceil((satuan/beratAwal)*hargaAwal);
+						// console.log(subtotal)
 						var biaya_total = document.getElementById('biaya_total').value;
 						// console.log(biaya_total, parseInt(biaya_total.replace(/,/g, '')), parseInt(harga.replace(/,/g, '')), subtotal);
-						biaya_total = (parseInt(biaya_total.replace(/,/g, '')) - parseInt(harga.replace(/,/g, '')))+subtotal;
+						biaya_total = (parseInt(biaya_total.replace(/,/g, '')) - parseInt(harga))+subtotal;
 						document.getElementById('biaya_total').value = numberFormat(biaya_total);
+						document.getElementById('biaya_total3').value = numberFormat(biaya_total);
 						document.getElementById(idharga).value = numberFormat(subtotal);
+						// console.log(numberFormat(subtotal));
 						}
 						function ubahTotal(){
 						var biaya_total = document.getElementById("biaya_total").value;
@@ -886,7 +909,8 @@
 		// readURL(this);
 		// });
 		function gntgmbr(kodegambar,kodetext, kode_template, harga_template, status) {
-			if (status == 0) {
+			// console.log(status);
+			if (status == 1) {
 				alert('Desain sudah terjual, tidak dapat dipilih!');
 				return false;
 			}

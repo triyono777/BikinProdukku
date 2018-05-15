@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>BikinProdukku.com</title>
+		<title>BikinProdukku.com - 1 Klik Jadi Pengusaha Milenial</title>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="description" content="Colo Shop Template">

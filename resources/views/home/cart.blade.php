@@ -199,7 +199,7 @@
 			</div>
 			<div class="modal-body">
 				<div class="table-responsive">
-					<table class="table table-hover">
+					<table class="table table-hover table-bordered">
 						<thead>
 							<tr>
 								<th>No</th>
@@ -211,6 +211,31 @@
 						<tbody id="table-detail">
 						</tbody>
 					</table>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-md-6 col-xs-12">
+						<div class="table-responsive">
+							<table class="table table-hover table-bordered">
+								<thead>
+									<tr>
+										<th>Varian Rasa</th>
+										<th>Jumlah</th>
+									</tr>
+								</thead>
+								<tbody id="varian_rasa">
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="col-md-6 col-xs-12">
+						<div class="table-responsive">
+							<table class="table table-hover table-bordered">
+								<tbody id="kemasan">
+								</tbody>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -238,10 +263,20 @@
 	$('#datatables').on('click', '.btn-detail', function() {
 		const kode_detail = $(this).data('kode_detail');
 		$.get('{{route('cart.detail')}}', {kode_detail: kode_detail}, function(data) {
+			// console.log(data);
 			$('#table-detail').empty();
+			$('#varian_rasa').empty();
 			$.each(data, function(key, value) {
-				var template = '<tr><td>'+(++key)+'</td><td>'+value.nama_bahan+'</td><td>'+value.jumlah+'</td><td>'+value.subtotal+'</td></tr>';
-				$('#table-detail').append(template);
+				$.each(value.sub_detail_transaksi, function(k, v) {
+					const template1 = '<tr><td>'+(++k)+'</td><td>'+v.nama_bahan+'</td><td>'+v.jumlah+'</td><td>'+v.subtotal+'</td></tr>';
+					$('#table-detail').append(template1);
+				});
+				$.each(value.trans_varian, function(s, v) {
+					const template2 = '<tr><td>'+v.varian.nama_varian+'</td><td>'+v.jumlah+'</td></tr>';
+					$('#varian_rasa').append(template2);
+				})
+				const template3 = '<tr><th>Ukuran Kemasan</th><td>'+value.kemasan.ukuran+'</td></tr><tr><th>Jumlah</th><td>'+value.minimal_pembelian.jumlah_pembelian+' / '+value.minimal_pembelian.satuan+'</td></tr>';
+				$('#kemasan').append(template3);
 			});
 		});
 	});

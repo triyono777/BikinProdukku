@@ -262,8 +262,9 @@ class TransaksiPenggunaController extends Controller
     }
 
     public function cartDetail(Request $request) {
-        $subDetailTransaksi = SubDetailTransaksi::where('kode_detail', $request['kode_detail'])->get();
-        return response()->json($subDetailTransaksi);
+        // $subDetailTransaksi = SubDetailTransaksi::where('kode_detail', $request['kode_detail'])->get();
+        $detailTransaksi = DetailTransaksi::with(['subDetailTransaksi', 'minimalPembelian', 'kemasan', 'transVarian.varian'])->where('kode_detail', $request['kode_detail'])->get()->toArray();
+        return response()->json($detailTransaksi);
     }
 
     public function pembayaranView() {

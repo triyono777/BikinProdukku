@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
 
             if (auth()->guard('pengguna')->check()) {
                 $transaksi = Transaksi::with('DetailTransaksi')->where(['id_user' => auth()->guard('pengguna')->user()->id_user, 'status' => 0])->orderBy('created_at', 'desc')->first();
-                $jumlah_cart = count($transaksi['detail_transaksi']);
+                $jumlah_cart = count($transaksi['DetailTransaksi']);
             }else {
                 $jumlah_cart = 0;
             }

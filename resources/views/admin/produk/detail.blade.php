@@ -291,8 +291,8 @@
 	});
 	$('#frm-edit2').on('submit', function(e) {
 		e.preventDefault();
-		const id = $(this).data('id');
-		$.post("{{route('admin.bahanBakuUpdate', $kode_produk)}}", id, function() {
+		const data = $(this).serialize();
+		$.post("{{route('admin.bahanBakuUpdate', $kode_produk)}}", data, function() {
 			$('#modal-edit2').modal('hide');
 			$('#datatables2').DataTable().ajax.reload();
 			alertify.success('data berhasil di update');

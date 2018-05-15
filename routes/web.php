@@ -1,11 +1,10 @@
 <?php
 
 // Home
-Route::get('/', 'Home\HomeController@index')->name('home');
+	Route::get('/', 'Home\HomeController@index')->name('home');
 
 Route::get('/customer-service/{cs}', 'Home\HomeController@cs')->name('cs');
 
-Route::post('/akun/loginpengguna', 'Auth\AuthController@loginPost')->name('admin.penggunaLogin');
 Route::post('/daftar', 'Auth\AuthController@daftar')->name('daftar');
 
 // Route::get('/kemasan/{id}', 'Home\HomeController@kemasan')->name('kemasan');
@@ -48,6 +47,7 @@ Route::post('/cart/konfirmasi-pembayaran', 'TransaksiPenggunaController@pembayar
 Route::get('/admin/login', 'Auth\AuthController@loginView')->name('admin.loginView');
 Route::post('/admin/login', 'Auth\AuthController@loginPost')->name('admin.loginPost');
 Route::post('/akun/login', 'Auth\AuthController@loginAkun')->name('admin.loginAkun');
+Route::post('/akuns/pengguna', 'Auth\AuthController@loginPost')->name('admin.penggunaLogin');
 Route::post('/register', 'Auth\AuthController@registerPost')->name('admin.registerPost');
 
 Route::group(['middleware' => 'pengguna'], function() {

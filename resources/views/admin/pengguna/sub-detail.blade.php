@@ -93,7 +93,7 @@
 		</div>
 	</div>
 </div>
-<div class="col-md-4">
+{{-- <div class="col-md-4">
 	<div class="box">
 		<div class="col-xs-12">
 			<h2 class="page-header">
@@ -108,8 +108,8 @@
 			@endif
 		</div>
 	</div>
-</div>
-<div class="col-md-4">
+</div> --}}
+{{-- <div class="col-md-4">
 	<div class="box">
 		<div class="col-xs-12">
 			<h2 class="page-header">
@@ -124,8 +124,8 @@
 			@endif
 		</div>
 	</div>
-</div>
-<div class="col-md-4">
+</div> --}}
+<div class="col-md-12">
 	<div class="box">
 		<div class="col-xs-12">
 			<h2 class="page-header">
